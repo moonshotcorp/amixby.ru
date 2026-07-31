@@ -135,15 +135,6 @@
             100% { transform: translate(30px, 20px) scale(1.05); }
         }
 
-        /* ===== MAIN CONTENT WRAPPER ===== */
-        .main-content {
-            position: relative;
-            z-index: 1;
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
         /* ===== GLASS ===== */
         .glass {
             background: var(--glass-bg);
@@ -163,10 +154,6 @@
         /* ===== ANIMATIONS ===== */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px) scale(0.97); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-16px) scale(0.96); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
         @keyframes healthPulse {
@@ -245,7 +232,6 @@
             font-weight: 800;
             font-size: 13px;
             color: #fff;
-            box-shadow: 0 4px 20px rgba(123, 63, 242, 0.35);
         }
         .logo-text {
             font-size: 1.1rem;
@@ -442,7 +428,7 @@
             height: 20px;
             border-radius: 50%;
             background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
             transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .switch.active .knob {
@@ -469,41 +455,26 @@
             position: relative;
             overflow: hidden;
         }
-        .btn::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.20), transparent);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        .btn:hover::after { opacity: 1; }
         .btn-primary {
             background: linear-gradient(135deg, var(--purple), var(--purple-light));
             color: #fff;
-            box-shadow: 0 4px 24px rgba(123, 63, 242, 0.35);
         }
         .btn-primary:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 40px rgba(123, 63, 242, 0.45);
+            transform: translateY(-2px);
         }
         .btn-accent {
             background: linear-gradient(135deg, var(--pink), var(--pink-light));
             color: #fff;
-            box-shadow: 0 4px 24px rgba(238, 58, 121, 0.35);
         }
         .btn-accent:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 40px rgba(238, 58, 121, 0.45);
+            transform: translateY(-2px);
         }
         .btn-success {
             background: linear-gradient(135deg, var(--green), #34D399);
             color: #fff;
-            box-shadow: 0 4px 24px rgba(16, 185, 129, 0.35);
         }
         .btn-success:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 40px rgba(16, 185, 129, 0.45);
+            transform: translateY(-2px);
         }
         .btn-large { padding: 16px 40px; font-size: 1.05rem; }
         .btn-sm { padding: 8px 18px; font-size: 0.8rem; }
@@ -515,8 +486,7 @@
         }
         .btn-glass:hover {
             background: var(--bg-card);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
         }
         .btn-loading {
             opacity: 0.7;
@@ -569,42 +539,6 @@
             font-weight: 400;
         }
         .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
-        .hero-image-wrapper {
-            position: relative;
-            animation: fadeUp 0.8s ease 0.2s forwards;
-            opacity: 0;
-            animation-fill-mode: forwards;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .hero-image {
-            width: 100%;
-            max-width: 520px;
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-xl);
-            display: block;
-            border: 1px solid var(--glass-border);
-            background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-            min-height: 300px;
-            object-fit: cover;
-        }
-        .hero-image-placeholder {
-            width: 100%;
-            max-width: 520px;
-            aspect-ratio: 6/5;
-            border-radius: var(--radius-xl);
-            background: linear-gradient(135deg, var(--glass-bg), var(--bg-card));
-            border: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: var(--text-tertiary);
-            box-shadow: var(--shadow-xl);
-            backdrop-filter: blur(8px);
-        }
 
         /* ===== SECTIONS ===== */
         .section { padding: 50px 0; position: relative; background: transparent; }
@@ -777,11 +711,10 @@
             border-radius: 50%;
             background: linear-gradient(135deg, var(--purple), var(--pink));
             cursor: pointer;
-            box-shadow: 0 2px 12px rgba(123, 63, 242, 0.35);
             transition: all 0.2s;
         }
         .range-wrapper input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.15);
+            transform: scale(1.10);
         }
         .range-wrapper input[type="range"]::-moz-range-thumb {
             width: 20px;
@@ -928,7 +861,7 @@
             color: #fff;
             flex-shrink: 0;
             transition: all 0.4s ease;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
         }
         .health-circle.green {
             background: var(--green);
@@ -1181,7 +1114,7 @@
             font-size: 1.2rem;
             font-weight: 800;
             margin: 0 auto 16px;
-            box-shadow: 0 4px 24px rgba(123, 63, 242, 0.30);
+            box-shadow: 0 4px 24px rgba(123, 63, 242, 0.25);
         }
         .step-card h3 {
             font-size: 1.05rem;
@@ -1402,19 +1335,6 @@
         .toast .icon { font-size: 1.1rem; }
         .toast .msg { font-weight: 500; color: var(--text-primary); }
 
-        /* ===== SECTION HIDDEN (mobile only) ===== */
-        .section-hidden {
-            display: block;
-            padding: 60px 0;
-            background: transparent;
-            min-height: auto;
-        }
-        .section-hidden .section-inner {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
         /* ===== RESPONSIVE ===== */
         @media (max-width: 900px) {
             .hero-inner {
@@ -1423,9 +1343,6 @@
                 gap: 40px;
             }
             .hero-content { order: 1; }
-            .hero-image-wrapper { order: 0; display: flex; justify-content: center; }
-            .hero-image { max-width: 380px; }
-            .hero-image-placeholder { max-width: 380px; }
             .hero-subtitle { margin-left: auto; margin-right: auto; }
             .hero-cta { justify-content: center; }
             .steps-grid { grid-template-columns: 1fr 1fr; }
@@ -1579,9 +1496,9 @@
                     <a href="#how-it-works-section" class="btn btn-glass btn-large">О калькуляторе</a>
                 </div>
             </div>
-            <div class="hero-image-wrapper">
-                <div class="hero-image-placeholder">
-                    <span>📊</span>
+            <div style="display:flex;justify-content:center;align-items:center;min-height:300px;">
+                <div style="width:100%;max-width:520px;aspect-ratio:6/5;border-radius:var(--radius-xl);background:var(--glass-bg);backdrop-filter:blur(12px);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;font-size:4rem;color:var(--text-tertiary);box-shadow:var(--shadow-xl);">
+                    <span style="opacity:0.3;">📊</span>
                 </div>
             </div>
         </div>
