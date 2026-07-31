@@ -68,7 +68,7 @@
             position: relative;
         }
 
-        /* ===== BACKGROUND BLURS / SPOTS ===== */
+        /* ===== BACKGROUND BLURS / SPOTS (more spots) ===== */
         .bg-spots {
             position: fixed;
             inset: 0;
@@ -126,6 +126,33 @@
             right: 35%;
             opacity: 0.08;
             animation-delay: -12s;
+        }
+        .bg-spots .spot-6 {
+            width: 250px;
+            height: 250px;
+            background: var(--purple-dark);
+            top: 60%;
+            left: 5%;
+            opacity: 0.10;
+            animation-delay: -4s;
+        }
+        .bg-spots .spot-7 {
+            width: 180px;
+            height: 180px;
+            background: var(--pink-dark);
+            bottom: 40%;
+            right: 20%;
+            opacity: 0.07;
+            animation-delay: -7s;
+        }
+        .bg-spots .spot-8 {
+            width: 280px;
+            height: 280px;
+            background: var(--purple-light);
+            top: 10%;
+            left: 25%;
+            opacity: 0.06;
+            animation-delay: -10s;
         }
 
         @keyframes floatSpot {
@@ -1409,13 +1436,16 @@
 </head>
 <body>
 
-    <!-- ===== BACKGROUND SPOTS ===== -->
+    <!-- ===== BACKGROUND SPOTS (8 spots) ===== -->
     <div class="bg-spots">
         <div class="spot spot-1"></div>
         <div class="spot spot-2"></div>
         <div class="spot spot-3"></div>
         <div class="spot spot-4"></div>
         <div class="spot spot-5"></div>
+        <div class="spot spot-6"></div>
+        <div class="spot spot-7"></div>
+        <div class="spot spot-8"></div>
     </div>
 
     <!-- ===== HEADER ===== -->
@@ -1497,9 +1527,7 @@
                 </div>
             </div>
             <div style="display:flex;justify-content:center;align-items:center;min-height:300px;">
-                <div style="width:100%;max-width:520px;aspect-ratio:6/5;border-radius:var(--radius-xl);background:var(--glass-bg);backdrop-filter:blur(12px);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;font-size:4rem;color:var(--text-tertiary);box-shadow:var(--shadow-xl);">
-                    <span style="opacity:0.3;">📊</span>
-                </div>
+                <!-- Пустой блок вместо картинки -->
             </div>
         </div>
     </section>
@@ -1546,16 +1574,16 @@
                     </div>
                 </div>
 
-                <!-- PRICE, COST, QUANTITY -->
+                <!-- PRICE, COST, QUANTITY (default 0) -->
                 <div class="calc-grid">
                     <div class="form-group">
                         <label class="form-label">Цена продажи (₽)</label>
-                        <input type="number" id="priceInput" class="form-input" placeholder="1 500" min="0.01" step="0.01" oninput="saveState();" />
+                        <input type="number" id="priceInput" class="form-input" placeholder="0" value="0" min="0" step="0.01" oninput="saveState();" />
                         <div class="error-message" id="price-error">Введите цену больше 0</div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Себестоимость (₽)</label>
-                        <input type="number" id="costInput" class="form-input" placeholder="800" min="0.01" step="0.01" oninput="saveState();" />
+                        <input type="number" id="costInput" class="form-input" placeholder="0" value="0" min="0" step="0.01" oninput="saveState();" />
                         <div class="error-message" id="cost-error">Введите себестоимость больше 0</div>
                     </div>
                 </div>
@@ -1567,12 +1595,12 @@
                                 <span class="tooltip-text">Округляется вверх до целого кг</span>
                             </span>
                         </label>
-                        <input type="number" id="weight" class="form-input" placeholder="0.3" min="0.01" step="0.01" oninput="saveState();" />
+                        <input type="number" id="weight" class="form-input" placeholder="0" value="0" min="0" step="0.01" oninput="saveState();" />
                         <div class="error-message" id="weight-error">Введите вес больше 0</div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Продаж в месяц (шт)</label>
-                        <input type="number" id="quantityInput" class="form-input" placeholder="100" min="1" step="1" oninput="saveState();" />
+                        <input type="number" id="quantityInput" class="form-input" placeholder="0" value="0" min="0" step="1" oninput="saveState();" />
                         <div class="error-message" id="quantity-error">Введите целое число > 0</div>
                     </div>
                 </div>
@@ -1606,7 +1634,7 @@
                 <div class="calc-grid" style="margin-top:4px;">
                     <div class="form-group">
                         <label class="form-label">Прогноз продаж (шт/день)</label>
-                        <input type="number" id="dailySales" class="form-input" placeholder="5" min="0" step="1" value="0" oninput="saveState();" />
+                        <input type="number" id="dailySales" class="form-input" placeholder="0" value="0" min="0" step="1" oninput="saveState();" />
                     </div>
                     <div class="form-group" style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;">
                         <button class="btn btn-primary btn-large" onclick="calculateProfit()" style="flex:1;min-width:140px;">
