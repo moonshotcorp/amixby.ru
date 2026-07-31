@@ -576,6 +576,7 @@
             animation-fill-mode: forwards;
             display: flex;
             justify-content: center;
+            align-items: center;
         }
         .hero-image {
             width: 100%;
@@ -584,6 +585,25 @@
             box-shadow: var(--shadow-xl);
             display: block;
             border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            min-height: 300px;
+            object-fit: cover;
+        }
+        .hero-image-placeholder {
+            width: 100%;
+            max-width: 520px;
+            aspect-ratio: 6/5;
+            border-radius: var(--radius-xl);
+            background: linear-gradient(135deg, var(--glass-bg), var(--bg-card));
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--text-tertiary);
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(8px);
         }
 
         /* ===== SECTIONS ===== */
@@ -1382,16 +1402,12 @@
         .toast .icon { font-size: 1.1rem; }
         .toast .msg { font-weight: 500; color: var(--text-primary); }
 
-        /* ===== HIDDEN SECTIONS ===== */
+        /* ===== SECTION HIDDEN (mobile only) ===== */
         .section-hidden {
-            display: none;
+            display: block;
             padding: 60px 0;
             background: transparent;
-            min-height: calc(100vh - 140px);
-        }
-        .section-hidden.active {
-            display: block;
-            animation: fadeUp 0.5s ease forwards;
+            min-height: auto;
         }
         .section-hidden .section-inner {
             max-width: var(--max-width);
@@ -1409,6 +1425,7 @@
             .hero-content { order: 1; }
             .hero-image-wrapper { order: 0; display: flex; justify-content: center; }
             .hero-image { max-width: 380px; }
+            .hero-image-placeholder { max-width: 380px; }
             .hero-subtitle { margin-left: auto; margin-right: auto; }
             .hero-cta { justify-content: center; }
             .steps-grid { grid-template-columns: 1fr 1fr; }
@@ -1459,7 +1476,6 @@
             .support-card { padding: 16px; }
         }
 
-        /* ===== DESKTOP (large screens) ===== */
         @media (min-width: 1400px) {
             :root {
                 --max-width: 1300px;
@@ -1564,10 +1580,9 @@
                 </div>
             </div>
             <div class="hero-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=500&fit=crop&crop=center&auto=format"
-                     alt="Wildberries аналитика"
-                     class="hero-image"
-                     loading="eager" />
+                <div class="hero-image-placeholder">
+                    <span>📊</span>
+                </div>
             </div>
         </div>
     </section>
@@ -1792,7 +1807,7 @@
     </section>
 
     <!-- ===== HISTORY ===== -->
-    <section class="history-section section-hidden" id="history-section">
+    <section class="history-section" id="history-section">
         <div class="section-inner">
             <div class="section-header animate-on-scroll">
                 <h2>История расчётов</h2>
@@ -1805,7 +1820,7 @@
     </section>
 
     <!-- ===== FULL ANALYSIS ===== -->
-    <section class="analysis-section section-hidden" id="analysis-section">
+    <section class="analysis-section" id="analysis-section">
         <div class="section-inner">
             <div class="section-header animate-on-scroll">
                 <h2>Полный анализ товара</h2>
@@ -1838,7 +1853,7 @@
     </section>
 
     <!-- ===== HOW IT WORKS ===== -->
-    <section class="section section-hidden" id="how-it-works-section" style="background:transparent;">
+    <section class="section" id="how-it-works-section" style="background:transparent;">
         <div class="section-inner">
             <div class="section-header animate-on-scroll">
                 <h2>Как мы считаем</h2>
@@ -1882,7 +1897,7 @@
     </section>
 
     <!-- ===== FAQ ===== -->
-    <section class="section section-hidden" id="faq-section" style="background:transparent;">
+    <section class="section" id="faq-section" style="background:transparent;">
         <div class="section-inner">
             <div class="section-header animate-on-scroll">
                 <h2>Частые вопросы</h2>
@@ -1922,7 +1937,7 @@
     </section>
 
     <!-- ===== SUPPORT ===== -->
-    <section class="support-section section-hidden" id="support-section">
+    <section class="support-section" id="support-section">
         <div class="section-inner">
             <div class="section-header animate-on-scroll">
                 <h2>Поддержка</h2>
@@ -2030,26 +2045,14 @@
         function navigateTo(section) {
             closeMenu();
 
-            document.querySelectorAll('.section-hidden').forEach(el => el.classList.remove('active'));
-
             const target = document.getElementById(section + '-section');
-            if (target && target.classList.contains('section-hidden')) {
-                target.classList.add('active');
-                setTimeout(() => {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 300);
-                return;
-            }
-
-            const visibleTarget = document.getElementById(section + '-section');
-            if (visibleTarget) {
-                visibleTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                return;
-            }
-
-            const fallback = document.getElementById(section);
-            if (fallback) {
-                fallback.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                const fallback = document.getElementById(section);
+                if (fallback) {
+                    fallback.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }
         }
 
@@ -2707,8 +2710,6 @@
             updateStepCommission();
             onLogisticsChange();
             renderHistory();
-
-            document.querySelectorAll('.section-hidden').forEach(el => el.classList.remove('active'));
 
             if (hasState) {
                 setTimeout(calculateProfit, 300);
