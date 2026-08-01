@@ -1577,10 +1577,27 @@
     <div class="modal-overlay" id="modalFaq"><div class="modal"><button class="modal-close" onclick="closeModal('modalFaq')">&times;</button><h2 id="faqTitle">Часто задаваемые вопросы</h2><div class="faq-item"><strong id="faq1q">Какие предметы доступны?</strong><p id="faq1a">Все школьные предметы: математика, русский, физика, химия, биология, история, английский и другие.</p></div><div class="faq-item"><strong id="faq2q">Нужно ли регистрироваться?</strong><p id="faq2a">Нет, Amixby работает без регистрации — открыли и пользуетесь.</p></div><div class="faq-item"><strong id="faq3q">Сколько это стоит?</strong><p id="faq3a">Полностью бесплатно. Мы используем Groq API с бесплатным тарифом.</p></div><div class="faq-item"><strong id="faq4q">Можно ли скачать материалы?</strong><p id="faq4a">Да, кнопка «Скачать PDF» или «Скачать Word» сохранит задания и план урока.</p></div><div class="faq-item"><strong id="faq5q">Что делать, если ИИ не отвечает?</strong><p id="faq5a">Проверьте интернет-соединение. Если ошибка повторяется — напишите в поддержку.</p></div></div></div>
     <script>
         // ============================================================
-        // API КЛЮЧ
+        // 1 API КЛЮЧ (срок 30 дней)
         // ============================================================
-        const GROQ_API_KEY = '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';
+        const API_KEYS = [
+            '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'
+        ];
+
+        let currentKeyIndex = 0;
+        let allKeysExhausted = false;
         const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+        function getCurrentKey() {
+            if (allKeysExhausted) return null;
+            return API_KEYS[currentKeyIndex];
+        }
+
+        function rotateKey() {
+            // Так как ключ только один, ротация не имеет смысла
+            allKeysExhausted = true;
+            console.warn('Единственный ключ исчерпан!');
+            return false;
+        }
 
         // ============================================================
         // ПЕРЕВОДЫ
@@ -1665,7 +1682,8 @@
                 faq5a: 'Проверьте интернет-соединение. Если ошибка повторяется — напишите в поддержку.',
                 errorTitle: 'Ошибка генерации',
                 errorConnection: 'Невозможно сгенерировать план урока. Проверьте соединение!',
-                errorTech: 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!'
+                errorTech: 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!',
+                errorAllKeys: 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!'
             },
             en: {
                 logoSub: 'lessons in a minute',
@@ -1746,7 +1764,8 @@
                 faq5a: 'Check your internet connection. If the error persists, write to support.',
                 errorTitle: 'Generation error',
                 errorConnection: 'Unable to generate lesson plan. Check your connection!',
-                errorTech: 'Technical work is currently underway. Please wait and try again later!'
+                errorTech: 'Technical work is currently underway. Please wait and try again later!',
+                errorAllKeys: 'Oops, Amixby is currently undergoing technical maintenance. Please try again later!'
             },
             kk: {
                 logoSub: 'сабақтар бір минутта',
@@ -1827,7 +1846,8 @@
                 faq5a: 'Интернет қосылымын тексеріңіз. Қате қайталанса, қолдау қызметіне жазыңыз.',
                 errorTitle: 'Жасау қатесі',
                 errorConnection: 'Сабақ жоспарын жасау мүмкін емес. Қосылымды тексеріңіз!',
-                errorTech: 'Қазір техникалық жұмыстар жүргізілуде. Күте тұрыңыз және кейінірек қайталап көріңіз!'
+                errorTech: 'Қазір техникалық жұмыстар жүргізілуде. Күте тұрыңыз және кейінірек қайталап көріңіз!',
+                errorAllKeys: 'Ой, қазір Amixby техникалық жұмыстары жүргізілуде. Кейінірек қайталап көріңіз!'
             },
             de: {
                 logoSub: 'Unterricht in einer Minute',
@@ -1908,7 +1928,8 @@
                 faq5a: 'Überprüfen Sie Ihre Internetverbindung. Wenn der Fehler weiterhin auftritt, schreiben Sie an den Support.',
                 errorTitle: 'Generierungsfehler',
                 errorConnection: 'Unterrichtsplan konnte nicht generiert werden. Überprüfen Sie Ihre Verbindung!',
-                errorTech: 'Derzeit werden technische Arbeiten durchgeführt. Bitte warten Sie und versuchen Sie es später erneut!'
+                errorTech: 'Derzeit werden technische Arbeiten durchgeführt. Bitte warten Sie und versuchen Sie es später erneut!',
+                errorAllKeys: 'Hoppla, Amixby wird gerade technisch gewartet. Bitte versuchen Sie es später erneut!'
             }
         };
 
@@ -1933,7 +1954,6 @@
         function applyLanguage(lang) {
             const t = translations[lang] || translations.ru;
 
-            // Общие элементы
             document.getElementById('logoSub').textContent = t.logoSub;
             document.querySelector('.btn-new-lesson').textContent = t.newLesson;
             document.getElementById('navHistory').textContent = t.navHistory;
@@ -1982,7 +2002,6 @@
             document.getElementById('showAnswersBtn').textContent = t.showAnswers;
             document.getElementById('footerText').textContent = t.footerText;
 
-            // Модалки
             document.getElementById('historyTitle').textContent = t.historyTitle;
             document.getElementById('clearHistoryBtn').textContent = t.clearHistory;
             document.getElementById('langTitle').textContent = t.langTitle;
@@ -2014,11 +2033,9 @@
             document.getElementById('faq5q').textContent = t.faq5q;
             document.getElementById('faq5a').textContent = t.faq5a;
 
-            // Сохраняем текущий язык в глобальную переменную для генерации
             window.currentLanguage = lang;
         }
 
-        // Инициализация языка
         const initialLang = getLanguage();
         setLanguage(initialLang);
 
@@ -2168,7 +2185,7 @@
         }
 
         // ============================================================
-        // ГЕНЕРАЦИЯ С ТАЙМАУТОМ И ПОВТОРАМИ
+        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ
         // ============================================================
         async function generateWithAI(topic, levels, includePlan, retries = 2) {
             const levelsText = levels.join(', ');
@@ -2239,13 +2256,19 @@
             let lastError = null;
 
             for (let attempt = 0; attempt <= retries; attempt++) {
+                const currentKey = getCurrentKey();
+
+                if (!currentKey || allKeysExhausted) {
+                    throw new Error(translations[currentLanguage]?.errorAllKeys || 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!');
+                }
+
                 try {
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 60000);
 
                     const response = await fetch(GROQ_API_URL, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentKey}` },
                         body: JSON.stringify({
                             model: 'llama-3.3-70b-versatile',
                             messages: [
@@ -2264,12 +2287,15 @@
                         const errorData = await response.json();
                         let errorMsg = errorData.error?.message || response.statusText;
 
-                        if (response.status === 429) {
-                            errorMsg = translations[currentLanguage]?.errorTech || 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
-                        } else if (response.status === 401 || response.status === 403) {
-                            errorMsg = translations[currentLanguage]?.errorTech || 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
-                        } else if (response.status === 500 || response.status === 502 || response.status === 503 || response
-                            .status === 504) {
+                        if (response.status === 429 || response.status === 402 || response.status === 403) {
+                            const t = translations[currentLanguage] || translations.ru;
+                            console.warn('Единственный ключ исчерпан!');
+                            allKeysExhausted = true;
+                            throw new Error(t.errorAllKeys || 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!');
+                        }
+
+                        if (response.status === 500 || response.status === 502 || response.status === 503 || response.status ===
+                            504) {
                             errorMsg = translations[currentLanguage]?.errorTech || 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
                             if (attempt < retries) {
                                 console.log(`Попытка ${attempt + 1} не удалась. Повтор через 2 секунды...`);
@@ -2295,6 +2321,15 @@
 
                 } catch (error) {
                     lastError = error;
+
+                    if (error.message.includes('технические работы Amixby') ||
+                        error.message.includes('technical maintenance Amixby') ||
+                        error.message.includes('техникалық жұмыстары Amixby') ||
+                        error.message.includes('technisch gewartet Amixby') ||
+                        error.message.includes('Ой, сейчас идут технические работы Amixby')) {
+                        throw error;
+                    }
+
                     if (error.name === 'AbortError') {
                         if (attempt < retries) {
                             console.log(`Таймаут. Попытка ${attempt + 1}/${retries + 1}. Повтор...`);
@@ -2305,7 +2340,7 @@
                     }
                     if (attempt < retries && !error.message.includes('технические работы') && !error.message.includes(
                             'Technical work') && !error.message.includes('техникалық жұмыстар') && !error.message.includes(
-                            'technische Arbeiten')) {
+                            'technische Arbeiten') && !error.message.includes('технические работы Amixby')) {
                         console.log(`Ошибка: ${error.message}. Попытка ${attempt + 1}/${retries + 1}. Повтор...`);
                         await new Promise(resolve => setTimeout(resolve, 2000));
                         continue;
@@ -2857,7 +2892,17 @@
                 console.error('Ошибка:', error);
                 let userMessage = error.message;
                 const t = translations[currentLanguage] || translations.ru;
-                if (error.message === 'Failed to fetch' || error.message.includes('NetworkError') || error.message.includes(
+
+                if (error.message.includes('Ой, сейчас идут технические работы Amixby') ||
+                    error.message.includes('Oops, Amixby is currently undergoing technical maintenance') ||
+                    error.message.includes('Ой, қазір Amixby техникалық жұмыстары жүргізілуде') ||
+                    error.message.includes('Hoppla, Amixby wird gerade technisch gewartet') ||
+                    error.message.includes('технические работы Amixby') ||
+                    error.message.includes('Все API-ключи исчерпаны') ||
+                    error.message.includes('All API keys are exhausted')) {
+                    userMessage = t.errorAllKeys || 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!';
+                } else if (error.message === 'Failed to fetch' || error.message.includes('NetworkError') || error.message
+                    .includes(
                         'network') || error.message.includes('NetworkError when attempting to fetch resource')) {
                     userMessage = t.errorConnection || 'Невозможно сгенерировать план урока. Проверьте соединение!';
                 } else if (error.message.includes('технические работы') || error.message.includes('Technical work') || error
@@ -2867,6 +2912,7 @@
                     'Failed to extract JSON')) {
                     userMessage = t.errorTech || 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
                 }
+
                 document.getElementById('tasksContent').innerHTML =
                     `<div class="error-message"><span class="error-title">${t.errorTitle || 'Ошибка генерации'}</span>${userMessage}</div>`;
                 resultSection.classList.add('visible');
