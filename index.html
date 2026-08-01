@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Amixby — Уроки за минуту</title>
+    <title>Amixby — Планы за минуту</title>
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
@@ -54,6 +54,7 @@
             --btn-disabled-opacity: 0.5;
             --cache-badge-bg: #e8f5e9;
             --cache-badge-text: #2e7d32;
+            --history-icon-color: #007aff;
         }
         [data-theme="dark"] {
             --bg-primary: #0a0a0c;
@@ -96,6 +97,7 @@
             --btn-disabled-opacity: 0.4;
             --cache-badge-bg: #1a3a2a;
             --cache-badge-text: #6acf8a;
+            --history-icon-color: #4a9aff;
         }
         * {
             margin: 0;
@@ -122,9 +124,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 20px;
+            padding-bottom: 16px;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             position: relative;
             transition: border-color 0.3s ease;
         }
@@ -132,6 +134,11 @@
             display: flex;
             flex-direction: column;
             gap: 2px;
+        }
+        .logo-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
         .logo {
             font-size: 30px;
@@ -150,32 +157,33 @@
             color: var(--text-tertiary);
             letter-spacing: 0.3px;
             transition: color 0.3s ease;
-            margin-left: 2px;
+            margin-top: -2px;
         }
         .header-actions {
             display: flex;
             align-items: center;
             gap: 16px;
         }
-        .btn-new-lesson {
-            background: var(--accent);
-            border: none;
+        .btn-history {
+            background: var(--bg-btn-secondary);
+            border: 1.5px solid var(--border-color);
             border-radius: 12px;
             padding: 8px 18px;
             font-size: 15px;
             font-weight: 500;
             font-family: inherit;
-            color: #fff;
+            color: var(--accent);
             cursor: pointer;
-            transition: background 0.2s ease, transform 0.2s ease;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
             white-space: nowrap;
         }
-        .btn-new-lesson:hover {
-            background: var(--accent-hover);
+        .btn-history:hover {
+            background: var(--bg-btn-secondary-hover);
+            border-color: var(--accent);
             transform: scale(1.02);
-        }
-        .btn-new-lesson:active {
-            transform: scale(0.96);
         }
         .burger {
             display: none;
@@ -384,6 +392,21 @@
         }
         .input-area::placeholder {
             color: var(--text-tertiary);
+        }
+        .input-area.word-limit-exceeded {
+            border-color: var(--level-olympiad);
+            color: var(--level-olympiad);
+        }
+        .word-counter {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-top: 6px;
+            text-align: right;
+            transition: color 0.3s ease;
+        }
+        .word-counter.exceeded {
+            color: var(--level-olympiad);
+            font-weight: 600;
         }
         .input-wrapper {
             display: flex;
@@ -1278,6 +1301,119 @@
                 transform: translateX(0);
             }
         }
+        .onboarding-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-overlay-dark);
+            backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        .onboarding-overlay.open {
+            display: flex;
+        }
+        .onboarding-modal {
+            background: var(--bg-modal);
+            border-radius: 32px;
+            max-width: 540px;
+            width: 100%;
+            padding: 40px 36px;
+            box-shadow: var(--shadow-modal);
+            animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            transition: background 0.3s ease;
+        }
+        .onboarding-modal h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .onboarding-modal h2 span {
+            color: var(--accent);
+        }
+        .onboarding-modal .sub {
+            font-size: 17px;
+            color: var(--text-tertiary);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .onboarding-modal .step {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 18px;
+            align-items: flex-start;
+        }
+        .onboarding-modal .step .num {
+            background: var(--accent-light);
+            color: var(--accent);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .onboarding-modal .step .text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+        .onboarding-modal .step .text strong {
+            color: var(--text-primary);
+        }
+        .onboarding-modal .btn-start {
+            background: var(--accent);
+            border: none;
+            border-radius: 14px;
+            padding: 14px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .onboarding-modal .btn-start:hover {
+            background: var(--accent-hover);
+            transform: scale(1.02);
+        }
+        .onboarding-modal .btn-start:active {
+            transform: scale(0.97);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
         @media (min-width: 769px) {
             body {
                 padding: 48px 40px 60px;
@@ -1430,13 +1566,6 @@
                 width: 100%;
                 justify-content: flex-end;
             }
-            .btn-new-lesson {
-                font-size: 13px;
-                padding: 6px 14px;
-            }
-            .header-actions {
-                gap: 8px;
-            }
             .logo {
                 font-size: 24px;
             }
@@ -1481,6 +1610,13 @@
             .stats-bar .stat-item {
                 font-size: 14px;
             }
+            .btn-history {
+                font-size: 13px;
+                padding: 6px 14px;
+            }
+            .logo-row {
+                gap: 10px;
+            }
         }
         @media (max-width: 600px) {
             .modal {
@@ -1501,6 +1637,12 @@
             .nav-menu.mobile a {
                 font-size: 22px;
             }
+            .onboarding-modal {
+                padding: 28px 20px;
+            }
+            .onboarding-modal h2 {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -1509,17 +1651,20 @@
         <!-- HEADER -->
         <header class="header">
             <div class="logo-wrapper">
-                <span class="logo">Amix<span>by</span></span>
-                <span class="logo-sub" id="logoSub">уроки за минуту</span>
+                <div class="logo-row">
+                    <span class="logo">Amix<span>by</span></span>
+                    <button class="btn-history" onclick="openModal('history')" id="btnHistory">
+                        <span id="historyBtnText">История</span>
+                    </button>
+                </div>
+                <span class="logo-sub" id="logoSub">Планы за минуту</span>
             </div>
             <div class="header-actions">
-                <button class="btn-new-lesson" id="newLessonBtn">Новый урок</button>
                 <button class="burger" id="burgerBtn" aria-label="Меню">
                     <span></span><span></span><span></span>
                 </button>
             </div>
             <nav class="nav-menu" id="desktopNav">
-                <a onclick="openModal('history')" id="navHistory">История уроков</a>
                 <a onclick="toggleTheme()" id="navTheme">Тёмная тема</a>
                 <a onclick="openModal('languages')" id="navLanguages">Языки</a>
                 <a onclick="openModal('how')" id="navHow">Как это работает?</a>
@@ -1527,7 +1672,6 @@
                 <a onclick="openModal('faq')" id="navFaq">FAQ</a>
             </nav>
             <nav class="nav-menu mobile" id="mobileNav">
-                <a onclick="openModal('history'); closeBurger();" id="mobHistory">История уроков</a>
                 <a onclick="toggleTheme(); closeBurger();" id="mobTheme">Тёмная тема</a>
                 <a onclick="openModal('languages'); closeBurger();" id="mobLanguages">Языки</a>
                 <a onclick="openModal('how'); closeBurger();" id="mobHow">Как это работает?</a>
@@ -1546,6 +1690,7 @@
                 <div class="filter-group">
                     <label for="classSelect" id="classLabel">Класс</label>
                     <select class="filter-select" id="classSelect">
+                        <option value="">Выбрать</option>
                         <option value="1">1 класс</option><option value="2">2 класс</option>
                         <option value="3">3 класс</option><option value="4">4 класс</option>
                         <option value="5">5 класс</option><option value="6">6 класс</option>
@@ -1557,6 +1702,7 @@
                 <div class="filter-group">
                     <label for="subjectSelect" id="subjectLabel">Предмет</label>
                     <select class="filter-select" id="subjectSelect">
+                        <option value="">Выбрать</option>
                         <optgroup label="Точные науки">
                             <option value="математика">Математика</option>
                             <option value="алгебра">Алгебра</option>
@@ -1604,13 +1750,14 @@
             <label class="label" for="topicInput" id="topicLabel">Тема урока</label>
             <span class="label-sub" id="topicSub">Введите тему, ключевые слова или вставьте текст параграфа</span>
             <div class="input-wrapper">
-                <textarea class="input-area" id="topicInput" placeholder="Например: Квадратные уравнения. 8 класс">Дроби. Сложение и вычитание с разными знаменателями. 5 класс</textarea>
+                <textarea class="input-area" id="topicInput" placeholder="Пример: квадратные уравнения">Квадратные уравнения. 8 класс</textarea>
                 <button class="action-btn" id="voiceBtn" title="Голосовой ввод">
                     <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                     <span id="voiceLabel">Голос</span>
                     <span class="voice-status" id="voiceStatus"></span>
                 </button>
             </div>
+            <div class="word-counter" id="wordCounter">0 / 20 слов</div>
 
             <div class="cache-badge" id="cacheBadge">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
@@ -1678,6 +1825,32 @@
     <div class="modal-overlay" id="modalHow"><div class="modal"><button class="modal-close" onclick="closeModal('modalHow')">&times;</button><h2 id="howTitle">Как это работает?</h2><p id="howStep1"><strong>1. Выберите класс и предмет</strong> — укажите параметры для точной настройки.</p><p id="howStep2"><strong>2. Введите тему</strong> — например: «Квадратные уравнения. 8 класс».</p><p id="howStep3"><strong>3. Выберите уровни</strong> — базовый, профи или олимпиадный (можно несколько).</p><p id="howStep4"><strong>4. Нажмите «Создать урок»</strong> — ИИ сгенерирует задания, план урока и ответы за 5 секунд.</p><p id="howStep5"><strong>5. Скачайте PDF или Word</strong> или распечатайте материалы прямо из браузера.</p><p style="margin-top:12px;color:var(--text-tertiary);" id="howNote">Все материалы создаются на основе вашей темы с учётом школьной программы.</p></div></div>
     <div class="modal-overlay" id="modalSupport"><div class="modal"><button class="modal-close" onclick="closeModal('modalSupport')">&times;</button><h2 id="supportTitle">Поддержка</h2><p id="supportSub">Опишите вашу проблему или предложение, и мы ответим в ближайшее время.</p><div class="support-email"><p><strong>Email для связи:</strong> <a href="mailto:apexcorpoff@gmail.com">apexcorpoff@gmail.com</a></p></div><form id="supportForm" onsubmit="sendSupport(event)"><textarea id="supportMessage" placeholder="Опишите вашу проблему..." required></textarea><button type="submit" class="btn-send" id="supportSend">Отправить</button></form><p style="margin-top:8px;font-size:14px;color:var(--text-tertiary);" id="supportNote">Письмо будет открыто в вашем почтовом клиенте.</p></div></div>
     <div class="modal-overlay" id="modalFaq"><div class="modal"><button class="modal-close" onclick="closeModal('modalFaq')">&times;</button><h2 id="faqTitle">Часто задаваемые вопросы</h2><div class="faq-item"><strong id="faq1q">Какие предметы доступны?</strong><p id="faq1a">Все школьные предметы: математика, русский, физика, химия, биология, история, английский и другие.</p></div><div class="faq-item"><strong id="faq2q">Нужно ли регистрироваться?</strong><p id="faq2a">Нет, Amixby работает без регистрации — открыли и пользуетесь.</p></div><div class="faq-item"><strong id="faq3q">Сколько это стоит?</strong><p id="faq3a">Полностью бесплатно. Мы используем Groq API с бесплатным тарифом.</p></div><div class="faq-item"><strong id="faq4q">Можно ли скачать материалы?</strong><p id="faq4a">Да, кнопка «Скачать PDF» или «Скачать Word» сохранит задания и план урока.</p></div><div class="faq-item"><strong id="faq5q">Что делать, если ИИ не отвечает?</strong><p id="faq5a">Проверьте интернет-соединение. Если ошибка повторяется — напишите в поддержку.</p></div></div></div>
+
+    <!-- ===== ОНБОРДИНГ ===== -->
+    <div class="onboarding-overlay" id="onboardingOverlay">
+        <div class="onboarding-modal">
+            <h2>👋 Добро пожаловать в <span>Amixby</span></h2>
+            <p class="sub">Создавайте готовые уроки за считанные секунды — просто выберите параметры и нажмите кнопку.</p>
+            <div class="step">
+                <div class="num">1</div>
+                <div class="text"><strong>Выберите класс и предмет</strong> — настройте под свой урок.</div>
+            </div>
+            <div class="step">
+                <div class="num">2</div>
+                <div class="text"><strong>Введите тему</strong> — например: «Квадратные уравнения».</div>
+            </div>
+            <div class="step">
+                <div class="num">3</div>
+                <div class="text"><strong>Нажмите «Создать урок»</strong> — ИИ сгенерирует задания, план и ответы.</div>
+            </div>
+            <div class="step">
+                <div class="num">4</div>
+                <div class="text"><strong>Скачайте PDF или Word</strong> или покажите ответы на экране.</div>
+            </div>
+            <button class="btn-start" id="onboardingStart">Начать работу</button>
+        </div>
+    </div>
+
     <script>
         // ============================================================
         // API КЛЮЧ GROQ
@@ -1865,15 +2038,12 @@
         // ============================================================
         const translations = {
             ru: {
-                logoSub: 'уроки за минуту',
-                newLesson: 'Новый урок',
-                navHistory: 'История уроков',
+                logoSub: 'Планы за минуту',
                 navTheme: 'Тёмная тема',
                 navLanguages: 'Языки',
                 navHow: 'Как это работает?',
                 navSupport: 'Поддержка',
                 navFaq: 'FAQ',
-                mobHistory: 'История уроков',
                 mobTheme: 'Тёмная тема',
                 mobLanguages: 'Языки',
                 mobHow: 'Как это работает?',
@@ -1885,7 +2055,7 @@
                 subjectLabel: 'Предмет',
                 topicLabel: 'Тема урока',
                 topicSub: 'Введите тему, ключевые слова или вставьте текст параграфа',
-                topicPlaceholder: 'Например: Квадратные уравнения. 8 класс',
+                topicPlaceholder: 'Пример: квадратные уравнения',
                 voiceLabel: 'Голос',
                 voiceStop: 'Остановить',
                 levelLabel: 'Уровень сложности',
@@ -1912,6 +2082,7 @@
                 showAnswers: 'Показать на экране',
                 footerText: 'Amixby 2026 — создано для учителей',
                 historyTitle: 'История уроков',
+                historyBtnText: 'История',
                 clearHistory: 'Очистить историю',
                 langTitle: 'Языки',
                 langSub: 'Выберите язык интерфейса и генерации материалов.',
@@ -1946,18 +2117,22 @@
                 errorConnection: 'Невозможно сгенерировать план урока. Проверьте соединение!',
                 errorTech: 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!',
                 errorAllKeys: 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!',
-                fromCache: 'Загружено из кэша'
+                fromCache: 'Загружено из кэша',
+                onboardingTitle: '👋 Добро пожаловать в Amixby',
+                onboardingSub: 'Создавайте готовые уроки за считанные секунды — просто выберите параметры и нажмите кнопку.',
+                onboardingStep1: '<strong>Выберите класс и предмет</strong> — настройте под свой урок.',
+                onboardingStep2: '<strong>Введите тему</strong> — например: «Квадратные уравнения».',
+                onboardingStep3: '<strong>Нажмите «Создать урок»</strong> — ИИ сгенерирует задания, план и ответы.',
+                onboardingStep4: '<strong>Скачайте PDF или Word</strong> или покажите ответы на экране.',
+                onboardingBtn: 'Начать работу'
             },
             en: {
-                logoSub: 'lessons in a minute',
-                newLesson: 'New lesson',
-                navHistory: 'Lesson history',
+                logoSub: 'Plans in a minute',
                 navTheme: 'Dark theme',
                 navLanguages: 'Languages',
                 navHow: 'How it works?',
                 navSupport: 'Support',
                 navFaq: 'FAQ',
-                mobHistory: 'Lesson history',
                 mobTheme: 'Dark theme',
                 mobLanguages: 'Languages',
                 mobHow: 'How it works?',
@@ -1969,7 +2144,7 @@
                 subjectLabel: 'Subject',
                 topicLabel: 'Lesson topic',
                 topicSub: 'Enter the topic, keywords or paste the paragraph text',
-                topicPlaceholder: 'Example: Quadratic equations. Grade 8',
+                topicPlaceholder: 'Example: quadratic equations',
                 voiceLabel: 'Voice',
                 voiceStop: 'Stop',
                 levelLabel: 'Difficulty level',
@@ -1996,6 +2171,7 @@
                 showAnswers: 'Show on screen',
                 footerText: 'Amixby 2026 — created for teachers',
                 historyTitle: 'Lesson history',
+                historyBtnText: 'History',
                 clearHistory: 'Clear history',
                 langTitle: 'Languages',
                 langSub: 'Select the interface and generation language.',
@@ -2030,18 +2206,22 @@
                 errorConnection: 'Unable to generate lesson plan. Check your connection!',
                 errorTech: 'Technical work is currently underway. Please wait and try again later!',
                 errorAllKeys: 'Oops, Amixby is currently undergoing technical maintenance. Please try again later!',
-                fromCache: 'Loaded from cache'
+                fromCache: 'Loaded from cache',
+                onboardingTitle: '👋 Welcome to Amixby',
+                onboardingSub: 'Create ready-made lessons in seconds — just select parameters and click the button.',
+                onboardingStep1: '<strong>Select a class and subject</strong> — customize for your lesson.',
+                onboardingStep2: '<strong>Enter the topic</strong> — for example: "Quadratic equations".',
+                onboardingStep3: '<strong>Click "Create lesson"</strong> — AI will generate tasks, plan and answers.',
+                onboardingStep4: '<strong>Download PDF or Word</strong> or show answers on screen.',
+                onboardingBtn: 'Get started'
             },
             kk: {
-                logoSub: 'сабақтар бір минутта',
-                newLesson: 'Жаңа сабақ',
-                navHistory: 'Сабақтар тарихы',
+                logoSub: 'Жоспарлар бір минутта',
                 navTheme: 'Қараңғы тақырып',
                 navLanguages: 'Тілдер',
                 navHow: 'Бұл қалай жұмыс істейді?',
                 navSupport: 'Қолдау',
                 navFaq: 'Жиі қойылатын сұрақтар',
-                mobHistory: 'Сабақтар тарихы',
                 mobTheme: 'Қараңғы тақырып',
                 mobLanguages: 'Тілдер',
                 mobHow: 'Бұл қалай жұмыс істейді?',
@@ -2053,7 +2233,7 @@
                 subjectLabel: 'Пән',
                 topicLabel: 'Сабақ тақырыбы',
                 topicSub: 'Тақырыпты, кілт сөздерді енгізіңіз немесе абзац мәтінін қойыңыз',
-                topicPlaceholder: 'Мысалы: Квадрат теңдеулер. 8 сынып',
+                topicPlaceholder: 'Мысалы: квадрат теңдеулер',
                 voiceLabel: 'Дауыс',
                 voiceStop: 'Тоқтату',
                 levelLabel: 'Қиындық деңгейі',
@@ -2080,6 +2260,7 @@
                 showAnswers: 'Экранда көрсету',
                 footerText: 'Amixby 2026 — мұғалімдерге арналған',
                 historyTitle: 'Сабақтар тарихы',
+                historyBtnText: 'Тарих',
                 clearHistory: 'Тарихты тазалау',
                 langTitle: 'Тілдер',
                 langSub: 'Интерфейс пен жасау тілін таңдаңыз.',
@@ -2114,18 +2295,22 @@
                 errorConnection: 'Сабақ жоспарын жасау мүмкін емес. Қосылымды тексеріңіз!',
                 errorTech: 'Қазір техникалық жұмыстар жүргізілуде. Күте тұрыңыз және кейінірек қайталап көріңіз!',
                 errorAllKeys: 'Ой, қазір Amixby техникалық жұмыстары жүргізілуде. Кейінірек қайталап көріңіз!',
-                fromCache: 'Кэштен жүктелді'
+                fromCache: 'Кэштен жүктелді',
+                onboardingTitle: '👋 Amixby-ға қош келдіңіз',
+                onboardingSub: 'Дайын сабақтарды секундтарда жасаңыз — параметрлерді таңдап, батырманы басыңыз.',
+                onboardingStep1: '<strong>Сынып пен пәнді таңдаңыз</strong> — сабағыңызға бейімдеңіз.',
+                onboardingStep2: '<strong>Тақырыпты енгізіңіз</strong> — мысалы: «Квадрат теңдеулер».',
+                onboardingStep3: '<strong>«Сабақ құру» батырмасын басыңыз</strong> — ЖИ тапсырмалар, жоспар және жауаптар жасайды.',
+                onboardingStep4: '<strong>PDF немесе Word жүктеңіз</strong> немесе жауаптарды экранда көрсетіңіз.',
+                onboardingBtn: 'Жұмысқа кірісу'
             },
             de: {
-                logoSub: 'Unterricht in einer Minute',
-                newLesson: 'Neue Lektion',
-                navHistory: 'Unterrichtsverlauf',
+                logoSub: 'Pläne in einer Minute',
                 navTheme: 'Dunkles Design',
                 navLanguages: 'Sprachen',
                 navHow: 'Wie funktioniert es?',
                 navSupport: 'Unterstützung',
                 navFaq: 'FAQ',
-                mobHistory: 'Unterrichtsverlauf',
                 mobTheme: 'Dunkles Design',
                 mobLanguages: 'Sprachen',
                 mobHow: 'Wie funktioniert es?',
@@ -2137,7 +2322,7 @@
                 subjectLabel: 'Fach',
                 topicLabel: 'Unterrichtsthema',
                 topicSub: 'Geben Sie das Thema, Schlüsselwörter oder den Absatztext ein',
-                topicPlaceholder: 'Zum Beispiel: Quadratische Gleichungen. Klasse 8',
+                topicPlaceholder: 'Beispiel: Quadratische Gleichungen',
                 voiceLabel: 'Sprache',
                 voiceStop: 'Stopp',
                 levelLabel: 'Schwierigkeitsgrad',
@@ -2164,6 +2349,7 @@
                 showAnswers: 'Auf dem Bildschirm anzeigen',
                 footerText: 'Amixby 2026 — für Lehrer entwickelt',
                 historyTitle: 'Unterrichtsverlauf',
+                historyBtnText: 'Verlauf',
                 clearHistory: 'Verlauf löschen',
                 langTitle: 'Sprachen',
                 langSub: 'Wählen Sie die Schnittstellen- und Generierungssprache.',
@@ -2198,7 +2384,14 @@
                 errorConnection: 'Unterrichtsplan konnte nicht generiert werden. Überprüfen Sie Ihre Verbindung!',
                 errorTech: 'Derzeit werden technische Arbeiten durchgeführt. Bitte warten Sie und versuchen Sie es später erneut!',
                 errorAllKeys: 'Hoppla, Amixby wird gerade technisch gewartet. Bitte versuchen Sie es später erneut!',
-                fromCache: 'Aus Cache geladen'
+                fromCache: 'Aus Cache geladen',
+                onboardingTitle: '👋 Willkommen bei Amixby',
+                onboardingSub: 'Erstellen Sie in Sekunden fertige Unterrichtsstunden — wählen Sie einfach die Parameter und klicken Sie auf die Schaltfläche.',
+                onboardingStep1: '<strong>Wählen Sie eine Klasse und ein Fach</strong> — passen Sie es an Ihren Unterricht an.',
+                onboardingStep2: '<strong>Geben Sie das Thema ein</strong> — zum Beispiel: "Quadratische Gleichungen".',
+                onboardingStep3: '<strong>Klicken Sie auf "Unterricht erstellen"</strong> — KI generiert Aufgaben, Plan und Antworten.',
+                onboardingStep4: '<strong>Laden Sie PDF oder Word herunter</strong> oder zeigen Sie Antworten auf dem Bildschirm an.',
+                onboardingBtn: 'Los geht\'s'
             }
         };
 
@@ -2224,14 +2417,12 @@
             var t = translations[lang] || translations.ru;
 
             document.getElementById('logoSub').textContent = t.logoSub;
-            document.querySelector('.btn-new-lesson').textContent = t.newLesson;
-            document.getElementById('navHistory').textContent = t.navHistory;
+            document.getElementById('historyBtnText').textContent = t.historyBtnText;
             document.getElementById('navTheme').textContent = t.navTheme;
             document.getElementById('navLanguages').textContent = t.navLanguages;
             document.getElementById('navHow').textContent = t.navHow;
             document.getElementById('navSupport').textContent = t.navSupport;
             document.getElementById('navFaq').textContent = t.navFaq;
-            document.getElementById('mobHistory').textContent = t.mobHistory;
             document.getElementById('mobTheme').textContent = t.mobTheme;
             document.getElementById('mobLanguages').textContent = t.mobLanguages;
             document.getElementById('mobHow').textContent = t.mobHow;
@@ -2306,6 +2497,27 @@
             document.getElementById('faq5q').textContent = t.faq5q;
             document.getElementById('faq5a').textContent = t.faq5a;
 
+            // Онбординг
+            var onboardingTitle = document.querySelector('.onboarding-modal h2');
+            if (onboardingTitle) {
+                onboardingTitle.innerHTML = t.onboardingTitle || '👋 Добро пожаловать в <span>Amixby</span>';
+            }
+            var onboardingSub = document.querySelector('.onboarding-modal .sub');
+            if (onboardingSub) {
+                onboardingSub.textContent = t.onboardingSub || 'Создавайте готовые уроки за считанные секунды — просто выберите параметры и нажмите кнопку.';
+            }
+            var steps = document.querySelectorAll('.onboarding-modal .step .text');
+            if (steps.length >= 4) {
+                steps[0].innerHTML = t.onboardingStep1 || '<strong>Выберите класс и предмет</strong> — настройте под свой урок.';
+                steps[1].innerHTML = t.onboardingStep2 || '<strong>Введите тему</strong> — например: «Квадратные уравнения».';
+                steps[2].innerHTML = t.onboardingStep3 || '<strong>Нажмите «Создать урок»</strong> — ИИ сгенерирует задания, план и ответы.';
+                steps[3].innerHTML = t.onboardingStep4 || '<strong>Скачайте PDF или Word</strong> или покажите ответы на экране.';
+            }
+            var startBtn = document.getElementById('onboardingStart');
+            if (startBtn) {
+                startBtn.textContent = t.onboardingBtn || 'Начать работу';
+            }
+
             window.currentLanguage = lang;
             updateCacheBadgeText();
             updateVoiceButtonLabel();
@@ -2352,7 +2564,7 @@
                 isVoiceRecording = true;
                 voiceBtn.classList.add('recording');
                 voiceLabel.textContent = translations[currentLanguage]?.voiceStop || 'Остановить';
-                voiceStatus.textContent = '🎤';
+                voiceStatus.textContent = '●';
             };
 
             recognition.onresult = function(event) {
@@ -2371,6 +2583,7 @@
                     setTimeout(function() {
                         voiceStatus.textContent = '';
                     }, 1500);
+                    updateWordCounter();
                 }
             };
 
@@ -2421,6 +2634,29 @@
         }
 
         // ============================================================
+        // СЧЁТЧИК СЛОВ
+        // ============================================================
+        var MAX_WORDS = 20;
+
+        function updateWordCounter() {
+            var text = topicInput.value.trim();
+            var words = text ? text.split(/\s+/).length : 0;
+            var counter = document.getElementById('wordCounter');
+            var input = document.getElementById('topicInput');
+            counter.textContent = words + ' / ' + MAX_WORDS + ' слов';
+            if (words > MAX_WORDS) {
+                counter.classList.add('exceeded');
+                input.classList.add('word-limit-exceeded');
+            } else {
+                counter.classList.remove('exceeded');
+                input.classList.remove('word-limit-exceeded');
+            }
+        }
+
+        topicInput.addEventListener('input', updateWordCounter);
+        updateWordCounter();
+
+        // ============================================================
         // ТЁМНАЯ ТЕМА
         // ============================================================
         function getTheme() { return localStorage.getItem('amixby-theme') || 'light'; }
@@ -2449,8 +2685,8 @@
                 topic: topic,
                 levels: levels.join(', '),
                 data: data,
-                class: document.getElementById('classSelect').value,
-                subject: document.getElementById('subjectSelect').value
+                class: document.getElementById('classSelect').value || 'Не указан',
+                subject: document.getElementById('subjectSelect').value || 'Не указан'
             };
             history.unshift(item);
             localStorage.setItem('amixby-history', JSON.stringify(history));
@@ -3149,6 +3385,19 @@
             var topic = document.getElementById('topicInput').value.trim();
             if (!topic) { alert('Пожалуйста, введите тему урока'); return; }
 
+            var words = topic.split(/\s+/).length;
+            if (words > MAX_WORDS) {
+                alert('Тема не должна превышать ' + MAX_WORDS + ' слов. Сейчас: ' + words + ' слов.');
+                return;
+            }
+
+            var classVal = document.getElementById('classSelect').value;
+            var subjectVal = document.getElementById('subjectSelect').value;
+            if (!classVal || !subjectVal) {
+                alert('Пожалуйста, выберите класс и предмет.');
+                return;
+            }
+
             var activeLevels = document.querySelectorAll('.level-btn.active');
             var levels = [];
             activeLevels.forEach(function(btn) { levels.push(btn.dataset.level); });
@@ -3235,7 +3484,7 @@
                 }
 
                 document.getElementById('tasksContent').innerHTML =
-                    '<div class="error-message"><span class="error-title">' + t.errorTitle || 'Ошибка генерации' +
+                    '<div class="error-message"><span class="error-title">' + (t.errorTitle || 'Ошибка генерации') +
                     '</span>' + userMessage + '</div>';
                 resultSection.classList.add('visible');
 
@@ -3244,21 +3493,6 @@
             } finally {
                 this.classList.remove('loading');
             }
-        });
-
-        // ============================================================
-        // НОВЫЙ УРОК
-        // ============================================================
-        document.getElementById('newLessonBtn').addEventListener('click', function() {
-            document.getElementById('topicInput').value = '';
-            document.querySelectorAll('.level-btn').forEach(function(btn) { btn.classList.add('active'); });
-            document.getElementById('chkTasks').checked = true;
-            document.getElementById('chkPlan').checked = true;
-            document.querySelectorAll('.checkbox-item').forEach(function(item) { item.classList.remove('disabled'); });
-            document.getElementById('resultSection').classList.remove('visible');
-            document.getElementById('cacheBadge').classList.remove('visible');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            resetCooldown();
         });
 
         // ============================================================
@@ -3332,6 +3566,29 @@
             closeModal('modalSupport');
             alert('Письмо открыто в вашем почтовом клиенте. Отправьте его, и мы ответим.');
         }
+
+        // ============================================================
+        // ОНБОРДИНГ
+        // ============================================================
+        function showOnboarding() {
+            var overlay = document.getElementById('onboardingOverlay');
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideOnboarding() {
+            var overlay = document.getElementById('onboardingOverlay');
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+            localStorage.setItem('amixby-onboarding-shown', 'true');
+        }
+
+        document.getElementById('onboardingStart').addEventListener('click', hideOnboarding);
+
+        // Показываем онбординг только при первом запуске
+        if (!localStorage.getItem('amixby-onboarding-shown')) {
+            setTimeout(showOnboarding, 400);
+        }
     </script>
 </body>
-    </html>
+</html>
