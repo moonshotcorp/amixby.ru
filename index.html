@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <style>
-        /* ===== ВСЕ СТИЛИ ===== */
+        /* ===== ВСЕ СТИЛИ (полная версия) ===== */
         :root {
             --bg-primary: #f5f5f8;
             --bg-secondary: #ffffff;
@@ -1577,10 +1577,10 @@
     <div class="modal-overlay" id="modalFaq"><div class="modal"><button class="modal-close" onclick="closeModal('modalFaq')">&times;</button><h2 id="faqTitle">Часто задаваемые вопросы</h2><div class="faq-item"><strong id="faq1q">Какие предметы доступны?</strong><p id="faq1a">Все школьные предметы: математика, русский, физика, химия, биология, история, английский и другие.</p></div><div class="faq-item"><strong id="faq2q">Нужно ли регистрироваться?</strong><p id="faq2a">Нет, Amixby работает без регистрации — открыли и пользуетесь.</p></div><div class="faq-item"><strong id="faq3q">Сколько это стоит?</strong><p id="faq3a">Полностью бесплатно. Мы используем Groq API с бесплатным тарифом.</p></div><div class="faq-item"><strong id="faq4q">Можно ли скачать материалы?</strong><p id="faq4a">Да, кнопка «Скачать PDF» или «Скачать Word» сохранит задания и план урока.</p></div><div class="faq-item"><strong id="faq5q">Что делать, если ИИ не отвечает?</strong><p id="faq5a">Проверьте интернет-соединение. Если ошибка повторяется — напишите в поддержку.</p></div></div></div>
     <script>
         // ============================================================
-        // API КЛЮЧ GROQ
+        // НОВЫЙ API КЛЮЧ (НОВАЯ УЧЁТНАЯ ЗАПИСЬ) + МОДЕЛЬ llama-3.1-8b-instant
         // ============================================================
         const API_KEYS = [
-            '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'
+            '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'
         ];
         const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
@@ -2184,7 +2184,7 @@
         }
 
         // ============================================================
-        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ (Groq)
+        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ (НОВАЯ УЧЁТНАЯ ЗАПИСЬ)
         // ============================================================
         async function generateWithAI(topic, levels, includePlan, retries = 2) {
             const levelsText = levels.join(', ');
@@ -2272,7 +2272,7 @@
                             'Authorization': `Bearer ${currentKey}`
                         },
                         body: JSON.stringify({
-                            model: 'llama-3.3-70b-versatile',
+                            model: 'llama-3.1-8b-instant',
                             messages: [
                                 { role: 'system', content: 'Ты — профессиональный учитель-методист. Отвечай строго в формате JSON.' },
                                 { role: 'user', content: prompt }
@@ -3013,4 +3013,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
