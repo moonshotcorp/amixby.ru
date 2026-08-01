@@ -51,6 +51,7 @@
             --transition: 0.3s ease;
             --voice-btn-bg: #f2f2f7;
             --voice-btn-active: #007aff;
+            --btn-disabled-opacity: 0.5;
         }
         [data-theme="dark"] {
             --bg-primary: #0a0a0c;
@@ -90,6 +91,7 @@
             --plan-step-bg: #2c2c2e;
             --voice-btn-bg: #3a3a3c;
             --voice-btn-active: #4a9aff;
+            --btn-disabled-opacity: 0.4;
         }
         * {
             margin: 0;
@@ -438,6 +440,71 @@
             flex-shrink: 0;
         }
 
+        /* ===== КНОПКА СОЗДАТЬ УРОК С ТАЙМЕРОМ ===== */
+        .btn-primary {
+            background: var(--accent);
+            border: none;
+            border-radius: 14px;
+            padding: 15px 28px;
+            font-size: 17px;
+            font-weight: 600;
+            font-family: inherit;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
+            letter-spacing: 0.2px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-height: 56px;
+        }
+        .btn-primary:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(0, 122, 255, 0.30);
+        }
+        .btn-primary:active:not(:disabled) {
+            transform: scale(0.97);
+            box-shadow: none;
+        }
+        .btn-primary:disabled {
+            opacity: var(--btn-disabled-opacity);
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        .btn-primary .spinner {
+            display: none;
+            width: 22px;
+            height: 22px;
+            border: 2.5px solid rgba(255, 255, 255, 0.25);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        .btn-primary.loading .spinner {
+            display: block;
+        }
+        .btn-primary.loading .btn-text {
+            display: none;
+        }
+
+        /* Стили для таймера внутри кнопки */
+        .btn-timer {
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         /* ===== ОСТАЛЬНЫЕ СТИЛИ ===== */
         .level-row {
             display: flex;
@@ -504,57 +571,6 @@
         }
         .checkbox-item input[type="checkbox"]:checked {
             transform: scale(1.05);
-        }
-        .btn-primary {
-            background: var(--accent);
-            border: none;
-            border-radius: 14px;
-            padding: 15px 28px;
-            font-size: 17px;
-            font-weight: 600;
-            font-family: inherit;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            width: 100%;
-            letter-spacing: 0.2px;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary:hover {
-            background: var(--accent-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(0, 122, 255, 0.30);
-        }
-        .btn-primary:active {
-            transform: scale(0.97);
-            box-shadow: none;
-        }
-        .btn-primary.loading {
-            background: var(--accent);
-            opacity: 0.8;
-            pointer-events: none;
-        }
-        .btn-primary .spinner {
-            display: none;
-            width: 22px;
-            height: 22px;
-            border: 2.5px solid rgba(255, 255, 255, 0.25);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            margin: 0 auto;
-        }
-        .btn-primary.loading .spinner {
-            display: block;
-        }
-        .btn-primary.loading .btn-text {
-            display: none;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
         }
         .result-section {
             margin-top: 28px;
@@ -1243,6 +1259,7 @@
             .btn-primary {
                 padding: 18px 32px;
                 font-size: 18px;
+                min-height: 64px;
             }
             .tab-content {
                 padding: 32px 32px 28px;
@@ -1298,6 +1315,11 @@
             .level-btn {
                 font-size: 14px;
                 padding: 6px 16px;
+            }
+            .btn-primary {
+                padding: 14px 20px;
+                font-size: 16px;
+                min-height: 52px;
             }
             .tab {
                 font-size: 15px;
@@ -1528,10 +1550,13 @@
                 <label class="checkbox-item" id="chkTasksLabel"><input type="checkbox" checked id="chkTasks" /> Сгенерировать задания</label>
                 <label class="checkbox-item" id="chkPlanLabel"><input type="checkbox" checked id="chkPlan" /> Сгенерировать план урока</label>
             </div>
+            
+            <!-- КНОПКА С ТАЙМЕРОМ -->
             <button class="btn-primary" id="generateBtn">
                 <span class="btn-text" id="createBtnText">Создать урок</span>
                 <span class="spinner"></span>
             </button>
+            
             <!-- RESULT -->
             <div class="result-section" id="resultSection">
                 <div class="tabs" id="tabsContainer">
@@ -1577,7 +1602,7 @@
     <div class="modal-overlay" id="modalFaq"><div class="modal"><button class="modal-close" onclick="closeModal('modalFaq')">&times;</button><h2 id="faqTitle">Часто задаваемые вопросы</h2><div class="faq-item"><strong id="faq1q">Какие предметы доступны?</strong><p id="faq1a">Все школьные предметы: математика, русский, физика, химия, биология, история, английский и другие.</p></div><div class="faq-item"><strong id="faq2q">Нужно ли регистрироваться?</strong><p id="faq2a">Нет, Amixby работает без регистрации — открыли и пользуетесь.</p></div><div class="faq-item"><strong id="faq3q">Сколько это стоит?</strong><p id="faq3a">Полностью бесплатно. Мы используем Groq API с бесплатным тарифом.</p></div><div class="faq-item"><strong id="faq4q">Можно ли скачать материалы?</strong><p id="faq4a">Да, кнопка «Скачать PDF» или «Скачать Word» сохранит задания и план урока.</p></div><div class="faq-item"><strong id="faq5q">Что делать, если ИИ не отвечает?</strong><p id="faq5a">Проверьте интернет-соединение. Если ошибка повторяется — напишите в поддержку.</p></div></div></div>
     <script>
         // ============================================================
-        // НОВЫЙ API КЛЮЧ (НОВАЯ УЧЁТНАЯ ЗАПИСЬ) + МОДЕЛЬ llama-3.1-8b-instant
+        // API КЛЮЧ GROQ
         // ============================================================
         const API_KEYS = [
             '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'
@@ -1596,6 +1621,50 @@
             allKeysExhausted = true;
             console.warn('Единственный ключ исчерпан!');
             return false;
+        }
+
+        // ============================================================
+        // ТАЙМЕР ДЛЯ КНОПКИ (60 секунд между запросами)
+        // ============================================================
+        let cooldownTimer = null;
+        let cooldownSeconds = 0;
+        let isCooldownActive = false;
+
+        function startCooldown(seconds = 60) {
+            const btn = document.getElementById('generateBtn');
+            const btnText = document.getElementById('createBtnText');
+
+            // Блокируем кнопку и запускаем таймер
+            btn.disabled = true;
+            isCooldownActive = true;
+            cooldownSeconds = seconds;
+
+            btnText.textContent = `Подождите ${cooldownSeconds}с`;
+
+            cooldownTimer = setInterval(() => {
+                cooldownSeconds--;
+                if (cooldownSeconds <= 0) {
+                    clearInterval(cooldownTimer);
+                    cooldownTimer = null;
+                    isCooldownActive = false;
+                    btn.disabled = false;
+                    btnText.textContent = translations[currentLanguage]?.createBtn || 'Создать урок';
+                } else {
+                    btnText.textContent = `Подождите ${cooldownSeconds}с`;
+                }
+            }, 1000);
+        }
+
+        function resetCooldown() {
+            if (cooldownTimer) {
+                clearInterval(cooldownTimer);
+                cooldownTimer = null;
+            }
+            isCooldownActive = false;
+            const btn = document.getElementById('generateBtn');
+            const btnText = document.getElementById('createBtnText');
+            btn.disabled = false;
+            btnText.textContent = translations[currentLanguage]?.createBtn || 'Создать урок';
         }
 
         // ============================================================
@@ -1982,7 +2051,12 @@
             document.getElementById('levelOlympiad').textContent = t.levelOlympiad;
             document.getElementById('chkTasksLabel').innerHTML = `<input type="checkbox" checked id="chkTasks" /> ${t.chkTasks}`;
             document.getElementById('chkPlanLabel').innerHTML = `<input type="checkbox" checked id="chkPlan" /> ${t.chkPlan}`;
-            document.getElementById('createBtnText').textContent = t.createBtn;
+            
+            // Кнопка "Создать урок" — обновляем только если не на таймере
+            if (!isCooldownActive) {
+                document.getElementById('createBtnText').textContent = t.createBtn;
+            }
+            
             document.getElementById('tabTasks').textContent = t.tabTasks;
             document.getElementById('tabPlan').textContent = t.tabPlan;
             document.getElementById('tabAnswers').textContent = t.tabAnswers;
@@ -2184,7 +2258,7 @@
         }
 
         // ============================================================
-        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ (НОВАЯ УЧЁТНАЯ ЗАПИСЬ)
+        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ
         // ============================================================
         async function generateWithAI(topic, levels, includePlan, retries = 2) {
             const levelsText = levels.join(', ');
@@ -2864,32 +2938,49 @@
             'change')); });
 
         // ============================================================
-        // КНОПКА «СОЗДАТЬ УРОК»
+        // КНОПКА «СОЗДАТЬ УРОК» С ТАЙМЕРОМ
         // ============================================================
         const generateBtn = document.getElementById('generateBtn');
         const resultSection = document.getElementById('resultSection');
 
         generateBtn.addEventListener('click', async function() {
+            // Если кнопка уже заблокирована или идёт генерация — выходим
+            if (this.disabled || this.classList.contains('loading')) return;
+
             const topic = document.getElementById('topicInput').value.trim();
             if (!topic) { alert('Пожалуйста, введите тему урока'); return; }
+
             const activeLevels = document.querySelectorAll('.level-btn.active');
             const levels = [];
             activeLevels.forEach(btn => levels.push(btn.dataset.level));
             if (levels.length === 0) { alert('Выберите хотя бы один уровень сложности'); return; }
+
             const withPlan = document.getElementById('chkPlan').checked;
+
+            // Блокируем кнопку и показываем спиннер
             this.classList.add('loading');
-            this.querySelector('.btn-text').textContent = 'Генерация...';
+            this.disabled = true;
+
             try {
                 const data = await generateWithAI(topic, levels, withPlan);
                 saveHistoryItem(data, topic, levels);
                 renderLesson(data, topic, levels);
+
                 resultSection.classList.add('visible');
+
                 const tasksTab = document.querySelector('.tab[data-tab="tasks"]');
                 tabs.forEach(t => t.classList.remove('active'));
                 tasksTab.classList.add('active');
                 Object.keys(tabContents).forEach(key => { tabContents[key].classList.toggle('active', key === 'tasks'); });
                 updateIndicator(tasksTab);
-                setTimeout(() => { resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 200);
+
+                setTimeout(() => {
+                    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 200);
+
+                // Запускаем кулдаун 60 секунд
+                startCooldown(60);
+
             } catch (error) {
                 console.error('Ошибка:', error);
                 let userMessage = error.message;
@@ -2918,14 +3009,18 @@
                 document.getElementById('tasksContent').innerHTML =
                     `<div class="error-message"><span class="error-title">${t.errorTitle || 'Ошибка генерации'}</span>${userMessage}</div>`;
                 resultSection.classList.add('visible');
+
+                // При ошибке тоже запускаем кулдаун (чтобы не спамить)
+                startCooldown(30);
+
             } finally {
                 this.classList.remove('loading');
-                this.querySelector('.btn-text').textContent = translations[currentLanguage]?.createBtn || 'Создать урок';
+                // Кнопка остаётся disabled до конца кулдауна
             }
         });
 
         // ============================================================
-        // НОВЫЙ УРОК
+        // НОВЫЙ УРОК (сброс)
         // ============================================================
         document.getElementById('newLessonBtn').addEventListener('click', function() {
             document.getElementById('topicInput').value = '';
@@ -2935,9 +3030,7 @@
             document.querySelectorAll('.checkbox-item').forEach(item => item.classList.remove('disabled'));
             document.getElementById('resultSection').classList.remove('visible');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            const btn = document.getElementById('generateBtn');
-            btn.classList.remove('loading');
-            btn.querySelector('.btn-text').textContent = translations[currentLanguage]?.createBtn || 'Создать урок';
+            resetCooldown();
         });
 
         // ============================================================
@@ -3013,4 +3106,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
