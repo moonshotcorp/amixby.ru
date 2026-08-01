@@ -52,6 +52,8 @@
             --voice-btn-bg: #f2f2f7;
             --voice-btn-active: #007aff;
             --btn-disabled-opacity: 0.5;
+            --cache-badge-bg: #e8f5e9;
+            --cache-badge-text: #2e7d32;
         }
         [data-theme="dark"] {
             --bg-primary: #0a0a0c;
@@ -92,6 +94,8 @@
             --voice-btn-bg: #3a3a3c;
             --voice-btn-active: #4a9aff;
             --btn-disabled-opacity: 0.4;
+            --cache-badge-bg: #1a3a2a;
+            --cache-badge-text: #6acf8a;
         }
         * {
             margin: 0;
@@ -408,6 +412,7 @@
             gap: 8px;
             white-space: nowrap;
             min-height: 56px;
+            position: relative;
         }
         .input-wrapper .action-btn:hover {
             background: var(--bg-btn-secondary-hover);
@@ -438,6 +443,67 @@
             height: 20px;
             fill: currentColor;
             flex-shrink: 0;
+        }
+        .input-wrapper .action-btn .voice-status {
+            font-size: 11px;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-left: 4px;
+        }
+
+        /* ===== КЭШ-БЕЙДЖ ===== */
+        .cache-badge {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--cache-badge-text);
+            background: var(--cache-badge-bg);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            transition: background 0.3s ease, color 0.3s ease;
+            width: fit-content;
+        }
+        .cache-badge.visible {
+            display: inline-flex;
+        }
+        .cache-badge svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* ===== СЧЁТЧИК ЭКОНОМИИ ===== */
+        .stats-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+            background: var(--bg-block);
+            border-radius: 14px;
+            padding: 12px 20px;
+            margin-bottom: 18px;
+            border: 1px solid var(--border-color);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .stats-bar .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+        .stats-bar .stat-item .stat-value {
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+            font-variant-numeric: tabular-nums;
+        }
+        .stats-bar .stat-item .stat-label {
+            color: var(--text-tertiary);
+            transition: color 0.3s ease;
         }
 
         /* ===== КНОПКА СОЗДАТЬ УРОК С ТАЙМЕРОМ ===== */
@@ -493,7 +559,6 @@
             display: none;
         }
 
-        /* Стили для таймера внутри кнопки */
         .btn-timer {
             font-variant-numeric: tabular-nums;
             letter-spacing: 0.5px;
@@ -1289,6 +1354,10 @@
             .plan-modern .plan-step .step-desc {
                 font-size: 16px;
             }
+            .stats-bar {
+                gap: 20px 32px;
+                padding: 14px 24px;
+            }
         }
         @media (max-width: 768px) {
             .burger {
@@ -1424,6 +1493,14 @@
             .plan-modern .plan-step .step-timer-btn {
                 align-self: flex-start;
             }
+            .stats-bar {
+                flex-direction: column;
+                gap: 8px;
+                padding: 12px 16px;
+            }
+            .stats-bar .stat-item {
+                font-size: 14px;
+            }
         }
         @media (max-width: 600px) {
             .modal {
@@ -1528,6 +1605,23 @@
                     </select>
                 </div>
             </div>
+
+            <!-- СТАТИСТИКА ЭКОНОМИИ -->
+            <div class="stats-bar" id="statsBar">
+                <div class="stat-item">
+                    <span class="stat-label">Сэкономлено запросов:</span>
+                    <span class="stat-value" id="savedRequests">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Сэкономлено токенов (входящие):</span>
+                    <span class="stat-value" id="savedTokensInput">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Сэкономлено токенов (исходящие):</span>
+                    <span class="stat-value" id="savedTokensOutput">0</span>
+                </div>
+            </div>
+
             <label class="label" for="topicInput" id="topicLabel">Тема урока</label>
             <span class="label-sub" id="topicSub">Введите тему, ключевые слова или вставьте текст параграфа</span>
             <div class="input-wrapper">
@@ -1535,8 +1629,16 @@
                 <button class="action-btn" id="voiceBtn" title="Голосовой ввод">
                     <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                     <span id="voiceLabel">Голос</span>
+                    <span class="voice-status" id="voiceStatus"></span>
                 </button>
             </div>
+
+            <!-- КЭШ-БЕЙДЖ -->
+            <div class="cache-badge" id="cacheBadge">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+                <span>Загружено из кэша</span>
+            </div>
+
             <div style="margin-top: 18px;">
                 <span class="label" style="margin-bottom: 2px;" id="levelLabel">Уровень сложности</span>
                 <span class="label-sub" id="levelSub">Выберите один или несколько</span>
@@ -1624,22 +1726,124 @@
         }
 
         // ============================================================
-        // ТАЙМЕР ДЛЯ КНОПКИ (60 секунд между запросами)
+        // СТАТИСТИКА ЭКОНОМИИ (localStorage)
+        // ============================================================
+        function getStats() {
+            try {
+                const stats = JSON.parse(localStorage.getItem('amixby-stats'));
+                return stats || { savedRequests: 0, savedTokensInput: 0, savedTokensOutput: 0 };
+            } catch {
+                return { savedRequests: 0, savedTokensInput: 0, savedTokensOutput: 0 };
+            }
+        }
+
+        function saveStats(stats) {
+            localStorage.setItem('amixby-stats', JSON.stringify(stats));
+        }
+
+        function updateStatsDisplay() {
+            const stats = getStats();
+            document.getElementById('savedRequests').textContent = stats.savedRequests;
+            document.getElementById('savedTokensInput').textContent = stats.savedTokensInput;
+            document.getElementById('savedTokensOutput').textContent = stats.savedTokensOutput;
+        }
+
+        function incrementStats(inputTokens, outputTokens) {
+            const stats = getStats();
+            stats.savedRequests += 1;
+            stats.savedTokensInput += Math.round(inputTokens * 0.7);
+            stats.savedTokensOutput += Math.round(outputTokens * 0.5);
+            saveStats(stats);
+            updateStatsDisplay();
+        }
+
+        // ============================================================
+        // КЭШИРОВАНИЕ УРОКОВ (localStorage)
+        // ============================================================
+        function getCacheKey(topic, levels, withPlan) {
+            const levelsStr = levels.slice().sort().join(',');
+            const planStr = withPlan ? 'plan' : 'no-plan';
+            return `amixby-cache:${topic}:${levelsStr}:${planStr}`;
+        }
+
+        function getCachedLesson(key) {
+            try {
+                const cached = localStorage.getItem(key);
+                if (cached) {
+                    const data = JSON.parse(cached);
+                    const age = Date.now() - data.timestamp;
+                    if (age < 7 * 24 * 60 * 60 * 1000) {
+                        return data.lessonData;
+                    } else {
+                        localStorage.removeItem(key);
+                    }
+                }
+            } catch (e) {
+                console.warn('Ошибка чтения кэша:', e);
+            }
+            return null;
+        }
+
+        function setCachedLesson(key, lessonData) {
+            try {
+                localStorage.setItem(key, JSON.stringify({
+                    timestamp: Date.now(),
+                    lessonData: lessonData
+                }));
+            } catch (e) {
+                console.warn('Ошибка сохранения кэша:', e);
+            }
+        }
+
+        // ============================================================
+        // ПОДСЧЁТ ТОКЕНОВ (приблизительный)
+        // ============================================================
+        function estimateTokens(text) {
+            if (!text) return 0;
+            return Math.ceil(text.length / 4);
+        }
+
+        // ============================================================
+        // ТАЙМЕР ДЛЯ КНОПКИ (60 секунд) С localStorage
         // ============================================================
         let cooldownTimer = null;
         let cooldownSeconds = 0;
         let isCooldownActive = false;
 
+        // Ключ для localStorage
+        const COOLDOWN_STORAGE_KEY = 'amixby-cooldown-until';
+
+        function saveCooldownUntil(until) {
+            if (until) {
+                localStorage.setItem(COOLDOWN_STORAGE_KEY, String(until));
+            } else {
+                localStorage.removeItem(COOLDOWN_STORAGE_KEY);
+            }
+        }
+
+        function getCooldownUntil() {
+            const val = localStorage.getItem(COOLDOWN_STORAGE_KEY);
+            return val ? parseInt(val) : 0;
+        }
+
         function startCooldown(seconds = 60) {
             const btn = document.getElementById('generateBtn');
             const btnText = document.getElementById('createBtnText');
 
-            // Блокируем кнопку и запускаем таймер
+            // Сохраняем время окончания в localStorage
+            const until = Date.now() + seconds * 1000;
+            saveCooldownUntil(until);
+
             btn.disabled = true;
             isCooldownActive = true;
             cooldownSeconds = seconds;
 
             btnText.textContent = `Подождите ${cooldownSeconds}с`;
+
+            if (cooldownTimer) {
+                clearInterval(cooldownTimer);
+                cooldownTimer = null;
+            }
 
             cooldownTimer = setInterval(() => {
                 cooldownSeconds--;
@@ -1648,6 +1852,7 @@
                     cooldownTimer = null;
                     isCooldownActive = false;
                     btn.disabled = false;
+                    saveCooldownUntil(null);
                     btnText.textContent = translations[currentLanguage]?.createBtn || 'Создать урок';
                 } else {
                     btnText.textContent = `Подождите ${cooldownSeconds}с`;
@@ -1661,10 +1866,26 @@
                 cooldownTimer = null;
             }
             isCooldownActive = false;
+            saveCooldownUntil(null);
             const btn = document.getElementById('generateBtn');
             const btnText = document.getElementById('createBtnText');
             btn.disabled = false;
             btnText.textContent = translations[currentLanguage]?.createBtn || 'Создать урок';
+        }
+
+        // Восстанавливаем таймер при загрузке страницы (защита от F5)
+        function restoreCooldown() {
+            const until = getCooldownUntil();
+            if (until && Date.now() < until) {
+                const remaining = Math.round((until - Date.now()) / 1000);
+                if (remaining > 0) {
+                    startCooldown(remaining);
+                    return true;
+                } else {
+                    saveCooldownUntil(null);
+                }
+            }
+            return false;
         }
 
         // ============================================================
@@ -1694,6 +1915,7 @@
                 topicSub: 'Введите тему, ключевые слова или вставьте текст параграфа',
                 topicPlaceholder: 'Например: Квадратные уравнения. 8 класс',
                 voiceLabel: 'Голос',
+                voiceStop: 'Остановить',
                 levelLabel: 'Уровень сложности',
                 levelSub: 'Выберите один или несколько',
                 levelBase: 'Базовый',
@@ -1751,7 +1973,8 @@
                 errorTitle: 'Ошибка генерации',
                 errorConnection: 'Невозможно сгенерировать план урока. Проверьте соединение!',
                 errorTech: 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!',
-                errorAllKeys: 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!'
+                errorAllKeys: 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!',
+                fromCache: 'Загружено из кэша'
             },
             en: {
                 logoSub: 'lessons in a minute',
@@ -1776,6 +1999,7 @@
                 topicSub: 'Enter the topic, keywords or paste the paragraph text',
                 topicPlaceholder: 'Example: Quadratic equations. Grade 8',
                 voiceLabel: 'Voice',
+                voiceStop: 'Stop',
                 levelLabel: 'Difficulty level',
                 levelSub: 'Select one or more',
                 levelBase: 'Basic',
@@ -1833,7 +2057,8 @@
                 errorTitle: 'Generation error',
                 errorConnection: 'Unable to generate lesson plan. Check your connection!',
                 errorTech: 'Technical work is currently underway. Please wait and try again later!',
-                errorAllKeys: 'Oops, Amixby is currently undergoing technical maintenance. Please try again later!'
+                errorAllKeys: 'Oops, Amixby is currently undergoing technical maintenance. Please try again later!',
+                fromCache: 'Loaded from cache'
             },
             kk: {
                 logoSub: 'сабақтар бір минутта',
@@ -1858,6 +2083,7 @@
                 topicSub: 'Тақырыпты, кілт сөздерді енгізіңіз немесе абзац мәтінін қойыңыз',
                 topicPlaceholder: 'Мысалы: Квадрат теңдеулер. 8 сынып',
                 voiceLabel: 'Дауыс',
+                voiceStop: 'Тоқтату',
                 levelLabel: 'Қиындық деңгейі',
                 levelSub: 'Біреуін немесе бірнешеуін таңдаңыз',
                 levelBase: 'Негізгі',
@@ -1915,7 +2141,8 @@
                 errorTitle: 'Жасау қатесі',
                 errorConnection: 'Сабақ жоспарын жасау мүмкін емес. Қосылымды тексеріңіз!',
                 errorTech: 'Қазір техникалық жұмыстар жүргізілуде. Күте тұрыңыз және кейінірек қайталап көріңіз!',
-                errorAllKeys: 'Ой, қазір Amixby техникалық жұмыстары жүргізілуде. Кейінірек қайталап көріңіз!'
+                errorAllKeys: 'Ой, қазір Amixby техникалық жұмыстары жүргізілуде. Кейінірек қайталап көріңіз!',
+                fromCache: 'Кэштен жүктелді'
             },
             de: {
                 logoSub: 'Unterricht in einer Minute',
@@ -1940,6 +2167,7 @@
                 topicSub: 'Geben Sie das Thema, Schlüsselwörter oder den Absatztext ein',
                 topicPlaceholder: 'Zum Beispiel: Quadratische Gleichungen. Klasse 8',
                 voiceLabel: 'Sprache',
+                voiceStop: 'Stopp',
                 levelLabel: 'Schwierigkeitsgrad',
                 levelSub: 'Wählen Sie eine oder mehrere aus',
                 levelBase: 'Grundlegend',
@@ -1997,7 +2225,8 @@
                 errorTitle: 'Generierungsfehler',
                 errorConnection: 'Unterrichtsplan konnte nicht generiert werden. Überprüfen Sie Ihre Verbindung!',
                 errorTech: 'Derzeit werden technische Arbeiten durchgeführt. Bitte warten Sie und versuchen Sie es später erneut!',
-                errorAllKeys: 'Hoppla, Amixby wird gerade technisch gewartet. Bitte versuchen Sie es später erneut!'
+                errorAllKeys: 'Hoppla, Amixby wird gerade technisch gewartet. Bitte versuchen Sie es später erneut!',
+                fromCache: 'Aus Cache geladen'
             }
         };
 
@@ -2052,7 +2281,6 @@
             document.getElementById('chkTasksLabel').innerHTML = `<input type="checkbox" checked id="chkTasks" /> ${t.chkTasks}`;
             document.getElementById('chkPlanLabel').innerHTML = `<input type="checkbox" checked id="chkPlan" /> ${t.chkPlan}`;
             
-            // Кнопка "Создать урок" — обновляем только если не на таймере
             if (!isCooldownActive) {
                 document.getElementById('createBtnText').textContent = t.createBtn;
             }
@@ -2107,17 +2335,37 @@
             document.getElementById('faq5a').textContent = t.faq5a;
 
             window.currentLanguage = lang;
+            updateCacheBadgeText();
+            updateVoiceButtonLabel();
+        }
+
+        function updateCacheBadgeText() {
+            const badge = document.getElementById('cacheBadge');
+            const span = badge.querySelector('span');
+            if (span) {
+                span.textContent = translations[currentLanguage]?.fromCache || 'Загружено из кэша';
+            }
+        }
+
+        function updateVoiceButtonLabel() {
+            const label = document.getElementById('voiceLabel');
+            if (label && !isVoiceRecording) {
+                label.textContent = translations[currentLanguage]?.voiceLabel || 'Голос';
+            }
         }
 
         const initialLang = getLanguage();
         setLanguage(initialLang);
+        updateStatsDisplay();
 
         // ============================================================
-        // ГОЛОСОВОЙ ВВОД
+        // ГОЛОСОВОЙ ВВОД С ВОЗМОЖНОСТЬЮ ОСТАНОВКИ
         // ============================================================
         let recognition = null;
+        let isVoiceRecording = false;
         const voiceBtn = document.getElementById('voiceBtn');
         const voiceLabel = document.getElementById('voiceLabel');
+        const voiceStatus = document.getElementById('voiceStatus');
         const topicInput = document.getElementById('topicInput');
 
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
@@ -2129,8 +2377,10 @@
             recognition.maxAlternatives = 1;
 
             recognition.onstart = function() {
+                isVoiceRecording = true;
                 voiceBtn.classList.add('recording');
-                voiceLabel.textContent = 'Запись...';
+                voiceLabel.textContent = translations[currentLanguage]?.voiceStop || 'Остановить';
+                voiceStatus.textContent = '🎤';
             };
 
             recognition.onresult = function(event) {
@@ -2144,24 +2394,30 @@
                     }
                 }
                 topicInput.value = final || interim;
+                if (final) {
+                    voiceStatus.textContent = '✅';
+                    setTimeout(() => {
+                        voiceStatus.textContent = '';
+                    }, 1500);
+                }
             };
 
             recognition.onerror = function(event) {
                 console.error('Voice error:', event.error);
-                voiceBtn.classList.remove('recording');
-                voiceLabel.textContent = translations[currentLanguage]?.voiceLabel || 'Голос';
+                stopVoiceRecording();
                 if (event.error !== 'not-allowed') {
                     alert('Ошибка распознавания. Попробуйте ещё раз.');
                 }
             };
 
             recognition.onend = function() {
-                voiceBtn.classList.remove('recording');
-                voiceLabel.textContent = translations[currentLanguage]?.voiceLabel || 'Голос';
+                stopVoiceRecording();
             };
 
             voiceBtn.addEventListener('click', function() {
-                if (recognition) {
+                if (isVoiceRecording) {
+                    stopVoiceRecording();
+                } else {
                     try {
                         recognition.lang = currentLanguage === 'ru' ? 'ru-RU' :
                             currentLanguage === 'en' ? 'en-US' :
@@ -2170,10 +2426,20 @@
                     } catch (e) {
                         alert('Микрофон недоступен. Разрешите доступ к микрофону в браузере.');
                     }
-                } else {
-                    alert('Голосовой ввод не поддерживается вашим браузером. Используйте Chrome, Edge или Safari.');
                 }
             });
+
+            function stopVoiceRecording() {
+                if (recognition) {
+                    try {
+                        recognition.stop();
+                    } catch (e) {}
+                }
+                isVoiceRecording = false;
+                voiceBtn.classList.remove('recording');
+                voiceLabel.textContent = translations[currentLanguage]?.voiceLabel || 'Голос';
+                voiceStatus.textContent = '';
+            }
         } else {
             voiceBtn.style.opacity = '0.4';
             voiceBtn.title = 'Голосовой ввод не поддерживается';
@@ -2258,31 +2524,21 @@
         }
 
         // ============================================================
-        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ
+        // ГЕНЕРАЦИЯ С КЭШИРОВАНИЕМ И ЭКОНОМИЕЙ
         // ============================================================
         async function generateWithAI(topic, levels, includePlan, retries = 2) {
             const levelsText = levels.join(', ');
+            
             const planInstruction = includePlan ?
-                `Составь современный поурочный план по ФГОС. Обязательные разделы: Тема, Класс, Цели (3 цели). Ход урока — ровно 7 этапов:
-                1. Мотивация к учебной деятельности
-                2. Актуализация знаний и фиксирование индивидуального затруднения
-                3. Выявление места и причины затруднения. Постановка учебной задачи
-                4. Построение проекта выхода из затруднения («Открытие» нового знания)
-                5. Первичное закрепление с проговариванием во внешней речи
-                6. Самостоятельная работа с самопроверкой по эталону
-                7. Рефлексия учебной деятельности на уроке (Итог урока)
-
-                Для каждого этапа укажи: название, описание (что делает учитель, что делают ученики, формируемые УУД), примерное время (от 3 до 10 минут).
-                Ответ должен быть строго в формате JSON.` :
-                'План урока не нужен.';
+                'Составь план урока по ФГОС: 7 этапов (мотивация, актуализация, постановка задачи, открытие знания, закрепление, самопроверка, рефлексия). Для каждого: название, описание (учитель, ученики, УУД), время. Ответ в JSON.' :
+                'План не нужен.';
 
             const lang = currentLanguage || 'ru';
-            const langPrompt = lang === 'ru' ? 'на русском языке' :
+            const langPrompt = lang === 'ru' ? 'на русском' :
                 lang === 'en' ? 'in English' :
-                lang === 'kk' ? 'қазақ тілінде' : 'auf Deutsch';
+                lang === 'kk' ? 'қазақша' : 'auf Deutsch';
 
-            const prompt = `
-                Ты — профессиональный учитель-методист. Твоя задача — создать материалы для урока по теме: "${topic}".
+            const fullPrompt = `Ты — профессиональный учитель-методист. Твоя задача — создать материалы для урока по теме: "${topic}".
 
                 Уровни сложности: ${levelsText}.
 
@@ -2314,7 +2570,7 @@
                     }
                 }
 
-                ${planInstruction}
+                ${includePlan ? planInstruction : 'План не нужен.'}
 
                 Задачи должны быть разнообразными, соответствовать школьной программе и возрасту учеников.
                 Для каждой задачи укажи чёткое условие. Ответы должны быть правильными.
@@ -2323,8 +2579,7 @@
                 Для всех задач указывай номера (1., 2., 3., ...).
                 Ответы давай в виде: "1. ответ 2. ответ 3. ответ ..."
                 План должен быть современным, чётким, без смайликов, строго по ФГОС.
-                Ответ должен быть на языке: ${lang === 'ru' ? 'русском' : lang === 'en' ? 'английском' : lang === 'kk' ? 'казахском' : 'немецком'}.
-            `;
+                Ответ должен быть на языке: ${lang === 'ru' ? 'русском' : lang === 'en' ? 'английском' : lang === 'kk' ? 'казахском' : 'немецком'}.`;
 
             let lastError = null;
 
@@ -2349,10 +2604,10 @@
                             model: 'llama-3.1-8b-instant',
                             messages: [
                                 { role: 'system', content: 'Ты — профессиональный учитель-методист. Отвечай строго в формате JSON.' },
-                                { role: 'user', content: prompt }
+                                { role: 'user', content: fullPrompt }
                             ],
                             temperature: 0.7,
-                            max_tokens: 4000
+                            max_tokens: 2500
                         }),
                         signal: controller.signal
                     });
@@ -2598,14 +2853,21 @@
         let lastTopic = '';
         let lastLevels = [];
 
-        function renderLesson(data, topic, levels) {
+        function renderLesson(data, topic, levels, fromCache = false) {
             lastGeneratedData = data;
             lastTopic = topic;
             lastLevels = levels;
             const withTasks = document.getElementById('chkTasks').checked;
             const withPlan = document.getElementById('chkPlan').checked;
 
-            // --- ЗАДАНИЯ ---
+            const cacheBadge = document.getElementById('cacheBadge');
+            if (fromCache) {
+                cacheBadge.classList.add('visible');
+                updateCacheBadgeText();
+            } else {
+                cacheBadge.classList.remove('visible');
+            }
+
             let tasksHTML = '';
             if (withTasks && data.tasks) {
                 const levelMap = {
@@ -2636,7 +2898,6 @@
             }
             document.getElementById('tasksContent').innerHTML = tasksHTML;
 
-            // --- ПЛАН ПО ФГОС (7 ЭТАПОВ) ---
             let planHTML = '';
             if (withPlan && data.plan && data.plan.steps) {
                 const p = data.plan;
@@ -2677,7 +2938,6 @@
 
             setTimeout(setupTimerForPlan, 100);
 
-            // --- ОТВЕТЫ ---
             let answersHTML = '';
             if (withTasks && data.answers) {
                 const levelMap = {
@@ -2938,13 +3198,38 @@
             'change')); });
 
         // ============================================================
-        // КНОПКА «СОЗДАТЬ УРОК» С ТАЙМЕРОМ
+        // КНОПКА «СОЗДАТЬ УРОК» С ТАЙМЕРОМ + КЭШИРОВАНИЕ + ЭКОНОМИЯ
         // ============================================================
         const generateBtn = document.getElementById('generateBtn');
         const resultSection = document.getElementById('resultSection');
 
+        // Восстанавливаем таймер при загрузке
+        restoreCooldown();
+
+        // Синхронизация таймера между вкладками
+        window.addEventListener('storage', function(e) {
+            if (e.key === COOLDOWN_STORAGE_KEY) {
+                const val = e.newValue;
+                if (val) {
+                    const until = parseInt(val);
+                    if (Date.now() < until) {
+                        const remaining = Math.round((until - Date.now()) / 1000);
+                        if (remaining > 0) {
+                            // Если таймер уже запущен и отличается — перезапускаем
+                            if (!isCooldownActive || cooldownSeconds !== remaining) {
+                                startCooldown(remaining);
+                            }
+                        }
+                    } else {
+                        resetCooldown();
+                    }
+                } else {
+                    resetCooldown();
+                }
+            }
+        });
+
         generateBtn.addEventListener('click', async function() {
-            // Если кнопка уже заблокирована или идёт генерация — выходим
             if (this.disabled || this.classList.contains('loading')) return;
 
             const topic = document.getElementById('topicInput').value.trim();
@@ -2957,15 +3242,43 @@
 
             const withPlan = document.getElementById('chkPlan').checked;
 
-            // Блокируем кнопку и показываем спиннер
+            // ===== ПРОВЕРКА КЭША =====
+            const cacheKey = getCacheKey(topic, levels, withPlan);
+            const cachedData = getCachedLesson(cacheKey);
+
+            if (cachedData) {
+                renderLesson(cachedData, topic, levels, true);
+                resultSection.classList.add('visible');
+
+                const jsonStr = JSON.stringify(cachedData);
+                const inputTokens = estimateTokens(topic + levels.join(',') + 'создай задания');
+                const outputTokens = estimateTokens(jsonStr);
+                incrementStats(inputTokens, outputTokens);
+
+                const tasksTab = document.querySelector('.tab[data-tab="tasks"]');
+                tabs.forEach(t => t.classList.remove('active'));
+                tasksTab.classList.add('active');
+                Object.keys(tabContents).forEach(key => { tabContents[key].classList.toggle('active', key === 'tasks'); });
+                updateIndicator(tasksTab);
+
+                setTimeout(() => {
+                    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 200);
+
+                startCooldown(30);
+                return;
+            }
+
+            // ===== НЕТ КЭША — ГЕНЕРИРУЕМ =====
             this.classList.add('loading');
             this.disabled = true;
 
             try {
                 const data = await generateWithAI(topic, levels, withPlan);
-                saveHistoryItem(data, topic, levels);
-                renderLesson(data, topic, levels);
 
+                setCachedLesson(cacheKey, data);
+                saveHistoryItem(data, topic, levels);
+                renderLesson(data, topic, levels, false);
                 resultSection.classList.add('visible');
 
                 const tasksTab = document.querySelector('.tab[data-tab="tasks"]');
@@ -2978,7 +3291,6 @@
                     resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 200);
 
-                // Запускаем кулдаун 60 секунд
                 startCooldown(60);
 
             } catch (error) {
@@ -3010,12 +3322,10 @@
                     `<div class="error-message"><span class="error-title">${t.errorTitle || 'Ошибка генерации'}</span>${userMessage}</div>`;
                 resultSection.classList.add('visible');
 
-                // При ошибке тоже запускаем кулдаун (чтобы не спамить)
                 startCooldown(30);
 
             } finally {
                 this.classList.remove('loading');
-                // Кнопка остаётся disabled до конца кулдауна
             }
         });
 
@@ -3029,7 +3339,9 @@
             document.getElementById('chkPlan').checked = true;
             document.querySelectorAll('.checkbox-item').forEach(item => item.classList.remove('disabled'));
             document.getElementById('resultSection').classList.remove('visible');
+            document.getElementById('cacheBadge').classList.remove('visible');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Сбрасываем таймер при нажатии "Новый урок" (пользователь хочет начать заново)
             resetCooldown();
         });
 
@@ -3106,4 +3418,4 @@
         }
     </script>
 </body>
-    </html>
+                </html>
