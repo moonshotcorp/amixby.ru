@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <style>
-        /* ===== ВСЕ СТИЛИ (полная версия) ===== */
+        /* ===== ВСЕ СТИЛИ ===== */
         :root {
             --bg-primary: #f5f5f8;
             --bg-secondary: #ffffff;
@@ -385,8 +385,6 @@
         .input-area::placeholder {
             color: var(--text-tertiary);
         }
-
-        /* ===== ПОЛЕ ВВОДА С КНОПКОЙ ГОЛОСА ===== */
         .input-wrapper {
             display: flex;
             gap: 10px;
@@ -450,8 +448,6 @@
             opacity: 0.8;
             margin-left: 4px;
         }
-
-        /* ===== КЭШ-БЕЙДЖ ===== */
         .cache-badge {
             display: none;
             align-items: center;
@@ -474,8 +470,6 @@
             height: 16px;
             fill: currentColor;
         }
-
-        /* ===== СЧЁТЧИК ЭКОНОМИИ ===== */
         .stats-bar {
             display: flex;
             flex-wrap: wrap;
@@ -505,8 +499,6 @@
             color: var(--text-tertiary);
             transition: color 0.3s ease;
         }
-
-        /* ===== КНОПКА СОЗДАТЬ УРОК С ТАЙМЕРОМ ===== */
         .btn-primary {
             background: var(--accent);
             border: none;
@@ -558,19 +550,15 @@
         .btn-primary.loading .btn-text {
             display: none;
         }
-
         .btn-timer {
             font-variant-numeric: tabular-nums;
             letter-spacing: 0.5px;
         }
-
         @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
-
-        /* ===== ОСТАЛЬНЫЕ СТИЛИ ===== */
         .level-row {
             display: flex;
             flex-wrap: wrap;
@@ -829,8 +817,6 @@
             color: var(--accent);
             transition: background 0.3s ease, color 0.3s ease;
         }
-
-        /* ===== ПЛАН ПО ФГОС (7 ЭТАПОВ) С ТАЙМЕРАМИ ===== */
         .plan-modern {
             display: flex;
             flex-direction: column;
@@ -982,8 +968,6 @@
             color: var(--level-base);
             border-color: var(--level-base);
         }
-
-        /* ===== ОТВЕТЫ ===== */
         .answers-grid {
             display: flex;
             flex-direction: column;
@@ -1028,8 +1012,6 @@
             color: var(--text-secondary);
             transition: color 0.3s ease;
         }
-
-        /* ===== КНОПКИ ===== */
         .btn-secondary {
             background: var(--bg-btn-secondary);
             border: none;
@@ -1296,8 +1278,6 @@
                 transform: translateX(0);
             }
         }
-
-        /* ===== АДАПТИВ ===== */
         @media (min-width: 769px) {
             body {
                 padding: 48px 40px 60px;
@@ -1606,7 +1586,6 @@
                 </div>
             </div>
 
-            <!-- СТАТИСТИКА ЭКОНОМИИ -->
             <div class="stats-bar" id="statsBar">
                 <div class="stat-item">
                     <span class="stat-label">Сэкономлено запросов:</span>
@@ -1633,7 +1612,6 @@
                 </button>
             </div>
 
-            <!-- КЭШ-БЕЙДЖ -->
             <div class="cache-badge" id="cacheBadge">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
                 <span>Загружено из кэша</span>
@@ -1653,13 +1631,11 @@
                 <label class="checkbox-item" id="chkPlanLabel"><input type="checkbox" checked id="chkPlan" /> Сгенерировать план урока</label>
             </div>
             
-            <!-- КНОПКА С ТАЙМЕРОМ -->
             <button class="btn-primary" id="generateBtn">
                 <span class="btn-text" id="createBtnText">Создать урок</span>
                 <span class="spinner"></span>
             </button>
             
-            <!-- RESULT -->
             <div class="result-section" id="resultSection">
                 <div class="tabs" id="tabsContainer">
                     <button class="tab active" data-tab="tasks" id="tabTasks">Задания</button>
@@ -1726,7 +1702,7 @@
         }
 
         // ============================================================
-        // СТАТИСТИКА ЭКОНОМИИ (localStorage)
+        // СТАТИСТИКА
         // ============================================================
         function getStats() {
             try {
@@ -1758,7 +1734,7 @@
         }
 
         // ============================================================
-        // КЭШИРОВАНИЕ УРОКОВ (localStorage)
+        // КЭШ
         // ============================================================
         function getCacheKey(topic, levels, withPlan) {
             const levelsStr = levels.slice().sort().join(',');
@@ -1796,7 +1772,7 @@
         }
 
         // ============================================================
-        // ПОДСЧЁТ ТОКЕНОВ (приблизительный)
+        // ПОДСЧЁТ ТОКЕНОВ
         // ============================================================
         function estimateTokens(text) {
             if (!text) return 0;
@@ -1804,13 +1780,11 @@
         }
 
         // ============================================================
-        // ТАЙМЕР ДЛЯ КНОПКИ (60 секунд) С localStorage
+        // ТАЙМЕР
         // ============================================================
         let cooldownTimer = null;
         let cooldownSeconds = 0;
         let isCooldownActive = false;
-
-        // Ключ для localStorage
         const COOLDOWN_STORAGE_KEY = 'amixby-cooldown-until';
 
         function saveCooldownUntil(until) {
@@ -1830,7 +1804,6 @@
             const btn = document.getElementById('generateBtn');
             const btnText = document.getElementById('createBtnText');
 
-            // Сохраняем время окончания в localStorage
             const until = Date.now() + seconds * 1000;
             saveCooldownUntil(until);
 
@@ -1838,14 +1811,14 @@
             isCooldownActive = true;
             cooldownSeconds = seconds;
 
-            btnText.textContent = `Подождите ${cooldownSeconds}с`;
+            btnText.textContent = 'Подождите ' + cooldownSeconds + 'с';
 
             if (cooldownTimer) {
                 clearInterval(cooldownTimer);
                 cooldownTimer = null;
             }
 
-            cooldownTimer = setInterval(() => {
+            cooldownTimer = setInterval(function() {
                 cooldownSeconds--;
                 if (cooldownSeconds <= 0) {
                     clearInterval(cooldownTimer);
@@ -1855,7 +1828,7 @@
                     saveCooldownUntil(null);
                     btnText.textContent = translations[currentLanguage]?.createBtn || 'Создать урок';
                 } else {
-                    btnText.textContent = `Подождите ${cooldownSeconds}с`;
+                    btnText.textContent = 'Подождите ' + cooldownSeconds + 'с';
                 }
             }, 1000);
         }
@@ -1873,7 +1846,6 @@
             btnText.textContent = translations[currentLanguage]?.createBtn || 'Создать урок';
         }
 
-        // Восстанавливаем таймер при загрузке страницы (защита от F5)
         function restoreCooldown() {
             const until = getCooldownUntil();
             if (until && Date.now() < until) {
@@ -2249,7 +2221,7 @@
         }
 
         function applyLanguage(lang) {
-            const t = translations[lang] || translations.ru;
+            var t = translations[lang] || translations.ru;
 
             document.getElementById('logoSub').textContent = t.logoSub;
             document.querySelector('.btn-new-lesson').textContent = t.newLesson;
@@ -2278,13 +2250,13 @@
             document.getElementById('levelBase').textContent = t.levelBase;
             document.getElementById('levelProfi').textContent = t.levelProfi;
             document.getElementById('levelOlympiad').textContent = t.levelOlympiad;
-            document.getElementById('chkTasksLabel').innerHTML = `<input type="checkbox" checked id="chkTasks" /> ${t.chkTasks}`;
-            document.getElementById('chkPlanLabel').innerHTML = `<input type="checkbox" checked id="chkPlan" /> ${t.chkPlan}`;
-            
+            document.getElementById('chkTasksLabel').innerHTML = '<input type="checkbox" checked id="chkTasks" /> ' + t.chkTasks;
+            document.getElementById('chkPlanLabel').innerHTML = '<input type="checkbox" checked id="chkPlan" /> ' + t.chkPlan;
+
             if (!isCooldownActive) {
                 document.getElementById('createBtnText').textContent = t.createBtn;
             }
-            
+
             document.getElementById('tabTasks').textContent = t.tabTasks;
             document.getElementById('tabPlan').textContent = t.tabPlan;
             document.getElementById('tabAnswers').textContent = t.tabAnswers;
@@ -2340,36 +2312,36 @@
         }
 
         function updateCacheBadgeText() {
-            const badge = document.getElementById('cacheBadge');
-            const span = badge.querySelector('span');
+            var badge = document.getElementById('cacheBadge');
+            var span = badge.querySelector('span');
             if (span) {
                 span.textContent = translations[currentLanguage]?.fromCache || 'Загружено из кэша';
             }
         }
 
         function updateVoiceButtonLabel() {
-            const label = document.getElementById('voiceLabel');
+            var label = document.getElementById('voiceLabel');
             if (label && !isVoiceRecording) {
                 label.textContent = translations[currentLanguage]?.voiceLabel || 'Голос';
             }
         }
 
-        const initialLang = getLanguage();
+        var initialLang = getLanguage();
         setLanguage(initialLang);
         updateStatsDisplay();
 
         // ============================================================
-        // ГОЛОСОВОЙ ВВОД С ВОЗМОЖНОСТЬЮ ОСТАНОВКИ
+        // ГОЛОСОВОЙ ВВОД
         // ============================================================
-        let recognition = null;
-        let isVoiceRecording = false;
-        const voiceBtn = document.getElementById('voiceBtn');
-        const voiceLabel = document.getElementById('voiceLabel');
-        const voiceStatus = document.getElementById('voiceStatus');
-        const topicInput = document.getElementById('topicInput');
+        var recognition = null;
+        var isVoiceRecording = false;
+        var voiceBtn = document.getElementById('voiceBtn');
+        var voiceLabel = document.getElementById('voiceLabel');
+        var voiceStatus = document.getElementById('voiceStatus');
+        var topicInput = document.getElementById('topicInput');
 
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             recognition = new SpeechRecognition();
             recognition.lang = 'ru-RU';
             recognition.continuous = false;
@@ -2384,9 +2356,9 @@
             };
 
             recognition.onresult = function(event) {
-                let final = '';
-                let interim = '';
-                for (let i = event.resultIndex; i < event.results.length; i++) {
+                var final = '';
+                var interim = '';
+                for (var i = event.resultIndex; i < event.results.length; i++) {
                     if (event.results[i].isFinal) {
                         final += event.results[i][0].transcript;
                     } else {
@@ -2396,7 +2368,7 @@
                 topicInput.value = final || interim;
                 if (final) {
                     voiceStatus.textContent = '✅';
-                    setTimeout(() => {
+                    setTimeout(function() {
                         voiceStatus.textContent = '';
                     }, 1500);
                 }
@@ -2458,7 +2430,7 @@
             localStorage.setItem('amixby-theme', theme);
         }
 
-        function toggleTheme() { const current = getTheme();
+        function toggleTheme() { var current = getTheme();
             setTheme(current === 'light' ? 'dark' : 'light'); }
         setTheme(getTheme());
 
@@ -2470,8 +2442,8 @@
         }
 
         function saveHistoryItem(data, topic, levels) {
-            const history = getHistory();
-            const item = {
+            var history = getHistory();
+            var item = {
                 id: Date.now(),
                 date: new Date().toLocaleString('ru-RU'),
                 topic: topic,
@@ -2485,33 +2457,39 @@
         }
 
         function renderHistory() {
-            const container = document.getElementById('historyList');
-            const history = getHistory();
+            var container = document.getElementById('historyList');
+            var history = getHistory();
             if (history.length === 0) { container.innerHTML = '<div class="history-empty">Уроков пока нет. Создайте свой первый урок!</div>'; return; }
-            container.innerHTML = history.map((item, index) =>
-                `<div class="history-item"><div class="info"><div class="title">${item.topic}</div><div class="meta">${item.date} · ${item.class} класс · ${item.subject} · Уровни: ${item.levels}</div></div><div class="actions"><button onclick="openHistoryLesson(${index})">Открыть</button><button class="delete" onclick="deleteHistoryItem(${index})">Удалить</button></div></div>`
-            ).join('');
+            container.innerHTML = history.map(function(item, index) {
+                return '<div class="history-item"><div class="info"><div class="title">' + item.topic +
+                    '</div><div class="meta">' + item.date + ' · ' + item.class + ' класс · ' + item.subject +
+                    ' · Уровни: ' + item.levels +
+                    '</div></div><div class="actions"><button onclick="openHistoryLesson(' + index +
+                    ')">Открыть</button><button class="delete" onclick="deleteHistoryItem(' + index +
+                    ')">Удалить</button></div></div>';
+            }).join('');
         }
 
         function openHistoryLesson(index) {
-            const history = getHistory();
-            const item = history[index];
+            var history = getHistory();
+            var item = history[index];
             if (!item) return;
-            const levels = item.levels.split(', ');
+            var levels = item.levels.split(', ');
             renderLesson(item.data, item.topic, levels);
             document.getElementById('resultSection').classList.add('visible');
-            const tasksTab = document.querySelector('.tab[data-tab="tasks"]');
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            var tasksTab = document.querySelector('.tab[data-tab="tasks"]');
+            document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
             tasksTab.classList.add('active');
-            Object.keys(tabContents).forEach(key => { tabContents[key].classList.toggle('active', key === 'tasks'); });
+            Object.keys(tabContents).forEach(function(key) { tabContents[key].classList.toggle('active', key === 'tasks'); });
             updateIndicator(tasksTab);
             closeModal('modalHistory');
-            setTimeout(() => { document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
+            setTimeout(function() { document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth',
+                    block: 'start' }); }, 300);
         }
 
         function deleteHistoryItem(index) {
             if (!confirm('Удалить этот урок из истории?')) return;
-            const history = getHistory();
+            var history = getHistory();
             history.splice(index, 1);
             localStorage.setItem('amixby-history', JSON.stringify(history));
             renderHistory();
@@ -2524,81 +2502,47 @@
         }
 
         // ============================================================
-        // ГЕНЕРАЦИЯ С КЭШИРОВАНИЕМ И ЭКОНОМИЕЙ
+        // ГЕНЕРАЦИЯ
         // ============================================================
-        async function generateWithAI(topic, levels, includePlan, retries = 2) {
-            const levelsText = levels.join(', ');
-            
-            const planInstruction = includePlan ?
+        async function generateWithAI(topic, levels, includePlan, retries) {
+            if (retries === undefined) retries = 2;
+            var levelsText = levels.join(', ');
+
+            var planInstruction = includePlan ?
                 'Составь план урока по ФГОС: 7 этапов (мотивация, актуализация, постановка задачи, открытие знания, закрепление, самопроверка, рефлексия). Для каждого: название, описание (учитель, ученики, УУД), время. Ответ в JSON.' :
                 'План не нужен.';
 
-            const lang = currentLanguage || 'ru';
-            const langPrompt = lang === 'ru' ? 'на русском' :
+            var lang = currentLanguage || 'ru';
+            var langPrompt = lang === 'ru' ? 'на русском' :
                 lang === 'en' ? 'in English' :
                 lang === 'kk' ? 'қазақша' : 'auf Deutsch';
 
-            const fullPrompt = `Ты — профессиональный учитель-методист. Твоя задача — создать материалы для урока по теме: "${topic}".
+            var fullPrompt = 'Ты — профессиональный учитель-методист. Твоя задача — создать материалы для урока по теме: "' +
+                topic + '". Уровни сложности: ' + levelsText +
+                '. Ответ должен быть строго в формате JSON без лишнего текста ' + langPrompt +
+                ': {"tasks": {"base": ["список задач для базового уровня (5 штук)"], "profi": ["список задач для профи-уровня (5 штук)"], "olympiad": ["список задач для олимпиадного уровня (2-3 штуки)"]}, "plan": {"topic": "тема урока", "class": "класс (например, 5 класс)", "goals": ["цель 1", "цель 2", "цель 3"], "steps": [{"name": "Мотивация к учебной деятельности", "desc": "описание (учитель, ученики, УУД)", "time": "5 мин"}, {"name": "Актуализация знаний и фиксирование индивидуального затруднения", "desc": "описание", "time": "5 мин"}, {"name": "Выявление места и причины затруднения. Постановка учебной задачи", "desc": "описание", "time": "5 мин"}, {"name": "Построение проекта выхода из затруднения («Открытие» нового знания)", "desc": "описание", "time": "7 мин"}, {"name": "Первичное закрепление с проговариванием во внешней речи", "desc": "описание", "time": "7 мин"}, {"name": "Самостоятельная работа с самопроверкой по эталону", "desc": "описание", "time": "7 мин"}, {"name": "Рефлексия учебной деятельности на уроке (Итог урока)", "desc": "описание", "time": "4 мин"}]}, "answers": {"base": "ответы на базовый уровень через запятую", "profi": "ответы на профи-уровень через запятую", "olympiad": "ответы на олимпиадный уровень"}} ' +
+                (includePlan ? planInstruction : 'План не нужен.') +
+                ' Задачи должны быть разнообразными, соответствовать школьной программе и возрасту учеников. Для каждой задачи укажи чёткое условие. Ответы должны быть правильными. Используй математические обозначения в текстовом виде (например, "x²", "√", "¹⁄₂"). Если тема не математическая, адаптируй задания под неё. Для всех задач указывай номера (1., 2., 3., ...). Ответы давай в виде: "1. ответ 2. ответ 3. ответ ..." План должен быть современным, чётким, без смайликов, строго по ФГОС. Ответ должен быть на языке: ' +
+                (lang === 'ru' ? 'русском' : lang === 'en' ? 'английском' : lang === 'kk' ? 'казахском' : 'немецком');
 
-                Уровни сложности: ${levelsText}.
+            var lastError = null;
 
-                Ответ должен быть строго в формате JSON без лишнего текста ${langPrompt}:
-                {
-                    "tasks": {
-                        "base": ["список задач для базового уровня (5 штук)"],
-                        "profi": ["список задач для профи-уровня (5 штук)"],
-                        "olympiad": ["список задач для олимпиадного уровня (2-3 штуки)"]
-                    },
-                    "plan": {
-                        "topic": "тема урока",
-                        "class": "класс (например, 5 класс)",
-                        "goals": ["цель 1", "цель 2", "цель 3"],
-                        "steps": [
-                            {"name": "Мотивация к учебной деятельности", "desc": "описание (учитель, ученики, УУД)", "time": "5 мин"},
-                            {"name": "Актуализация знаний и фиксирование индивидуального затруднения", "desc": "описание", "time": "5 мин"},
-                            {"name": "Выявление места и причины затруднения. Постановка учебной задачи", "desc": "описание", "time": "5 мин"},
-                            {"name": "Построение проекта выхода из затруднения («Открытие» нового знания)", "desc": "описание", "time": "7 мин"},
-                            {"name": "Первичное закрепление с проговариванием во внешней речи", "desc": "описание", "time": "7 мин"},
-                            {"name": "Самостоятельная работа с самопроверкой по эталону", "desc": "описание", "time": "7 мин"},
-                            {"name": "Рефлексия учебной деятельности на уроке (Итог урока)", "desc": "описание", "time": "4 мин"}
-                        ]
-                    },
-                    "answers": {
-                        "base": "ответы на базовый уровень через запятую",
-                        "profi": "ответы на профи-уровень через запятую",
-                        "olympiad": "ответы на олимпиадный уровень"
-                    }
-                }
-
-                ${includePlan ? planInstruction : 'План не нужен.'}
-
-                Задачи должны быть разнообразными, соответствовать школьной программе и возрасту учеников.
-                Для каждой задачи укажи чёткое условие. Ответы должны быть правильными.
-                Используй математические обозначения в текстовом виде (например, "x²", "√", "¹⁄₂").
-                Если тема не математическая, адаптируй задания под неё.
-                Для всех задач указывай номера (1., 2., 3., ...).
-                Ответы давай в виде: "1. ответ 2. ответ 3. ответ ..."
-                План должен быть современным, чётким, без смайликов, строго по ФГОС.
-                Ответ должен быть на языке: ${lang === 'ru' ? 'русском' : lang === 'en' ? 'английском' : lang === 'kk' ? 'казахском' : 'немецком'}.`;
-
-            let lastError = null;
-
-            for (let attempt = 0; attempt <= retries; attempt++) {
-                const currentKey = getCurrentKey();
+            for (var attempt = 0; attempt <= retries; attempt++) {
+                var currentKey = getCurrentKey();
 
                 if (!currentKey || allKeysExhausted) {
                     throw new Error(translations[currentLanguage]?.errorAllKeys || 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!');
                 }
 
                 try {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 60000);
+                    var controller = new AbortController();
+                    var timeoutId = setTimeout(function() { controller.abort(); }, 60000);
 
-                    const response = await fetch(GROQ_API_URL, {
+                    var response = await fetch(GROQ_API_URL, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${currentKey}`
+                            'Authorization': 'Bearer ' + currentKey
                         },
                         body: JSON.stringify({
                             model: 'llama-3.1-8b-instant',
@@ -2615,11 +2559,11 @@
                     clearTimeout(timeoutId);
 
                     if (!response.ok) {
-                        const errorData = await response.json();
-                        let errorMsg = errorData.error?.message || response.statusText;
+                        var errorData = await response.json();
+                        var errorMsg = errorData.error?.message || response.statusText;
 
                         if (response.status === 429 || response.status === 402 || response.status === 403) {
-                            const t = translations[currentLanguage] || translations.ru;
+                            var t = translations[currentLanguage] || translations.ru;
                             console.warn('Единственный ключ исчерпан!');
                             allKeysExhausted = true;
                             throw new Error(t.errorAllKeys || 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!');
@@ -2629,21 +2573,21 @@
                             504) {
                             errorMsg = translations[currentLanguage]?.errorTech || 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
                             if (attempt < retries) {
-                                console.log(`Попытка ${attempt + 1} не удалась. Повтор через 2 секунды...`);
-                                await new Promise(resolve => setTimeout(resolve, 2000));
+                                console.log('Попытка ' + (attempt + 1) + ' не удалась. Повтор через 2 секунды...');
+                                await new Promise(function(resolve) { setTimeout(resolve, 2000); });
                                 continue;
                             }
                         }
                         throw new Error(errorMsg);
                     }
 
-                    const data = await response.json();
-                    const content = data.choices[0].message.content;
-                    const jsonMatch = content.match(/\{[\s\S]*\}/);
+                    var data = await response.json();
+                    var content = data.choices[0].message.content;
+                    var jsonMatch = content.match(/\{[\s\S]*\}/);
                     if (!jsonMatch) {
                         if (attempt < retries) {
-                            console.log(`Попытка ${attempt + 1} — невалидный JSON. Повтор...`);
-                            await new Promise(resolve => setTimeout(resolve, 2000));
+                            console.log('Попытка ' + (attempt + 1) + ' — невалидный JSON. Повтор...');
+                            await new Promise(function(resolve) { setTimeout(resolve, 2000); });
                             continue;
                         }
                         throw new Error('Не удалось извлечь JSON из ответа ИИ');
@@ -2663,8 +2607,8 @@
 
                     if (error.name === 'AbortError') {
                         if (attempt < retries) {
-                            console.log(`Таймаут. Попытка ${attempt + 1}/${retries + 1}. Повтор...`);
-                            await new Promise(resolve => setTimeout(resolve, 2000));
+                            console.log('Таймаут. Попытка ' + (attempt + 1) + '/' + (retries + 1) + '. Повтор...');
+                            await new Promise(function(resolve) { setTimeout(resolve, 2000); });
                             continue;
                         }
                         throw new Error(translations[currentLanguage]?.errorTech || 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!');
@@ -2672,8 +2616,9 @@
                     if (attempt < retries && !error.message.includes('технические работы') && !error.message.includes(
                             'Technical work') && !error.message.includes('техникалық жұмыстар') && !error.message.includes(
                             'technische Arbeiten') && !error.message.includes('технические работы Amixby')) {
-                        console.log(`Ошибка: ${error.message}. Попытка ${attempt + 1}/${retries + 1}. Повтор...`);
-                        await new Promise(resolve => setTimeout(resolve, 2000));
+                        console.log('Ошибка: ' + error.message + '. Попытка ' + (attempt + 1) + '/' + (retries + 1) +
+                            '. Повтор...');
+                        await new Promise(function(resolve) { setTimeout(resolve, 2000); });
                         continue;
                     }
                     throw error;
@@ -2683,19 +2628,19 @@
         }
 
         // ============================================================
-        // ТАЙМЕР
+        // ТАЙМЕР (внутренний, для плана урока)
         // ============================================================
-        let timerInterval = null;
-        let timerSeconds = 0;
-        let timerRunning = false;
-        let timerActiveIndex = -1;
-        let timerStartTime = 0;
-        let timerElapsedBefore = 0;
+        var timerInterval = null;
+        var timerSeconds = 0;
+        var timerRunning = false;
+        var timerActiveIndex = -1;
+        var timerStartTime = 0;
+        var timerElapsedBefore = 0;
 
         function formatTime(seconds) {
-            const m = Math.floor(seconds / 60);
-            const s = seconds % 60;
-            return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            var m = Math.floor(seconds / 60);
+            var s = seconds % 60;
+            return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
         }
 
         function startTimer(index, durationSeconds) {
@@ -2710,20 +2655,20 @@
             updateTimerUI(index);
             updateTimerDisplay();
 
-            timerInterval = setInterval(() => {
-                const elapsed = Math.floor((Date.now() - timerStartTime) / 1000);
-                const remaining = Math.max(0, timerSeconds - elapsed);
+            timerInterval = setInterval(function() {
+                var elapsed = Math.floor((Date.now() - timerStartTime) / 1000);
+                var remaining = Math.max(0, timerSeconds - elapsed);
                 timerElapsedBefore = elapsed;
                 updateTimerDisplay(remaining);
 
                 if (remaining <= 0) {
                     stopTimer();
-                    const steps = document.querySelectorAll('.plan-modern .plan-step');
+                    var steps = document.querySelectorAll('.plan-modern .plan-step');
                     if (steps[index]) {
                         steps[index].classList.remove('active-timer');
                         steps[index].style.borderColor = 'var(--level-base)';
                     }
-                    const btns = document.querySelectorAll('.plan-modern .plan-step .step-timer-btn');
+                    var btns = document.querySelectorAll('.plan-modern .plan-step .step-timer-btn');
                     if (btns[index]) {
                         btns[index].textContent = 'Завершён';
                         btns[index].classList.remove('running');
@@ -2739,10 +2684,10 @@
                 timerInterval = null;
             }
             timerRunning = false;
-            document.querySelectorAll('.plan-modern .plan-step').forEach(el => {
+            document.querySelectorAll('.plan-modern .plan-step').forEach(function(el) {
                 el.classList.remove('active-timer');
             });
-            const timerDisplay = document.querySelector('.plan-modern .plan-timer-bar .timer-display');
+            var timerDisplay = document.querySelector('.plan-modern .plan-timer-bar .timer-display');
             if (timerDisplay) {
                 timerDisplay.textContent = '00:00';
             }
@@ -2750,13 +2695,13 @@
         }
 
         function updateTimerUI(index) {
-            document.querySelectorAll('.plan-modern .plan-step').forEach((el, i) => {
+            document.querySelectorAll('.plan-modern .plan-step').forEach(function(el, i) {
                 el.classList.toggle('active-timer', i === index);
             });
         }
 
         function updateTimerDisplay(remaining) {
-            const display = document.querySelector('.plan-modern .plan-timer-bar .timer-display');
+            var display = document.querySelector('.plan-modern .plan-timer-bar .timer-display');
             if (display) {
                 if (remaining !== undefined) {
                     display.textContent = formatTime(remaining);
@@ -2767,21 +2712,21 @@
         }
 
         function setupTimerForPlan() {
-            const steps = document.querySelectorAll('.plan-modern .plan-step');
+            var steps = document.querySelectorAll('.plan-modern .plan-step');
             if (steps.length === 0) return;
 
-            steps.forEach((step, index) => {
-                const existingBtn = step.querySelector('.step-timer-btn');
+            steps.forEach(function(step, index) {
+                var existingBtn = step.querySelector('.step-timer-btn');
                 if (existingBtn) existingBtn.remove();
 
-                const timeSpan = step.querySelector('.step-time');
+                var timeSpan = step.querySelector('.step-time');
                 if (!timeSpan) return;
-                const timeText = timeSpan.textContent.trim();
-                const match = timeText.match(/(\d+)\s*мин/);
+                var timeText = timeSpan.textContent.trim();
+                var match = timeText.match(/(\d+)\s*мин/);
                 if (!match) return;
-                const duration = parseInt(match[1]) * 60;
+                var duration = parseInt(match[1]) * 60;
 
-                const btn = document.createElement('button');
+                var btn = document.createElement('button');
                 btn.className = 'step-timer-btn';
                 btn.textContent = 'Запустить';
                 btn.dataset.duration = duration;
@@ -2789,14 +2734,14 @@
 
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    const idx = parseInt(this.dataset.index);
-                    const dur = parseInt(this.dataset.duration);
+                    var idx = parseInt(this.dataset.index);
+                    var dur = parseInt(this.dataset.duration);
                     if (timerRunning && timerActiveIndex === idx) {
                         stopTimer();
                         this.textContent = 'Запустить';
                         this.classList.remove('running');
                         this.classList.remove('completed');
-                        document.querySelectorAll('.plan-modern .plan-step .step-timer-btn').forEach(b => {
+                        document.querySelectorAll('.plan-modern .plan-step .step-timer-btn').forEach(function(b) {
                             if (b !== this) {
                                 b.textContent = 'Запустить';
                                 b.classList.remove('running');
@@ -2808,7 +2753,7 @@
                         this.textContent = 'Остановить';
                         this.classList.add('running');
                         this.classList.remove('completed');
-                        document.querySelectorAll('.plan-modern .plan-step .step-timer-btn').forEach(b => {
+                        document.querySelectorAll('.plan-modern .plan-step .step-timer-btn').forEach(function(b) {
                             if (b !== this) {
                                 b.textContent = 'Запустить';
                                 b.classList.remove('running');
@@ -2818,9 +2763,9 @@
                     }
                 });
 
-                const row = step.querySelector('.step-row');
+                var row = step.querySelector('.step-row');
                 if (row) {
-                    const timeEl = row.querySelector('.step-time');
+                    var timeEl = row.querySelector('.step-time');
                     if (timeEl) {
                         row.insertBefore(btn, timeEl);
                     } else {
@@ -2831,16 +2776,16 @@
                 }
             });
 
-            const resetBtn = document.querySelector('.plan-modern .plan-timer-bar .timer-btn');
+            var resetBtn = document.querySelector('.plan-modern .plan-timer-bar .timer-btn');
             if (resetBtn) {
                 resetBtn.addEventListener('click', function() {
                     stopTimer();
-                    document.querySelectorAll('.plan-modern .plan-step .step-timer-btn').forEach(b => {
+                    document.querySelectorAll('.plan-modern .plan-step .step-timer-btn').forEach(function(b) {
                         b.textContent = 'Запустить';
                         b.classList.remove('running');
                         b.classList.remove('completed');
                     });
-                    const display = document.querySelector('.plan-modern .plan-timer-bar .timer-display');
+                    var display = document.querySelector('.plan-modern .plan-timer-bar .timer-display');
                     if (display) display.textContent = '00:00';
                 });
             }
@@ -2849,18 +2794,19 @@
         // ============================================================
         // ОТОБРАЖЕНИЕ
         // ============================================================
-        let lastGeneratedData = null;
-        let lastTopic = '';
-        let lastLevels = [];
+        var lastGeneratedData = null;
+        var lastTopic = '';
+        var lastLevels = [];
 
-        function renderLesson(data, topic, levels, fromCache = false) {
+        function renderLesson(data, topic, levels, fromCache) {
+            if (fromCache === undefined) fromCache = false;
             lastGeneratedData = data;
             lastTopic = topic;
             lastLevels = levels;
-            const withTasks = document.getElementById('chkTasks').checked;
-            const withPlan = document.getElementById('chkPlan').checked;
+            var withTasks = document.getElementById('chkTasks').checked;
+            var withPlan = document.getElementById('chkPlan').checked;
 
-            const cacheBadge = document.getElementById('cacheBadge');
+            var cacheBadge = document.getElementById('cacheBadge');
             if (fromCache) {
                 cacheBadge.classList.add('visible');
                 updateCacheBadgeText();
@@ -2868,67 +2814,60 @@
                 cacheBadge.classList.remove('visible');
             }
 
-            let tasksHTML = '';
+            // --- ЗАДАНИЯ ---
+            var tasksHTML = '';
             if (withTasks && data.tasks) {
-                const levelMap = {
+                var levelMap = {
                     'base': { label: 'Базовый уровень', cls: 'level-base', data: data.tasks.base },
                     'profi': { label: 'Профи-уровень', cls: 'level-profi', data: data.tasks.profi },
                     'olympiad': { label: 'Олимпиадный уровень', cls: 'level-olympiad', data: data.tasks.olympiad }
                 };
-                let hasAny = false;
-                const wrapper = document.createElement('div');
+                var hasAny = false;
+                var wrapper = document.createElement('div');
                 wrapper.className = 'tasks-wrapper';
-                levels.forEach(level => {
-                    const info = levelMap[level];
+                levels.forEach(function(level) {
+                    var info = levelMap[level];
                     if (info && info.data && info.data.length > 0) {
                         hasAny = true;
-                        const block = document.createElement('div');
-                        block.className = `task-level ${info.cls}`;
-                        let tasksList = '<ul class="task-list">';
-                        info.data.forEach(task => { tasksList += `<li>${task.replace(/^\d+\.\s*/, '')}</li>`; });
+                        var block = document.createElement('div');
+                        block.className = 'task-level ' + info.cls;
+                        var tasksList = '<ul class="task-list">';
+                        info.data.forEach(function(task) { tasksList += '<li>' + task.replace(/^\d+\.\s*/, '') +
+                            '</li>'; });
                         tasksList += '</ul>';
-                        block.innerHTML =
-                            `<h4>${info.label} <span class="badge">${level === 'base' ? 'Б' : level === 'profi' ? 'П' : 'О'}</span></h4>${tasksList}`;
+                        block.innerHTML = '<h4>' + info.label + ' <span class="badge">' + (level === 'base' ? 'Б' :
+                            level === 'profi' ? 'П' : 'О') + '</span></h4>' + tasksList;
                         wrapper.appendChild(block);
                     }
                 });
-                tasksHTML = hasAny ? wrapper.innerHTML : '<p style="color: var(--text-tertiary);">Нет заданий для выбранных уровней</p>';
+                tasksHTML = hasAny ? wrapper.innerHTML :
+                '<p style="color: var(--text-tertiary);">Нет заданий для выбранных уровней</p>';
             } else {
                 tasksHTML = '<p style="color: var(--text-tertiary);">Генерация заданий отключена</p>';
             }
             document.getElementById('tasksContent').innerHTML = tasksHTML;
 
-            let planHTML = '';
+            // --- ПЛАН ---
+            var planHTML = '';
             if (withPlan && data.plan && data.plan.steps) {
-                const p = data.plan;
-                const stepsHtml = p.steps.map((step, idx) =>
-                    `<div class="plan-step">
-                        <div class="step-row">
-                            <span class="step-title">${idx+1}. ${step.name}</span>
-                            <span class="step-time">${step.time || ''}</span>
-                        </div>
-                        <div class="step-desc">${step.desc || ''}</div>
-                    </div>`
-                ).join('');
+                var p = data.plan;
+                var stepsHtml = p.steps.map(function(step, idx) {
+                    return '<div class="plan-step"><div class="step-row"><span class="step-title">' + (idx + 1) +
+                        '. ' + step.name + '</span><span class="step-time">' + (step.time || '') +
+                        '</span></div><div class="step-desc">' + (step.desc || '') + '</div></div>';
+                }).join('');
 
-                const goalsHtml = p.goals ? p.goals.map(g => `<span style="display:block;font-size:15px;color:var(--text-secondary);">• ${g}</span>`).join(
-                    '') : '';
+                var goalsHtml = p.goals ? p.goals.map(function(g) { return '<span style="display:block;font-size:15px;color:var(--text-secondary);">• ' +
+                        g + '</span>'; }).join('') : '';
 
-                planHTML = `
-                    <div class="plan-modern">
-                        <div class="plan-header-block">
-                            <div class="item"><span class="plan-label">Тема</span><span class="plan-value">${p.topic || topic}</span></div>
-                            <div class="item"><span class="plan-label">Класс</span><span class="plan-value">${p.class || ''}</span></div>
-                            <div class="item"><span class="plan-label">Цели</span><span class="plan-value">${goalsHtml || '—'}</span></div>
-                        </div>
-                        <div class="plan-timer-bar">
-                            <span class="timer-display">00:00</span>
-                            <button class="timer-btn">Сбросить таймер</button>
-                        </div>
-                        <div style="font-weight:600;font-size:16px;color:var(--text-primary);margin:4px 0 6px 0;">Ход урока</div>
-                        ${stepsHtml}
-                    </div>
-                `;
+                planHTML = '<div class="plan-modern"><div class="plan-header-block"><div class="item"><span class="plan-label">Тема</span><span class="plan-value">' +
+                    (p.topic || topic) +
+                    '</span></div><div class="item"><span class="plan-label">Класс</span><span class="plan-value">' + (p
+                        .class || '') +
+                    '</span></div><div class="item"><span class="plan-label">Цели</span><span class="plan-value">' + (
+                        goalsHtml || '—') +
+                    '</span></div></div><div class="plan-timer-bar"><span class="timer-display">00:00</span><button class="timer-btn">Сбросить таймер</button></div><div style="font-weight:600;font-size:16px;color:var(--text-primary);margin:4px 0 6px 0;">Ход урока</div>' +
+                    stepsHtml + '</div>';
             } else if (withPlan) {
                 planHTML = '<p style="color: var(--text-tertiary);">План не сгенерирован</p>';
             } else {
@@ -2938,32 +2877,36 @@
 
             setTimeout(setupTimerForPlan, 100);
 
-            let answersHTML = '';
+            // --- ОТВЕТЫ ---
+            var answersHTML = '';
             if (withTasks && data.answers) {
-                const levelMap = {
+                var levelMap2 = {
                     'base': { label: 'Базовый уровень', cls: 'level-base', data: data.answers.base },
                     'profi': { label: 'Профи-уровень', cls: 'level-profi', data: data.answers.profi },
                     'olympiad': { label: 'Олимпиадный уровень', cls: 'level-olympiad', data: data.answers.olympiad }
                 };
-                let hasAny = false;
-                const grid = document.createElement('div');
+                var hasAny2 = false;
+                var grid = document.createElement('div');
                 grid.className = 'answers-grid';
-                levels.forEach(level => {
-                    const info = levelMap[level];
+                levels.forEach(function(level) {
+                    var info = levelMap2[level];
                     if (info && info.data) {
-                        hasAny = true;
-                        const block = document.createElement('div');
-                        block.className = `answer-level ${info.cls}`;
-                        const pairs = info.data.split(/\d+\.\s*/).filter(s => s.trim() !== '');
-                        let pairsHTML = '<div class="answer-pairs">';
-                        pairs.forEach((val, idx) => { pairsHTML +=
-                                `<span class="num">${idx + 1}.</span><span class="val">${val.trim()}</span>`; });
+                        hasAny2 = true;
+                        var block = document.createElement('div');
+                        block.className = 'answer-level ' + info.cls;
+                        var pairs = info.data.split(/\d+\.\s*/).filter(function(s) { return s.trim() !== ''; });
+                        var pairsHTML = '<div class="answer-pairs">';
+                        pairs.forEach(function(val, idx) {
+                            pairsHTML += '<span class="num">' + (idx + 1) +
+                                '.</span><span class="val">' + val.trim() + '</span>';
+                        });
                         pairsHTML += '</div>';
-                        block.innerHTML = `<h4>${info.label}</h4>${pairsHTML}`;
+                        block.innerHTML = '<h4>' + info.label + '</h4>' + pairsHTML;
                         grid.appendChild(block);
                     }
                 });
-                answersHTML = hasAny ? grid.innerHTML : '<p style="color: var(--text-tertiary);">Нет ответов для выбранных уровней</p>';
+                answersHTML = hasAny2 ? grid.innerHTML :
+                '<p style="color: var(--text-tertiary);">Нет ответов для выбранных уровней</p>';
             } else {
                 answersHTML = '<p style="color: var(--text-tertiary);">Ответы не сгенерированы</p>';
             }
@@ -2971,63 +2914,34 @@
         }
 
         // ============================================================
-        // ЭКСПОРТ В WORD (.doc)
+        // ЭКСПОРТ В WORD
         // ============================================================
         function exportWord(elementId, filename) {
-            const element = document.getElementById(elementId);
+            var element = document.getElementById(elementId);
             if (!element || element.innerHTML.trim() === '' || element.innerHTML.includes('Выберите класс, предмет и нажмите')) {
                 alert('Сначала создайте урок, чтобы скачать Word.');
                 return;
             }
 
-            let content = element.cloneNode(true);
-            const btns = content.querySelectorAll('.btn-group, .btn-secondary, button, .plan-timer-bar, .step-timer-btn');
-            btns.forEach(el => el.remove());
+            var content = element.cloneNode(true);
+            var btns = content.querySelectorAll('.btn-group, .btn-secondary, button, .plan-timer-bar, .step-timer-btn');
+            btns.forEach(function(el) { el.remove(); });
 
-            const style = `
-                <style>
-                    body { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 30px; color: #1c1c1e; max-width: 800px; margin: 0 auto; }
-                    h1 { color: #007aff; font-size: 28px; margin-bottom: 4px; }
-                    h2 { font-size: 22px; margin-top: 24px; margin-bottom: 12px; color: #1c1c1e; border-bottom: 1px solid #e5e5ea; padding-bottom: 8px; }
-                    h3 { font-size: 18px; margin: 16px 0 8px 0; color: #1c1c1e; }
-                    .task-block { background: #f8f8fc; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; border-left: 4px solid #007aff; }
-                    .task-block.level-base { border-left-color: #34c759; }
-                    .task-block.level-profi { border-left-color: #ff9500; }
-                    .task-block.level-olympiad { border-left-color: #ff3b30; }
-                    .task-block ul { list-style: none; padding: 0; margin: 8px 0; }
-                    .task-block ul li { padding: 4px 0 4px 28px; position: relative; }
-                    .task-block ul li::before { content: counter(item); counter-increment: item; position: absolute; left: 0; font-weight: 600; color: #007aff; }
-                    .task-block ul { counter-reset: item; }
-                    .plan-header { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; background: #f8f8fc; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; border-left: 4px solid #007aff; }
-                    .plan-header .item .label { font-size: 12px; font-weight: 600; color: #8e8e93; text-transform: uppercase; }
-                    .plan-header .item .value { font-size: 16px; font-weight: 500; color: #1c1c1e; }
-                    .plan-step { background: #f8f8fc; border-radius: 12px; padding: 12px 16px; margin-bottom: 10px; border-left: 3px solid #007aff; }
-                    .plan-step .step-title { font-weight: 600; font-size: 16px; }
-                    .plan-step .step-desc { color: #3a3a3c; margin-top: 4px; font-size: 15px; line-height: 1.6; }
-                    .plan-step .step-time { color: #8e8e93; font-size: 13px; font-family: monospace; }
-                    .answers-block { background: #f8f8fc; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; border-left: 4px solid #007aff; }
-                    .answers-block .pairs { display: grid; grid-template-columns: auto 1fr; gap: 2px 20px; font-size: 16px; }
-                    .answers-block .pairs .num { font-weight: 500; color: #8e8e93; }
-                </style>
-            `;
+            var style = '<style>body{font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:30px;color:#1c1c1e;max-width:800px;margin:0 auto;}h1{color:#007aff;font-size:28px;margin-bottom:4px;}h2{font-size:22px;margin-top:24px;margin-bottom:12px;color:#1c1c1e;border-bottom:1px solid #e5e5ea;padding-bottom:8px;}h3{font-size:18px;margin:16px 0 8px 0;color:#1c1c1e;}.task-block{background:#f8f8fc;border-radius:12px;padding:16px 20px;margin-bottom:16px;border-left:4px solid #007aff;}.task-block.level-base{border-left-color:#34c759;}.task-block.level-profi{border-left-color:#ff9500;}.task-block.level-olympiad{border-left-color:#ff3b30;}.task-block ul{list-style:none;padding:0;margin:8px 0;}.task-block ul li{padding:4px 0 4px 28px;position:relative;}.task-block ul li::before{content:counter(item);counter-increment:item;position:absolute;left:0;font-weight:600;color:#007aff;}.task-block ul{counter-reset:item;}.plan-header{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;background:#f8f8fc;border-radius:12px;padding:16px 20px;margin-bottom:16px;border-left:4px solid #007aff;}.plan-header .item .label{font-size:12px;font-weight:600;color:#8e8e93;text-transform:uppercase;}.plan-header .item .value{font-size:16px;font-weight:500;color:#1c1c1e;}.plan-step{background:#f8f8fc;border-radius:12px;padding:12px 16px;margin-bottom:10px;border-left:3px solid #007aff;}.plan-step .step-title{font-weight:600;font-size:16px;}.plan-step .step-desc{color:#3a3a3c;margin-top:4px;font-size:15px;line-height:1.6;}.plan-step .step-time{color:#8e8e93;font-size:13px;font-family:monospace;}.answers-block{background:#f8f8fc;border-radius:12px;padding:16px 20px;margin-bottom:12px;border-left:4px solid #007aff;}.answers-block .pairs{display:grid;grid-template-columns:auto 1fr;gap:2px 20px;font-size:16px;}.answers-block .pairs .num{font-weight:500;color:#8e8e93;}</style>';
 
-            const htmlContent = `
-                <html>
-                <head><meta charset="UTF-8"><title>${filename || 'Amixby-урок'}</title>${style}</head>
-                <body>
-                    <h1>Amixby — Урок</h1>
-                    <p style="font-size:18px;color:#3a3a3c;margin-bottom:24px;">Тема: ${lastTopic || ''}</p>
-                    ${content.innerHTML}
-                    <p style="margin-top:32px;font-size:14px;color:#8e8e93;text-align:center;border-top:1px solid #e5e5ea;padding-top:16px;">Создано в Amixby — уроки за минуту</p>
-                </body>
-                </html>
-            `;
+            var htmlContent =
+                '<html><head><meta charset="UTF-8"><title>' + (filename || 'Amixby-урок') +
+                '</title>' + style +
+                '</head><body><h1>Amixby — Урок</h1><p style="font-size:18px;color:#3a3a3c;margin-bottom:24px;">Тема: ' +
+                (lastTopic || '') +
+                '</p>' + content.innerHTML +
+                '<p style="margin-top:32px;font-size:14px;color:#8e8e93;text-align:center;border-top:1px solid #e5e5ea;padding-top:16px;">Создано в Amixby — уроки за минуту</p></body></html>';
 
-            const blob = new Blob([htmlContent], { type: 'application/msword' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
+            var blob = new Blob([htmlContent], { type: 'application/msword' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
             a.href = url;
-            a.download = `${filename || 'amixby-urok'}.doc`;
+            a.download = (filename || 'amixby-urok') + '.doc';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -3038,13 +2952,13 @@
         // PDF
         // ============================================================
         function generatePDF(elementId, filename) {
-            const element = document.getElementById(elementId);
+            var element = document.getElementById(elementId);
             if (!element || element.innerHTML.trim() === '' || element.innerHTML.includes('Выберите класс, предмет и нажмите')) {
                 alert('Сначала создайте урок, чтобы скачать PDF.');
                 return;
             }
 
-            const wrapper = document.createElement('div');
+            var wrapper = document.createElement('div');
             wrapper.style.padding = '40px';
             wrapper.style.fontFamily = "'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
             wrapper.style.color = '#1c1c1e';
@@ -3052,30 +2966,30 @@
             wrapper.style.maxWidth = '800px';
             wrapper.style.margin = '0 auto';
 
-            const title = document.createElement('h1');
+            var title = document.createElement('h1');
             title.textContent = 'Amixby — Урок';
             title.style.fontSize = '28px';
             title.style.marginBottom = '8px';
             title.style.color = '#007aff';
             wrapper.appendChild(title);
 
-            const topic = document.createElement('p');
+            var topic = document.createElement('p');
             topic.textContent = 'Тема: ' + (lastTopic || '');
             topic.style.fontSize = '18px';
             topic.style.marginBottom = '24px';
             topic.style.color = '#3a3a3c';
             wrapper.appendChild(topic);
 
-            const contentClone = element.cloneNode(true);
-            const btns = contentClone.querySelectorAll('.btn-group, .btn-secondary, button, .plan-timer-bar, .step-timer-btn');
-            btns.forEach(el => el.remove());
+            var contentClone = element.cloneNode(true);
+            var btns = contentClone.querySelectorAll('.btn-group, .btn-secondary, button, .plan-timer-bar, .step-timer-btn');
+            btns.forEach(function(el) { el.remove(); });
             contentClone.style.padding = '0';
             contentClone.style.background = 'transparent';
             contentClone.style.boxShadow = 'none';
             contentClone.style.borderRadius = '0';
             wrapper.appendChild(contentClone);
 
-            const footer = document.createElement('p');
+            var footer = document.createElement('p');
             footer.textContent = 'Создано в Amixby — уроки за минуту';
             footer.style.marginTop = '32px';
             footer.style.fontSize = '14px';
@@ -3092,7 +3006,7 @@
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, useCORS: true, letterRendering: true },
                 jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-            }).from(wrapper).save().then(() => { document.body.removeChild(wrapper); }).catch((err) => {
+            }).from(wrapper).save().then(function() { document.body.removeChild(wrapper); }).catch(function(err) {
                 console.error('PDF ошибка:', err);
                 document.body.removeChild(wrapper);
                 alert('Ошибка при создании PDF. Попробуйте использовать печать (Ctrl+P) и выбрать "Сохранить как PDF".');
@@ -3103,34 +3017,34 @@
         // ПОКАЗАТЬ НА ЭКРАНЕ
         // ============================================================
         function showAnswersOnScreen() {
-            const answersContent = document.getElementById('answersContent');
+            var answersContent = document.getElementById('answersContent');
             if (!answersContent || answersContent.innerHTML.trim() === '' || answersContent.innerHTML.includes(
                     'Выберите класс, предмет и нажмите')) {
                 alert('Сначала создайте урок, чтобы показать ответы.');
                 return;
             }
-            const overlay = document.createElement('div');
+            var overlay = document.createElement('div');
             overlay.style.cssText =
-                `position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-overlay-dark);backdrop-filter:blur(8px);z-index:9999;display:flex;justify-content:center;align-items:center;padding:40px 20px;animation:fadeIn 0.3s ease;`;
-            const container = document.createElement('div');
+                'position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-overlay-dark);backdrop-filter:blur(8px);z-index:9999;display:flex;justify-content:center;align-items:center;padding:40px 20px;animation:fadeIn 0.3s ease;';
+            var container = document.createElement('div');
             container.style.cssText =
-                `background:var(--bg-modal);border-radius:24px;max-width:800px;width:100%;max-height:80vh;overflow-y:auto;padding:32px 28px;box-shadow:var(--shadow-modal);animation:slideUp 0.3s ease;color:var(--text-primary);`;
-            const header = document.createElement('div');
+                'background:var(--bg-modal);border-radius:24px;max-width:800px;width:100%;max-height:80vh;overflow-y:auto;padding:32px 28px;box-shadow:var(--shadow-modal);animation:slideUp 0.3s ease;color:var(--text-primary);';
+            var header = document.createElement('div');
             header.style.cssText =
-                `display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border-color);padding-bottom:12px;`;
-            const title = document.createElement('h2');
+                'display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border-color);padding-bottom:12px;';
+            var title = document.createElement('h2');
             title.textContent = 'Ответы на экране';
             title.style.cssText = 'font-size:24px;font-weight:600;margin:0;';
-            const closeBtn = document.createElement('button');
+            var closeBtn = document.createElement('button');
             closeBtn.textContent = 'Закрыть';
             closeBtn.style.cssText =
-                `background:var(--bg-btn-secondary);border:none;border-radius:12px;padding:8px 20px;font-size:16px;font-weight:500;color:var(--accent);cursor:pointer;transition:background 0.2s ease;`;
-            closeBtn.onmouseover = () => closeBtn.style.background = 'var(--bg-btn-secondary-hover)';
-            closeBtn.onmouseout = () => closeBtn.style.background = 'var(--bg-btn-secondary)';
-            closeBtn.onclick = () => document.body.removeChild(overlay);
+                'background:var(--bg-btn-secondary);border:none;border-radius:12px;padding:8px 20px;font-size:16px;font-weight:500;color:var(--accent);cursor:pointer;transition:background 0.2s ease;';
+            closeBtn.onmouseover = function() { closeBtn.style.background = 'var(--bg-btn-secondary-hover)'; };
+            closeBtn.onmouseout = function() { closeBtn.style.background = 'var(--bg-btn-secondary)'; };
+            closeBtn.onclick = function() { document.body.removeChild(overlay); };
             header.appendChild(title);
             header.appendChild(closeBtn);
-            const contentClone = answersContent.cloneNode(true);
+            var contentClone = answersContent.cloneNode(true);
             contentClone.style.padding = '0';
             contentClone.style.background = 'transparent';
             contentClone.style.boxShadow = 'none';
@@ -3138,13 +3052,13 @@
             container.appendChild(header);
             container.appendChild(contentClone);
             overlay.appendChild(container);
-            const style = document.createElement('style');
+            var style = document.createElement('style');
             style.textContent =
-                `@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes slideUp{from{opacity:0;transform:translateY(30px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}`;
+                '@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes slideUp{from{opacity:0;transform:translateY(30px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}';
             overlay.appendChild(style);
             document.body.appendChild(overlay);
             overlay.addEventListener('click', function(e) { if (e.target === overlay) document.body.removeChild(overlay); });
-            const escHandler = function(e) {
+            var escHandler = function(e) {
                 if (e.key === 'Escape') { if (document.body.contains(overlay)) document.body.removeChild(overlay);
                     document.removeEventListener('keydown', escHandler); }
             };
@@ -3154,35 +3068,36 @@
         // ============================================================
         // ТАБЫ
         // ============================================================
-        const tabs = document.querySelectorAll('.tab');
-        const tabContents = { tasks: document.getElementById('tab-tasks'), plan: document.getElementById('tab-plan'),
+        var tabs = document.querySelectorAll('.tab');
+        var tabContents = { tasks: document.getElementById('tab-tasks'), plan: document.getElementById('tab-plan'),
             answers: document.getElementById('tab-answers') };
-        const indicator = document.getElementById('tabIndicator');
+        var indicator = document.getElementById('tabIndicator');
 
         function updateIndicator(activeTab) {
-            const rect = activeTab.getBoundingClientRect();
-            const containerRect = document.getElementById('tabsContainer').getBoundingClientRect();
+            var rect = activeTab.getBoundingClientRect();
+            var containerRect = document.getElementById('tabsContainer').getBoundingClientRect();
             indicator.style.width = rect.width + 'px';
             indicator.style.left = (rect.left - containerRect.left) + 'px';
         }
-        setTimeout(() => { const activeTab = document.querySelector('.tab.active'); if (activeTab) updateIndicator(
-            activeTab); }, 50);
-        tabs.forEach(tab => {
+        setTimeout(function() { var activeTab = document.querySelector('.tab.active'); if (activeTab) updateIndicator(
+                activeTab); }, 50);
+        tabs.forEach(function(tab) {
             tab.addEventListener('click', function() {
-                tabs.forEach(t => t.classList.remove('active'));
+                tabs.forEach(function(t) { t.classList.remove('active'); });
                 this.classList.add('active');
                 updateIndicator(this);
-                const target = this.dataset.tab;
-                Object.keys(tabContents).forEach(key => { tabContents[key].classList.toggle('active', key === target); });
+                var target = this.dataset.tab;
+                Object.keys(tabContents).forEach(function(key) { tabContents[key].classList.toggle('active', key ===
+                        target); });
             });
         });
-        window.addEventListener('resize', () => { const activeTab = document.querySelector('.tab.active'); if (activeTab)
+        window.addEventListener('resize', function() { var activeTab = document.querySelector('.tab.active'); if (activeTab)
                 updateIndicator(activeTab); });
 
         // ============================================================
         // УРОВНИ
         // ============================================================
-        document.querySelectorAll('.level-btn').forEach(btn => {
+        document.querySelectorAll('.level-btn').forEach(function(btn) {
             btn.addEventListener('click', function(e) { e.stopPropagation();
                 this.classList.toggle('active'); });
         });
@@ -3190,32 +3105,31 @@
         // ============================================================
         // ЧЕКБОКСЫ
         // ============================================================
-        document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
+        document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(function(cb) {
             cb.addEventListener('change', function() { this.closest('.checkbox-item').classList.toggle('disabled', !this
                     .checked); });
         });
-        document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => { cb.dispatchEvent(new Event(
+        document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(function(cb) { cb.dispatchEvent(new Event(
             'change')); });
 
         // ============================================================
-        // КНОПКА «СОЗДАТЬ УРОК» С ТАЙМЕРОМ + КЭШИРОВАНИЕ + ЭКОНОМИЯ
+        // КНОПКА «СОЗДАТЬ УРОК»
         // ============================================================
-        const generateBtn = document.getElementById('generateBtn');
-        const resultSection = document.getElementById('resultSection');
+        var generateBtn = document.getElementById('generateBtn');
+        var resultSection = document.getElementById('resultSection');
 
         // Восстанавливаем таймер при загрузке
         restoreCooldown();
 
-        // Синхронизация таймера между вкладками
+        // Синхронизация между вкладками
         window.addEventListener('storage', function(e) {
             if (e.key === COOLDOWN_STORAGE_KEY) {
-                const val = e.newValue;
+                var val = e.newValue;
                 if (val) {
-                    const until = parseInt(val);
+                    var until = parseInt(val);
                     if (Date.now() < until) {
-                        const remaining = Math.round((until - Date.now()) / 1000);
+                        var remaining = Math.round((until - Date.now()) / 1000);
                         if (remaining > 0) {
-                            // Если таймер уже запущен и отличается — перезапускаем
                             if (!isCooldownActive || cooldownSeconds !== remaining) {
                                 startCooldown(remaining);
                             }
@@ -3232,36 +3146,37 @@
         generateBtn.addEventListener('click', async function() {
             if (this.disabled || this.classList.contains('loading')) return;
 
-            const topic = document.getElementById('topicInput').value.trim();
+            var topic = document.getElementById('topicInput').value.trim();
             if (!topic) { alert('Пожалуйста, введите тему урока'); return; }
 
-            const activeLevels = document.querySelectorAll('.level-btn.active');
-            const levels = [];
-            activeLevels.forEach(btn => levels.push(btn.dataset.level));
+            var activeLevels = document.querySelectorAll('.level-btn.active');
+            var levels = [];
+            activeLevels.forEach(function(btn) { levels.push(btn.dataset.level); });
             if (levels.length === 0) { alert('Выберите хотя бы один уровень сложности'); return; }
 
-            const withPlan = document.getElementById('chkPlan').checked;
+            var withPlan = document.getElementById('chkPlan').checked;
 
             // ===== ПРОВЕРКА КЭША =====
-            const cacheKey = getCacheKey(topic, levels, withPlan);
-            const cachedData = getCachedLesson(cacheKey);
+            var cacheKey = getCacheKey(topic, levels, withPlan);
+            var cachedData = getCachedLesson(cacheKey);
 
             if (cachedData) {
                 renderLesson(cachedData, topic, levels, true);
                 resultSection.classList.add('visible');
 
-                const jsonStr = JSON.stringify(cachedData);
-                const inputTokens = estimateTokens(topic + levels.join(',') + 'создай задания');
-                const outputTokens = estimateTokens(jsonStr);
+                var jsonStr = JSON.stringify(cachedData);
+                var inputTokens = estimateTokens(topic + levels.join(',') + 'создай задания');
+                var outputTokens = estimateTokens(jsonStr);
                 incrementStats(inputTokens, outputTokens);
 
-                const tasksTab = document.querySelector('.tab[data-tab="tasks"]');
-                tabs.forEach(t => t.classList.remove('active'));
+                var tasksTab = document.querySelector('.tab[data-tab="tasks"]');
+                tabs.forEach(function(t) { t.classList.remove('active'); });
                 tasksTab.classList.add('active');
-                Object.keys(tabContents).forEach(key => { tabContents[key].classList.toggle('active', key === 'tasks'); });
+                Object.keys(tabContents).forEach(function(key) { tabContents[key].classList.toggle('active', key ===
+                        'tasks'); });
                 updateIndicator(tasksTab);
 
-                setTimeout(() => {
+                setTimeout(function() {
                     resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 200);
 
@@ -3269,25 +3184,26 @@
                 return;
             }
 
-            // ===== НЕТ КЭША — ГЕНЕРИРУЕМ =====
+            // ===== НЕТ КЭША =====
             this.classList.add('loading');
             this.disabled = true;
 
             try {
-                const data = await generateWithAI(topic, levels, withPlan);
+                var data = await generateWithAI(topic, levels, withPlan);
 
                 setCachedLesson(cacheKey, data);
                 saveHistoryItem(data, topic, levels);
                 renderLesson(data, topic, levels, false);
                 resultSection.classList.add('visible');
 
-                const tasksTab = document.querySelector('.tab[data-tab="tasks"]');
-                tabs.forEach(t => t.classList.remove('active'));
-                tasksTab.classList.add('active');
-                Object.keys(tabContents).forEach(key => { tabContents[key].classList.toggle('active', key === 'tasks'); });
-                updateIndicator(tasksTab);
+                var tasksTab2 = document.querySelector('.tab[data-tab="tasks"]');
+                tabs.forEach(function(t) { t.classList.remove('active'); });
+                tasksTab2.classList.add('active');
+                Object.keys(tabContents).forEach(function(key) { tabContents[key].classList.toggle('active', key ===
+                        'tasks'); });
+                updateIndicator(tasksTab2);
 
-                setTimeout(() => {
+                setTimeout(function() {
                     resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 200);
 
@@ -3295,8 +3211,8 @@
 
             } catch (error) {
                 console.error('Ошибка:', error);
-                let userMessage = error.message;
-                const t = translations[currentLanguage] || translations.ru;
+                var userMessage = error.message;
+                var t = translations[currentLanguage] || translations.ru;
 
                 if (error.message.includes('Ой, сейчас идут технические работы Amixby') ||
                     error.message.includes('Oops, Amixby is currently undergoing technical maintenance') ||
@@ -3319,7 +3235,8 @@
                 }
 
                 document.getElementById('tasksContent').innerHTML =
-                    `<div class="error-message"><span class="error-title">${t.errorTitle || 'Ошибка генерации'}</span>${userMessage}</div>`;
+                    '<div class="error-message"><span class="error-title">' + t.errorTitle || 'Ошибка генерации' +
+                    '</span>' + userMessage + '</div>';
                 resultSection.classList.add('visible');
 
                 startCooldown(30);
@@ -3330,23 +3247,22 @@
         });
 
         // ============================================================
-        // НОВЫЙ УРОК (сброс)
+        // НОВЫЙ УРОК
         // ============================================================
         document.getElementById('newLessonBtn').addEventListener('click', function() {
             document.getElementById('topicInput').value = '';
-            document.querySelectorAll('.level-btn').forEach(btn => btn.classList.add('active'));
+            document.querySelectorAll('.level-btn').forEach(function(btn) { btn.classList.add('active'); });
             document.getElementById('chkTasks').checked = true;
             document.getElementById('chkPlan').checked = true;
-            document.querySelectorAll('.checkbox-item').forEach(item => item.classList.remove('disabled'));
+            document.querySelectorAll('.checkbox-item').forEach(function(item) { item.classList.remove('disabled'); });
             document.getElementById('resultSection').classList.remove('visible');
             document.getElementById('cacheBadge').classList.remove('visible');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            // Сбрасываем таймер при нажатии "Новый урок" (пользователь хочет начать заново)
             resetCooldown();
         });
 
         // ============================================================
-        // PDF / WORD КНОПКИ
+        // PDF / WORD
         // ============================================================
         document.getElementById('downloadPdfBtn').addEventListener('click', function() { generatePDF('tab-tasks',
                 'amixby-zadaniya.pdf'); });
@@ -3365,8 +3281,8 @@
         // ============================================================
         // БУРГЕР
         // ============================================================
-        const burgerBtn = document.getElementById('burgerBtn');
-        const mobileNav = document.getElementById('mobileNav');
+        var burgerBtn = document.getElementById('burgerBtn');
+        var mobileNav = document.getElementById('mobileNav');
         burgerBtn.addEventListener('click', function() {
             this.classList.toggle('active');
             mobileNav.classList.toggle('open');
@@ -3388,16 +3304,16 @@
         // МОДАЛКИ
         // ============================================================
         function openModal(type) {
-            const map = { 'how': 'modalHow', 'support': 'modalSupport', 'faq': 'modalFaq', 'history': 'modalHistory',
+            var map = { 'how': 'modalHow', 'support': 'modalSupport', 'faq': 'modalFaq', 'history': 'modalHistory',
                 'languages': 'modalLanguages' };
-            const id = map[type];
+            var id = map[type];
             if (id) { document.getElementById(id).classList.add('open');
                 document.body.style.overflow = 'hidden'; if (id === 'modalHistory') renderHistory(); }
         }
 
         function closeModal(id) { document.getElementById(id).classList.remove('open');
             document.body.style.overflow = ''; }
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
             overlay.addEventListener('click', function(e) { if (e.target === this) { this.classList.remove('open');
                     document.body.style.overflow = ''; } });
         });
@@ -3407,15 +3323,15 @@
         // ============================================================
         function sendSupport(e) {
             e.preventDefault();
-            const message = document.getElementById('supportMessage').value.trim();
+            var message = document.getElementById('supportMessage').value.trim();
             if (!message) { alert('Пожалуйста, опишите вашу проблему.'); return; }
-            const subject = encodeURIComponent('Amixby — Обращение в поддержку');
-            const body = encodeURIComponent(message + '\n\n— Отправлено через Amixby');
-            window.location.href = `mailto:apexcorpoff@gmail.com?subject=${subject}&body=${body}`;
+            var subject = encodeURIComponent('Amixby — Обращение в поддержку');
+            var body = encodeURIComponent(message + '\n\n— Отправлено через Amixby');
+            window.location.href = 'mailto:apexcorpoff@gmail.com?subject=' + subject + '&body=' + body;
             document.getElementById('supportMessage').value = '';
             closeModal('modalSupport');
             alert('Письмо открыто в вашем почтовом клиенте. Отправьте его, и мы ответим.');
         }
     </script>
 </body>
-                </html>
+    </html>
