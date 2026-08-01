@@ -8,9 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <style>
-        /* ============================================================
-           ПЕРЕМЕННЫЕ (светлая / тёмная)
-           ============================================================ */
+        /* ===== ВСЕ СТИЛИ (полная версия) ===== */
         :root {
             --bg-primary: #f5f5f8;
             --bg-secondary: #ffffff;
@@ -24,47 +22,34 @@
             --bg-modal: #ffffff;
             --bg-overlay: rgba(0, 0, 0, 0.4);
             --bg-overlay-dark: rgba(0, 0, 0, 0.7);
-
             --text-primary: #1c1c1e;
             --text-secondary: #3a3a3c;
             --text-tertiary: #8e8e93;
-            --text-link: #007aff;
-            --text-on-primary: #ffffff;
-
             --border-color: #e5e5ea;
             --border-focus: #007aff;
-
             --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.04);
             --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.15);
-
             --accent: #007aff;
             --accent-hover: #0066d9;
             --accent-light: #e8f2ff;
-
             --level-base: #34c759;
             --level-profi: #ff9500;
             --level-olympiad: #ff3b30;
-
             --burger-color: #1c1c1e;
             --footer-border: #e5e5ea;
             --logo-color: #1c1c1e;
-
-            --timer-bg: #f8f8fc;
             --timer-text: #007aff;
             --timer-border: #e5e5ea;
-            --timer-active: #007aff;
-
             --glass-bg: rgba(255, 255, 255, 0.2);
             --glass-border: rgba(255, 255, 255, 0.25);
             --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-
             --error-bg: #fef2f2;
             --error-border: #fecaca;
             --error-text: #dc2626;
-
+            --plan-step-border: #007aff;
+            --plan-step-bg: #f8f8fc;
             --transition: 0.3s ease;
         }
-
         [data-theme="dark"] {
             --bg-primary: #0a0a0c;
             --bg-secondary: #1c1c1e;
@@ -78,50 +63,35 @@
             --bg-modal: #1c1c1e;
             --bg-overlay: rgba(0, 0, 0, 0.6);
             --bg-overlay-dark: rgba(0, 0, 0, 0.85);
-
             --text-primary: #f5f5f8;
             --text-secondary: #e5e5ea;
             --text-tertiary: #98989e;
-            --text-link: #4a9aff;
-            --text-on-primary: #ffffff;
-
             --border-color: #3a3a3c;
             --border-focus: #4a9aff;
-
             --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.3);
             --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.5);
-
             --accent: #4a9aff;
             --accent-hover: #6aafff;
             --accent-light: #1a2a4a;
-
             --burger-color: #f5f5f8;
             --footer-border: #3a3a3c;
             --logo-color: #f5f5f8;
-
-            --timer-bg: #2c2c2e;
             --timer-text: #4a9aff;
             --timer-border: #3a3a3c;
-            --timer-active: #4a9aff;
-
             --glass-bg: rgba(28, 28, 30, 0.6);
             --glass-border: rgba(255, 255, 255, 0.1);
             --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-
             --error-bg: #2a1a1a;
             --error-border: #4a2a2a;
             --error-text: #ff6b6b;
+            --plan-step-border: #4a9aff;
+            --plan-step-bg: #2c2c2e;
         }
-
-        /* ============================================================
-           ОБЩИЕ СТИЛИ
-           ============================================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             background-color: var(--bg-primary);
             font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -134,15 +104,10 @@
             min-height: 100vh;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
         .container {
             max-width: 1000px;
             width: 100%;
         }
-
-        /* ============================================================
-           HEADER
-           ============================================================ */
         .header {
             display: flex;
             justify-content: space-between;
@@ -153,13 +118,11 @@
             position: relative;
             transition: border-color 0.3s ease;
         }
-
         .logo-wrapper {
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
-
         .logo {
             font-size: 30px;
             font-weight: 620;
@@ -171,7 +134,6 @@
             color: var(--accent);
             transition: color 0.3s ease;
         }
-
         .logo-sub {
             font-size: 14px;
             font-weight: 400;
@@ -180,13 +142,11 @@
             transition: color 0.3s ease;
             margin-left: 2px;
         }
-
         .header-actions {
             display: flex;
             align-items: center;
             gap: 16px;
         }
-
         .btn-new-lesson {
             background: var(--accent);
             border: none;
@@ -207,10 +167,6 @@
         .btn-new-lesson:active {
             transform: scale(0.96);
         }
-
-        /* ============================================================
-           БУРГЕР + СТЕКЛО
-           ============================================================ */
         .burger {
             display: none;
             flex-direction: column;
@@ -239,7 +195,6 @@
         .burger.active span:nth-child(3) {
             transform: rotate(-45deg) translate(5px, -5px);
         }
-
         .nav-menu {
             display: flex;
             gap: 28px;
@@ -259,7 +214,6 @@
         .nav-menu a:hover {
             color: var(--accent);
         }
-
         .nav-menu.mobile {
             display: none;
             position: fixed;
@@ -273,13 +227,11 @@
             justify-content: center;
             align-items: center;
             gap: 32px;
-
             background: var(--glass-bg);
             backdrop-filter: blur(24px) saturate(1.4);
             -webkit-backdrop-filter: blur(24px) saturate(1.4);
             border: 1px solid var(--glass-border);
             box-shadow: var(--glass-shadow);
-
             transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             opacity: 0;
             transform: scale(0.96) translateY(10px);
@@ -291,7 +243,6 @@
             transform: scale(1) translateY(0);
             pointer-events: auto;
         }
-
         .nav-menu.mobile::before {
             content: '';
             position: absolute;
@@ -304,7 +255,6 @@
             pointer-events: none;
             z-index: -1;
         }
-
         .nav-menu.mobile a {
             font-size: 28px;
             font-weight: 600;
@@ -316,10 +266,6 @@
             color: var(--accent);
             transform: scale(1.04);
         }
-
-        /* ============================================================
-           ГЕРОЙ
-           ============================================================ */
         .hero {
             margin-bottom: 28px;
         }
@@ -336,22 +282,16 @@
             color: var(--text-tertiary);
             transition: color 0.3s ease;
         }
-
-        /* ============================================================
-           ФИЛЬТРЫ
-           ============================================================ */
         .filters {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             margin-bottom: 18px;
         }
-
         .filter-group {
             flex: 1;
             min-width: 160px;
         }
-
         .filter-group label {
             font-size: 13px;
             font-weight: 600;
@@ -362,7 +302,6 @@
             margin-bottom: 4px;
             transition: color 0.3s ease;
         }
-
         .filter-select {
             width: 100%;
             padding: 12px 16px;
@@ -388,10 +327,6 @@
             background: var(--bg-secondary);
             color: var(--text-primary);
         }
-
-        /* ============================================================
-           КАРТОЧКА ГЕНЕРАТОРА
-           ============================================================ */
         .generator-card {
             background: var(--bg-card);
             backdrop-filter: blur(24px);
@@ -403,7 +338,6 @@
             margin-bottom: 32px;
             transition: background 0.3s ease, box-shadow 0.3s ease;
         }
-
         .label {
             font-size: 15px;
             font-weight: 600;
@@ -412,7 +346,6 @@
             display: block;
             transition: color 0.3s ease;
         }
-
         .label-sub {
             font-size: 13px;
             font-weight: 400;
@@ -421,7 +354,6 @@
             display: block;
             transition: color 0.3s ease;
         }
-
         .input-area {
             width: 100%;
             padding: 16px 18px;
@@ -443,10 +375,6 @@
         .input-area::placeholder {
             color: var(--text-tertiary);
         }
-
-        /* ============================================================
-           УРОВНИ
-           ============================================================ */
         .level-row {
             display: flex;
             flex-wrap: wrap;
@@ -454,7 +382,6 @@
             margin-top: 6px;
             margin-bottom: 22px;
         }
-
         .level-btn {
             background: var(--bg-input);
             border: 1.5px solid var(--border-color);
@@ -484,17 +411,12 @@
         .level-btn:active {
             transform: scale(0.95);
         }
-
-        /* ============================================================
-           ЧЕКБОКСЫ
-           ============================================================ */
         .checkbox-group {
             display: flex;
             flex-wrap: wrap;
             gap: 20px 32px;
             margin: 10px 0 26px;
         }
-
         .checkbox-item {
             display: flex;
             align-items: center;
@@ -507,7 +429,6 @@
         .checkbox-item.disabled {
             opacity: 0.4;
         }
-
         .checkbox-item input[type="checkbox"] {
             width: 20px;
             height: 20px;
@@ -520,10 +441,6 @@
         .checkbox-item input[type="checkbox"]:checked {
             transform: scale(1.05);
         }
-
-        /* ============================================================
-           КНОПКА СОЗДАТЬ
-           ============================================================ */
         .btn-primary {
             background: var(--accent);
             border: none;
@@ -570,16 +487,11 @@
         .btn-primary.loading .btn-text {
             display: none;
         }
-
         @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
-
-        /* ============================================================
-           РЕЗУЛЬТАТ
-           ============================================================ */
         .result-section {
             margin-top: 28px;
             opacity: 0;
@@ -592,7 +504,6 @@
             max-height: 5000px;
             margin-top: 28px;
         }
-
         .tabs {
             display: flex;
             gap: 0;
@@ -609,7 +520,6 @@
             border-radius: 2px;
             transition: left 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-
         .tab {
             padding: 12px 20px 12px 0;
             font-size: 17px;
@@ -629,11 +539,9 @@
         .tab.active {
             color: var(--accent);
         }
-
         .tab-contents {
             position: relative;
         }
-
         .tab-content {
             opacity: 0;
             transform: translateY(14px);
@@ -657,7 +565,6 @@
             position: relative;
             visibility: visible;
         }
-
         .tab-content h3 {
             font-size: 20px;
             font-weight: 600;
@@ -665,16 +572,11 @@
             color: var(--text-primary);
             transition: color 0.3s ease;
         }
-
-        /* ============================================================
-           ЗАДАНИЯ
-           ============================================================ */
         .tasks-wrapper {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-
         .task-level {
             background: var(--bg-block);
             border-radius: 16px;
@@ -691,7 +593,6 @@
         .task-level.level-olympiad {
             border-left-color: var(--level-olympiad);
         }
-
         .task-level h4 {
             font-size: 18px;
             font-weight: 600;
@@ -735,7 +636,6 @@
             background: #3a1a1a;
             color: #ff6b6b;
         }
-
         .task-list {
             list-style: none;
             padding: 0;
@@ -775,7 +675,6 @@
         .task-list {
             counter-reset: item;
         }
-
         .task-hint {
             margin-top: 10px;
             padding: 10px 16px;
@@ -786,59 +685,73 @@
             transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* ============================================================
-           ПЛАН + ТАЙМЕР
-           ============================================================ */
-        .plan-container {
+        /* ===== ПЛАН С ТАЙМЕРАМИ (полная версия) ===== */
+        .plan-modern {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 4px 0;
+        }
+        .plan-modern .plan-header-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 24px;
             background: var(--bg-block);
-            border-radius: 16px;
-            padding: 18px 22px;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 8px;
             border-left: 4px solid var(--accent);
             transition: background 0.3s ease;
         }
-
-        .plan-header {
+        .plan-modern .plan-header-block .item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-            gap: 12px;
+            flex-direction: column;
+            gap: 2px;
         }
-
-        .plan-header .plan-title {
-            font-size: 18px;
+        .plan-modern .plan-header-block .item .plan-label {
+            font-size: 12px;
             font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            transition: color 0.3s ease;
+        }
+        .plan-modern .plan-header-block .item .plan-value {
+            font-size: 16px;
+            font-weight: 500;
             color: var(--text-primary);
             transition: color 0.3s ease;
         }
 
-        .timer-controls {
+        .plan-modern .plan-timer-bar {
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
+            background: var(--bg-block);
+            border-radius: 12px;
+            padding: 10px 16px;
+            margin: 4px 0 8px 0;
+            border: 1px solid var(--border-color);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
-
-        .timer-display {
+        .plan-modern .plan-timer-bar .timer-display {
             font-size: 28px;
             font-weight: 600;
             font-family: 'SF Mono', 'Courier New', monospace;
             color: var(--timer-text);
             min-width: 100px;
             text-align: center;
-            transition: color 0.3s ease;
             padding: 4px 12px;
             background: var(--bg-input);
             border-radius: 10px;
             border: 1px solid var(--timer-border);
             transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
-
-        .timer-btn {
+        .plan-modern .plan-timer-bar .timer-btn {
             background: var(--bg-btn-secondary);
             border: none;
             border-radius: 10px;
-            padding: 6px 16px;
+            padding: 6px 18px;
             font-size: 15px;
             font-weight: 500;
             font-family: inherit;
@@ -846,119 +759,93 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .timer-btn:hover {
+        .plan-modern .plan-timer-bar .timer-btn:hover {
             background: var(--bg-btn-secondary-hover);
             transform: scale(1.02);
         }
-        .timer-btn:active {
+        .plan-modern .plan-timer-bar .timer-btn:active {
             transform: scale(0.95);
         }
-        .timer-btn.active {
-            background: var(--accent);
-            color: #fff;
-        }
-        .timer-btn.active:hover {
-            background: var(--accent-hover);
-        }
 
-        .plan-timeline {
+        .plan-modern .plan-step {
+            background: var(--plan-step-bg);
+            border-radius: 12px;
+            padding: 14px 18px;
+            border-left: 3px solid var(--plan-step-border);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
+            cursor: default;
+            position: relative;
         }
-
-        .plan-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 10px 14px;
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            transition: background 0.3s ease, border-color 0.3s ease;
-            border: 1.5px solid transparent;
-            cursor: pointer;
-        }
-        .plan-item:hover {
-            background: var(--bg-hover);
-        }
-        .plan-item.active-timer {
+        .plan-modern .plan-step.active-timer {
             border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-light);
             background: var(--accent-light);
         }
-
-        .plan-item .plan-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--accent);
-            flex-shrink: 0;
-            transition: background 0.3s ease;
+        .plan-modern .plan-step .step-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
         }
-        .plan-item:nth-child(1) .plan-dot {
-            background: var(--level-base);
-        }
-        .plan-item:nth-child(2) .plan-dot {
-            background: #5ac8fa;
-        }
-        .plan-item:nth-child(3) .plan-dot {
-            background: var(--level-profi);
-        }
-        .plan-item:nth-child(4) .plan-dot {
-            background: var(--level-olympiad);
-        }
-        .plan-item:nth-child(5) .plan-dot {
-            background: #af52de;
-        }
-        .plan-item:nth-child(6) .plan-dot {
-            background: var(--accent);
-        }
-
-        .plan-item .plan-time {
-            font-weight: 600;
-            color: var(--accent);
+        .plan-modern .plan-step .step-title {
             font-size: 15px;
-            min-width: 80px;
-            font-family: 'SF Mono', monospace;
+            font-weight: 600;
+            color: var(--text-primary);
             transition: color 0.3s ease;
         }
-
-        .plan-item .plan-desc {
-            font-size: 16px;
+        .plan-modern .plan-step .step-desc {
+            font-size: 15px;
             color: var(--text-secondary);
-            line-height: 1.4;
+            line-height: 1.5;
             transition: color 0.3s ease;
             flex: 1;
         }
-
-        .plan-item .plan-timer-btn {
+        .plan-modern .plan-step .step-time {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            font-family: 'SF Mono', monospace;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+        .plan-modern .plan-step .step-timer-btn {
             background: none;
-            border: none;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             font-size: 13px;
             font-weight: 500;
             color: var(--accent);
             cursor: pointer;
             font-family: inherit;
-            padding: 4px 12px;
-            border-radius: 8px;
-            transition: background 0.2s ease, color 0.2s ease;
+            padding: 4px 14px;
+            transition: all 0.2s ease;
             white-space: nowrap;
         }
-        .plan-item .plan-timer-btn:hover {
+        .plan-modern .plan-step .step-timer-btn:hover {
             background: var(--bg-hover);
+            border-color: var(--accent);
         }
-        .plan-item .plan-timer-btn.running {
-            color: var(--level-olympiad);
+        .plan-modern .plan-step .step-timer-btn.running {
+            color: #fff;
+            background: var(--level-olympiad);
+            border-color: var(--level-olympiad);
+        }
+        .plan-modern .plan-step .step-timer-btn.completed {
+            color: var(--level-base);
+            border-color: var(--level-base);
+            background: var(--bg-block);
         }
 
-        /* ============================================================
-           ОТВЕТЫ
-           ============================================================ */
+        /* ===== ОТВЕТЫ ===== */
         .answers-grid {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
-
         .answer-level {
             background: var(--bg-block);
             border-radius: 16px;
@@ -975,7 +862,6 @@
         .answer-level.level-olympiad {
             border-left-color: var(--level-olympiad);
         }
-
         .answer-level h4 {
             font-size: 17px;
             font-weight: 600;
@@ -983,7 +869,6 @@
             color: var(--text-primary);
             transition: color 0.3s ease;
         }
-
         .answer-pairs {
             display: grid;
             grid-template-columns: auto 1fr;
@@ -1001,9 +886,7 @@
             transition: color 0.3s ease;
         }
 
-        /* ============================================================
-           КНОПКИ
-           ============================================================ */
+        /* ===== КНОПКИ ===== */
         .btn-secondary {
             background: var(--bg-btn-secondary);
             border: none;
@@ -1025,17 +908,12 @@
         .btn-secondary:active {
             transform: scale(0.96);
         }
-
         .btn-group {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 16px;
         }
-
-        /* ============================================================
-           ОШИБКИ (НОВЫЕ СООБЩЕНИЯ)
-           ============================================================ */
         .error-message {
             background: var(--error-bg);
             border: 1px solid var(--error-border);
@@ -1047,17 +925,12 @@
             line-height: 1.5;
             transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
-
         .error-message .error-title {
             font-weight: 600;
             font-size: 17px;
             display: block;
             margin-bottom: 2px;
         }
-
-        /* ============================================================
-           ФУТЕР
-           ============================================================ */
         .footer {
             margin-top: 48px;
             font-size: 14px;
@@ -1067,10 +940,6 @@
             text-align: center;
             transition: color 0.3s ease, border-color 0.3s ease;
         }
-
-        /* ============================================================
-           МОДАЛКИ
-           ============================================================ */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -1205,17 +1074,12 @@
         .faq-item p {
             margin: 0;
         }
-
-        /* ============================================================
-           ИСТОРИЯ УРОКОВ
-           ============================================================ */
         .history-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin: 16px 0;
         }
-
         .history-item {
             display: flex;
             justify-content: space-between;
@@ -1229,7 +1093,6 @@
         .history-item:hover {
             background: var(--bg-hover);
         }
-
         .history-item .info {
             display: flex;
             flex-direction: column;
@@ -1246,7 +1109,6 @@
             color: var(--text-tertiary);
             transition: color 0.3s ease;
         }
-
         .history-item .actions {
             display: flex;
             gap: 8px;
@@ -1272,17 +1134,25 @@
         .history-item .actions button.delete:hover {
             background: rgba(255, 59, 48, 0.1);
         }
-
         .history-empty {
             text-align: center;
             padding: 32px 20px;
             color: var(--text-tertiary);
             font-size: 17px;
         }
-
-        /* ============================================================
-           АДАПТИВ
-           ============================================================ */
+        .history-item {
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
         @media (min-width: 769px) {
             body {
                 padding: 48px 40px 60px;
@@ -1311,13 +1181,6 @@
             .task-list li {
                 font-size: 18px;
             }
-            .plan-time {
-                font-size: 17px;
-                min-width: 100px;
-            }
-            .plan-desc {
-                font-size: 18px;
-            }
             .answer-pairs {
                 font-size: 17px;
             }
@@ -1327,18 +1190,17 @@
             .filter-group {
                 min-width: 180px;
             }
-            .timer-display {
-                font-size: 32px;
-                min-width: 120px;
-            }
-            .plan-item .plan-time {
-                min-width: 90px;
-            }
             .header-actions {
                 gap: 20px;
             }
+            .plan-modern .plan-header-block {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .plan-modern .plan-timer-bar .timer-display {
+                font-size: 32px;
+                min-width: 120px;
+            }
         }
-
         @media (max-width: 768px) {
             .burger {
                 display: flex;
@@ -1376,21 +1238,6 @@
                 height: 20px;
                 font-size: 11px;
                 top: 5px;
-            }
-            .plan-item {
-                padding: 10px 12px;
-                gap: 10px;
-                flex-wrap: wrap;
-            }
-            .plan-time {
-                font-size: 14px;
-                min-width: 65px;
-            }
-            .plan-desc {
-                font-size: 15px;
-            }
-            .plan-dot {
-                display: none;
             }
             .answer-level {
                 padding: 14px 16px;
@@ -1431,24 +1278,6 @@
                 width: 100%;
                 justify-content: flex-end;
             }
-            .timer-display {
-                font-size: 24px;
-                min-width: 80px;
-                padding: 2px 8px;
-            }
-            .timer-controls {
-                gap: 8px;
-                flex-wrap: wrap;
-            }
-            .timer-btn {
-                font-size: 13px;
-                padding: 4px 12px;
-            }
-            .plan-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
             .btn-new-lesson {
                 font-size: 13px;
                 padding: 6px 14px;
@@ -1462,8 +1291,37 @@
             .logo-sub {
                 font-size: 12px;
             }
+            .plan-modern .plan-header-block {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .plan-modern .plan-step {
+                padding: 12px 14px;
+            }
+            .plan-modern .plan-step .step-title {
+                font-size: 14px;
+            }
+            .plan-modern .plan-step .step-desc {
+                font-size: 14px;
+            }
+            .plan-modern .plan-timer-bar {
+                flex-direction: column;
+                gap: 8px;
+                align-items: stretch;
+            }
+            .plan-modern .plan-timer-bar .timer-display {
+                font-size: 24px;
+                min-width: 80px;
+            }
+            .plan-modern .plan-step .step-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 6px;
+            }
+            .plan-modern .plan-step .step-timer-btn {
+                align-self: flex-start;
+            }
         }
-
         @media (max-width: 600px) {
             .modal {
                 padding: 24px 18px;
@@ -1476,10 +1334,6 @@
             .modal li {
                 font-size: 16px;
             }
-            .plan-item .plan-timer-btn {
-                font-size: 12px;
-                padding: 2px 10px;
-            }
             .nav-menu.mobile {
                 padding: 24px;
                 gap: 24px;
@@ -1488,42 +1342,22 @@
                 font-size: 22px;
             }
         }
-
-        .history-item {
-            animation: slideIn 0.3s ease;
-        }
-        @keyframes slideIn {
-            0% {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
     </style>
 </head>
 <body>
-
     <div class="container">
-
         <!-- HEADER -->
         <header class="header">
             <div class="logo-wrapper">
                 <span class="logo">Amix<span>by</span></span>
                 <span class="logo-sub">уроки за минуту</span>
             </div>
-
             <div class="header-actions">
                 <button class="btn-new-lesson" id="newLessonBtn">Новый урок</button>
                 <button class="burger" id="burgerBtn" aria-label="Меню">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span></span><span></span><span></span>
                 </button>
             </div>
-
             <nav class="nav-menu" id="desktopNav">
                 <a onclick="openModal('history')">История уроков</a>
                 <a onclick="toggleTheme()">Тёмная тема</a>
@@ -1531,7 +1365,6 @@
                 <a onclick="openModal('support')">Поддержка</a>
                 <a onclick="openModal('faq')">FAQ</a>
             </nav>
-
             <nav class="nav-menu mobile" id="mobileNav">
                 <a onclick="openModal('history'); closeBurger();">История уроков</a>
                 <a onclick="toggleTheme(); closeBurger();">Тёмная тема</a>
@@ -1540,34 +1373,25 @@
                 <a onclick="openModal('faq'); closeBurger();">FAQ</a>
             </nav>
         </header>
-
         <!-- HERO -->
         <section class="hero">
             <h1>Подготовка урока</h1>
             <p>Выберите класс и предмет — ИИ создаст задания, план и ответы за 5 секунд</p>
         </section>
-
         <!-- GENERATOR -->
         <section class="generator-card">
-
             <div class="filters">
                 <div class="filter-group">
                     <label for="classSelect">Класс</label>
                     <select class="filter-select" id="classSelect">
-                        <option value="1">1 класс</option>
-                        <option value="2">2 класс</option>
-                        <option value="3">3 класс</option>
-                        <option value="4">4 класс</option>
-                        <option value="5">5 класс</option>
-                        <option value="6">6 класс</option>
-                        <option value="7">7 класс</option>
-                        <option value="8">8 класс</option>
-                        <option value="9">9 класс</option>
-                        <option value="10">10 класс</option>
+                        <option value="1">1 класс</option><option value="2">2 класс</option>
+                        <option value="3">3 класс</option><option value="4">4 класс</option>
+                        <option value="5">5 класс</option><option value="6">6 класс</option>
+                        <option value="7">7 класс</option><option value="8">8 класс</option>
+                        <option value="9">9 класс</option><option value="10">10 класс</option>
                         <option value="11">11 класс</option>
                     </select>
                 </div>
-
                 <div class="filter-group">
                     <label for="subjectSelect">Предмет</label>
                     <select class="filter-select" id="subjectSelect">
@@ -1599,12 +1423,9 @@
                     </select>
                 </div>
             </div>
-
             <label class="label" for="topicInput">Тема урока</label>
             <span class="label-sub">Введите тему, ключевые слова или вставьте текст параграфа</span>
-
             <textarea class="input-area" id="topicInput" placeholder="Например: Квадратные уравнения. 8 класс">Дроби. Сложение и вычитание с разными знаменателями. 5 класс</textarea>
-
             <div style="margin-top: 18px;">
                 <span class="label" style="margin-bottom: 2px;">Уровень сложности</span>
                 <span class="label-sub">Выберите один или несколько</span>
@@ -1614,144 +1435,59 @@
                     <button class="level-btn active" data-level="olympiad">Олимпиадный</button>
                 </div>
             </div>
-
             <div class="checkbox-group">
-                <label class="checkbox-item">
-                    <input type="checkbox" checked id="chkTasks" /> Сгенерировать задания
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" checked id="chkPlan" /> Сгенерировать план урока
-                </label>
+                <label class="checkbox-item"><input type="checkbox" checked id="chkTasks" /> Сгенерировать задания</label>
+                <label class="checkbox-item"><input type="checkbox" checked id="chkPlan" /> Сгенерировать план урока</label>
             </div>
-
             <button class="btn-primary" id="generateBtn">
                 <span class="btn-text">Создать урок</span>
                 <span class="spinner"></span>
             </button>
-
             <!-- RESULT -->
             <div class="result-section" id="resultSection">
-
                 <div class="tabs" id="tabsContainer">
                     <button class="tab active" data-tab="tasks">Задания</button>
                     <button class="tab" data-tab="plan">План урока</button>
                     <button class="tab" data-tab="answers">Ответы</button>
                     <div class="tab-indicator" id="tabIndicator"></div>
                 </div>
-
                 <div class="tab-contents" id="tabContentsWrapper">
                     <div class="tab-content active" id="tab-tasks">
                         <h3>Задания</h3>
-                        <div id="tasksContent">
-                            <p style="color: var(--text-tertiary);">Выберите класс, предмет и нажмите «Создать урок»</p>
-                        </div>
+                        <div id="tasksContent"><p style="color: var(--text-tertiary);">Выберите класс, предмет и нажмите «Создать урок»</p></div>
                         <div class="btn-group">
                             <button class="btn-secondary" id="downloadPdfBtn">Скачать PDF</button>
+                            <button class="btn-secondary" id="downloadWordBtn">Скачать Word</button>
                             <button class="btn-secondary" onclick="window.print()">Распечатать</button>
                         </div>
                     </div>
-
                     <div class="tab-content" id="tab-plan">
                         <h3>План урока</h3>
-                        <div id="planContent">
-                            <p style="color: var(--text-tertiary);">Выберите класс, предмет и нажмите «Создать урок»</p>
-                        </div>
+                        <div id="planContent"><p style="color: var(--text-tertiary);">Выберите класс, предмет и нажмите «Создать урок»</p></div>
                         <div class="btn-group">
                             <button class="btn-secondary" id="downloadPdfBtnPlan">Скачать PDF</button>
+                            <button class="btn-secondary" id="downloadWordBtnPlan">Скачать Word</button>
                             <button class="btn-secondary" onclick="window.print()">Отправить на печать</button>
                         </div>
                     </div>
-
                     <div class="tab-content" id="tab-answers">
                         <h3>Эталоны ответов</h3>
-                        <div id="answersContent">
-                            <p style="color: var(--text-tertiary);">Выберите класс, предмет и нажмите «Создать урок»</p>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn-secondary" id="showAnswersBtn">Показать на экране</button>
-                        </div>
+                        <div id="answersContent"><p style="color: var(--text-tertiary);">Выберите класс, предмет и нажмите «Создать урок»</p></div>
+                        <div class="btn-group"><button class="btn-secondary" id="showAnswersBtn">Показать на экране</button></div>
                     </div>
                 </div>
-
             </div>
         </section>
-
-        <footer class="footer">
-            Amixby 2026 — создано для учителей
-        </footer>
+        <footer class="footer">Amixby 2026 — создано для учителей</footer>
     </div>
-
     <!-- ===== МОДАЛКИ ===== -->
-    <div class="modal-overlay" id="modalHistory">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('modalHistory')">&times;</button>
-            <h2>История уроков</h2>
-            <div id="historyList" class="history-list"></div>
-            <div style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <button class="btn-secondary" onclick="clearHistory()" style="color: var(--level-olympiad);">Очистить историю</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modalHow">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('modalHow')">&times;</button>
-            <h2>Как это работает?</h2>
-            <p><strong>1. Выберите класс и предмет</strong> — укажите параметры для точной настройки.</p>
-            <p><strong>2. Введите тему</strong> — например: «Квадратные уравнения. 8 класс».</p>
-            <p><strong>3. Выберите уровни</strong> — базовый, профи или олимпиадный (можно несколько).</p>
-            <p><strong>4. Нажмите «Создать урок»</strong> — ИИ сгенерирует задания, план урока и ответы за 5 секунд.</p>
-            <p><strong>5. Скачайте PDF</strong> или распечатайте материалы прямо из браузера.</p>
-            <p style="margin-top: 12px; color: var(--text-tertiary);">Все материалы создаются на основе вашей темы с учётом школьной программы.</p>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modalSupport">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('modalSupport')">&times;</button>
-            <h2>Поддержка</h2>
-            <p>Опишите вашу проблему или предложение, и мы ответим в ближайшее время.</p>
-            <div class="support-email">
-                <p><strong>Email для связи:</strong> <a href="mailto:apexcorpoff@gmail.com">apexcorpoff@gmail.com</a></p>
-            </div>
-            <form id="supportForm" onsubmit="sendSupport(event)">
-                <textarea id="supportMessage" placeholder="Опишите вашу проблему..." required></textarea>
-                <button type="submit" class="btn-send">Отправить</button>
-            </form>
-            <p style="margin-top: 8px; font-size: 14px; color: var(--text-tertiary);">Письмо будет открыто в вашем почтовом клиенте.</p>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modalFaq">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('modalFaq')">&times;</button>
-            <h2>Часто задаваемые вопросы</h2>
-            <div class="faq-item">
-                <strong>Какие предметы доступны?</strong>
-                <p>Все школьные предметы: математика, русский, физика, химия, биология, история, английский и другие.</p>
-            </div>
-            <div class="faq-item">
-                <strong>Нужно ли регистрироваться?</strong>
-                <p>Нет, Amixby работает без регистрации — открыли и пользуетесь.</p>
-            </div>
-            <div class="faq-item">
-                <strong>Сколько это стоит?</strong>
-                <p>Полностью бесплатно. Мы используем Groq API с бесплатным тарифом.</p>
-            </div>
-            <div class="faq-item">
-                <strong>Можно ли скачать материалы?</strong>
-                <p>Да, кнопка «Скачать PDF» сохранит задания и план урока в формате PDF.</p>
-            </div>
-            <div class="faq-item">
-                <strong>Что делать, если ИИ не отвечает?</strong>
-                <p>Проверьте интернет-соединение. Если ошибка повторяется — напишите в поддержку.</p>
-            </div>
-        </div>
-    </div>
-
+    <div class="modal-overlay" id="modalHistory"><div class="modal"><button class="modal-close" onclick="closeModal('modalHistory')">&times;</button><h2>История уроков</h2><div id="historyList" class="history-list"></div><div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;"><button class="btn-secondary" onclick="clearHistory()" style="color:var(--level-olympiad);">Очистить историю</button></div></div></div>
+    <div class="modal-overlay" id="modalHow"><div class="modal"><button class="modal-close" onclick="closeModal('modalHow')">&times;</button><h2>Как это работает?</h2><p><strong>1. Выберите класс и предмет</strong> — укажите параметры для точной настройки.</p><p><strong>2. Введите тему</strong> — например: «Квадратные уравнения. 8 класс».</p><p><strong>3. Выберите уровни</strong> — базовый, профи или олимпиадный (можно несколько).</p><p><strong>4. Нажмите «Создать урок»</strong> — ИИ сгенерирует задания, план урока и ответы за 5 секунд.</p><p><strong>5. Скачайте PDF или Word</strong> или распечатайте материалы прямо из браузера.</p><p style="margin-top:12px;color:var(--text-tertiary);">Все материалы создаются на основе вашей темы с учётом школьной программы.</p></div></div>
+    <div class="modal-overlay" id="modalSupport"><div class="modal"><button class="modal-close" onclick="closeModal('modalSupport')">&times;</button><h2>Поддержка</h2><p>Опишите вашу проблему или предложение, и мы ответим в ближайшее время.</p><div class="support-email"><p><strong>Email для связи:</strong> <a href="mailto:apexcorpoff@gmail.com">apexcorpoff@gmail.com</a></p></div><form id="supportForm" onsubmit="sendSupport(event)"><textarea id="supportMessage" placeholder="Опишите вашу проблему..." required></textarea><button type="submit" class="btn-send">Отправить</button></form><p style="margin-top:8px;font-size:14px;color:var(--text-tertiary);">Письмо будет открыто в вашем почтовом клиенте.</p></div></div>
+    <div class="modal-overlay" id="modalFaq"><div class="modal"><button class="modal-close" onclick="closeModal('modalFaq')">&times;</button><h2>Часто задаваемые вопросы</h2><div class="faq-item"><strong>Какие предметы доступны?</strong><p>Все школьные предметы: математика, русский, физика, химия, биология, история, английский и другие.</p></div><div class="faq-item"><strong>Нужно ли регистрироваться?</strong><p>Нет, Amixby работает без регистрации — открыли и пользуетесь.</p></div><div class="faq-item"><strong>Сколько это стоит?</strong><p>Полностью бесплатно. Мы используем Groq API с бесплатным тарифом.</p></div><div class="faq-item"><strong>Можно ли скачать материалы?</strong><p>Да, кнопка «Скачать PDF» или «Скачать Word» сохранит задания и план урока.</p></div><div class="faq-item"><strong>Что делать, если ИИ не отвечает?</strong><p>Проверьте интернет-соединение. Если ошибка повторяется — напишите в поддержку.</p></div></div></div>
     <script>
         // ============================================================
-        // API
+        // API КЛЮЧ
         // ============================================================
         const GROQ_API_KEY = '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';
         const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
@@ -1759,30 +1495,22 @@
         // ============================================================
         // ТЁМНАЯ ТЕМА
         // ============================================================
-        function getTheme() {
-            return localStorage.getItem('amixby-theme') || 'light';
-        }
+        function getTheme() { return localStorage.getItem('amixby-theme') || 'light'; }
 
         function setTheme(theme) {
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('amixby-theme', theme);
         }
 
-        function toggleTheme() {
-            const current = getTheme();
-            setTheme(current === 'light' ? 'dark' : 'light');
-        }
+        function toggleTheme() { const current = getTheme();
+            setTheme(current === 'light' ? 'dark' : 'light'); }
         setTheme(getTheme());
 
         // ============================================================
-        // ИСТОРИЯ УРОКОВ
+        // ИСТОРИЯ
         // ============================================================
         function getHistory() {
-            try {
-                return JSON.parse(localStorage.getItem('amixby-history')) || [];
-            } catch {
-                return [];
-            }
+            try { return JSON.parse(localStorage.getItem('amixby-history')) || []; } catch { return []; }
         }
 
         function saveHistoryItem(data, topic, levels) {
@@ -1803,22 +1531,10 @@
         function renderHistory() {
             const container = document.getElementById('historyList');
             const history = getHistory();
-            if (history.length === 0) {
-                container.innerHTML = '<div class="history-empty">Уроков пока нет. Создайте свой первый урок!</div>';
-                return;
-            }
-            container.innerHTML = history.map((item, index) => `
-                <div class="history-item">
-                    <div class="info">
-                        <div class="title">${item.topic}</div>
-                        <div class="meta">${item.date} · ${item.class} класс · ${item.subject} · Уровни: ${item.levels}</div>
-                    </div>
-                    <div class="actions">
-                        <button onclick="openHistoryLesson(${index})">Открыть</button>
-                        <button class="delete" onclick="deleteHistoryItem(${index})">Удалить</button>
-                    </div>
-                </div>
-            `).join('');
+            if (history.length === 0) { container.innerHTML = '<div class="history-empty">Уроков пока нет. Создайте свой первый урок!</div>'; return; }
+            container.innerHTML = history.map((item, index) =>
+                `<div class="history-item"><div class="info"><div class="title">${item.topic}</div><div class="meta">${item.date} · ${item.class} класс · ${item.subject} · Уровни: ${item.levels}</div></div><div class="actions"><button onclick="openHistoryLesson(${index})">Открыть</button><button class="delete" onclick="deleteHistoryItem(${index})">Удалить</button></div></div>`
+            ).join('');
         }
 
         function openHistoryLesson(index) {
@@ -1831,14 +1547,10 @@
             const tasksTab = document.querySelector('.tab[data-tab="tasks"]');
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             tasksTab.classList.add('active');
-            Object.keys(tabContents).forEach(key => {
-                tabContents[key].classList.toggle('active', key === 'tasks');
-            });
+            Object.keys(tabContents).forEach(key => { tabContents[key].classList.toggle('active', key === 'tasks'); });
             updateIndicator(tasksTab);
             closeModal('modalHistory');
-            setTimeout(() => {
-                document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 300);
+            setTimeout(() => { document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
         }
 
         function deleteHistoryItem(index) {
@@ -1861,7 +1573,7 @@
         async function generateWithAI(topic, levels, includePlan) {
             const levelsText = levels.join(', ');
             const planInstruction = includePlan ?
-                'Составь пошаговый план урока на 45 минут с таймингом.' :
+                'Составь современный поурочный план по этапам: Тема, Класс, Цели, Ход урока (с этапами: актуализация знаний и фиксация затруднений, выявление причины затруднений, первичное закрепление, закрепление и повторение темы под конец). Для каждого этапа укажи краткое описание и примерное время (например, "5 мин").' :
                 'План урока не нужен.';
 
             const prompt = `
@@ -1876,14 +1588,17 @@
                         "profi": ["список задач для профи-уровня (5 штук)"],
                         "olympiad": ["список задач для олимпиадного уровня (2-3 штуки)"]
                     },
-                    "plan": [
-                        {"time": "0–5 мин", "desc": "описание этапа"},
-                        {"time": "5–12 мин", "desc": "описание этапа"},
-                        {"time": "12–25 мин", "desc": "описание этапа"},
-                        {"time": "25–33 мин", "desc": "описание этапа"},
-                        {"time": "33–40 мин", "desc": "описание этапа"},
-                        {"time": "40–45 мин", "desc": "описание этапа"}
-                    ],
+                    "plan": {
+                        "topic": "тема урока",
+                        "class": "класс (например, 5 класс)",
+                        "goals": ["цель 1", "цель 2", "цель 3"],
+                        "steps": [
+                            {"name": "Актуализация знаний и фиксация затруднений", "desc": "описание этапа", "time": "5 мин"},
+                            {"name": "Выявление причины затруднений", "desc": "описание этапа", "time": "5 мин"},
+                            {"name": "Первичное закрепление", "desc": "описание этапа", "time": "10 мин"},
+                            {"name": "Закрепление и повторение темы под конец", "desc": "описание этапа", "time": "10 мин"}
+                        ]
+                    },
                     "answers": {
                         "base": "ответы на базовый уровень через запятую",
                         "profi": "ответы на профи-уровень через запятую",
@@ -1899,14 +1614,12 @@
                 Если тема не математическая, адаптируй задания под неё.
                 Для всех задач указывай номера (1., 2., 3., ...).
                 Ответы давай в виде: "1. ответ 2. ответ 3. ответ ..."
+                План должен быть современным, чётким, без смайликов.
             `;
 
             const response = await fetch(GROQ_API_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${GROQ_API_KEY}`
-                },
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
                 body: JSON.stringify({
                     model: 'llama-3.3-70b-versatile',
                     messages: [
@@ -1921,17 +1634,10 @@
             if (!response.ok) {
                 const errorData = await response.json();
                 let errorMsg = errorData.error?.message || response.statusText;
-
-                // === КАСТОМНЫЕ СООБЩЕНИЯ ===
                 if (response.status === 429) {
                     errorMsg = 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
-                } else if (response.status === 401) {
-                    errorMsg = 'API-ключ недействителен. Проверьте ключ.';
-                } else if (response.status === 403) {
-                    errorMsg = 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
-                } else if (response.status === 500 || response.status === 502 || response.status === 503) {
-                    errorMsg = 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
-                } else if (response.status === 504) {
+                } else if (response.status === 401 || response.status === 403 || response.status === 500 || response.status ===
+                    502 || response.status === 503 || response.status === 504) {
                     errorMsg = 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
                 }
                 throw new Error(errorMsg);
@@ -1939,12 +1645,8 @@
 
             const data = await response.json();
             const content = data.choices[0].message.content;
-
             const jsonMatch = content.match(/\{[\s\S]*\}/);
-            if (!jsonMatch) {
-                throw new Error('Не удалось извлечь JSON из ответа ИИ');
-            }
-
+            if (!jsonMatch) throw new Error('Не удалось извлечь JSON из ответа ИИ');
             return JSON.parse(jsonMatch[0]);
         }
 
@@ -1976,6 +1678,14 @@
             updateTimerUI(index);
             updateTimerDisplay();
 
+            // Обновляем текст кнопки
+            const btns = document.querySelectorAll('.plan-modern .plan-step .step-timer-btn');
+            if (btns[index]) {
+                btns[index].textContent = 'Остановить';
+                btns[index].classList.add('running');
+                btns[index].classList.remove('completed');
+            }
+
             timerInterval = setInterval(() => {
                 const elapsed = Math.floor((Date.now() - timerStartTime) / 1000);
                 const remaining = Math.max(0, timerSeconds - elapsed);
@@ -1984,10 +1694,16 @@
 
                 if (remaining <= 0) {
                     stopTimer();
-                    const items = document.querySelectorAll('.plan-item');
-                    if (items[index]) {
-                        items[index].classList.remove('active-timer');
-                        items[index].style.borderColor = 'var(--level-base)';
+                    const steps = document.querySelectorAll('.plan-modern .plan-step');
+                    if (steps[index]) {
+                        steps[index].classList.remove('active-timer');
+                        steps[index].style.borderColor = 'var(--level-base)';
+                    }
+                    // Меняем текст кнопки
+                    if (btns[index]) {
+                        btns[index].textContent = 'Завершён';
+                        btns[index].classList.remove('running');
+                        btns[index].classList.add('completed');
                     }
                 }
             }, 200);
@@ -1999,10 +1715,10 @@
                 timerInterval = null;
             }
             timerRunning = false;
-            document.querySelectorAll('.plan-item').forEach(el => {
+            document.querySelectorAll('.plan-modern .plan-step').forEach(el => {
                 el.classList.remove('active-timer');
             });
-            const timerDisplay = document.querySelector('.timer-display');
+            const timerDisplay = document.querySelector('.plan-modern .plan-timer-bar .timer-display');
             if (timerDisplay) {
                 timerDisplay.textContent = '00:00';
             }
@@ -2010,13 +1726,13 @@
         }
 
         function updateTimerUI(index) {
-            document.querySelectorAll('.plan-item').forEach((el, i) => {
+            document.querySelectorAll('.plan-modern .plan-step').forEach((el, i) => {
                 el.classList.toggle('active-timer', i === index);
             });
         }
 
         function updateTimerDisplay(remaining) {
-            const display = document.querySelector('.timer-display');
+            const display = document.querySelector('.plan-modern .plan-timer-bar .timer-display');
             if (display) {
                 if (remaining !== undefined) {
                     display.textContent = formatTime(remaining);
@@ -2027,22 +1743,25 @@
         }
 
         function setupTimerForPlan() {
-            const items = document.querySelectorAll('.plan-item');
-            if (items.length === 0) return;
+            const steps = document.querySelectorAll('.plan-modern .plan-step');
+            if (steps.length === 0) return;
 
-            items.forEach((item, index) => {
-                const existingBtn = item.querySelector('.plan-timer-btn');
+            steps.forEach((step, index) => {
+                // Удаляем старую кнопку, если есть
+                const existingBtn = step.querySelector('.step-timer-btn');
                 if (existingBtn) existingBtn.remove();
 
-                const timeSpan = item.querySelector('.plan-time');
+                // Парсим время
+                const timeSpan = step.querySelector('.step-time');
                 if (!timeSpan) return;
-                const timeText = timeSpan.textContent;
-                const match = timeText.match(/(\d+)\s*–\s*(\d+)/);
+                const timeText = timeSpan.textContent.trim();
+                const match = timeText.match(/(\d+)\s*мин/);
                 if (!match) return;
-                const duration = parseInt(match[2]) * 60;
+                const duration = parseInt(match[1]) * 60;
 
+                // Создаём кнопку
                 const btn = document.createElement('button');
-                btn.className = 'plan-timer-btn';
+                btn.className = 'step-timer-btn';
                 btn.textContent = 'Запустить';
                 btn.dataset.duration = duration;
                 btn.dataset.index = index;
@@ -2054,39 +1773,59 @@
                     if (timerRunning && timerActiveIndex === idx) {
                         stopTimer();
                         this.textContent = 'Запустить';
+                        this.classList.remove('running');
+                        this.classList.remove('completed');
+                        // Сбрасываем другие кнопки
+                        document.querySelectorAll('.plan-modern .plan-step .step-timer-btn').forEach(b => {
+                            if (b !== this) {
+                                b.textContent = 'Запустить';
+                                b.classList.remove('running');
+                                b.classList.remove('completed');
+                            }
+                        });
                     } else {
                         startTimer(idx, dur);
                         this.textContent = 'Остановить';
-                        document.querySelectorAll('.plan-timer-btn').forEach(b => {
-                            if (b !== this) b.textContent = 'Запустить';
+                        this.classList.add('running');
+                        this.classList.remove('completed');
+                        document.querySelectorAll('.plan-modern .plan-step .step-timer-btn').forEach(b => {
+                            if (b !== this) {
+                                b.textContent = 'Запустить';
+                                b.classList.remove('running');
+                                b.classList.remove('completed');
+                            }
                         });
                     }
                 });
 
-                item.appendChild(btn);
+                // Добавляем кнопку в step-row
+                const row = step.querySelector('.step-row');
+                if (row) {
+                    // Вставляем перед временем
+                    const timeEl = row.querySelector('.step-time');
+                    if (timeEl) {
+                        row.insertBefore(btn, timeEl);
+                    } else {
+                        row.appendChild(btn);
+                    }
+                } else {
+                    step.appendChild(btn);
+                }
             });
 
-            const controls = document.querySelector('.timer-controls');
-            if (controls) {
-                const display = controls.querySelector('.timer-display');
-                controls.innerHTML = '';
-                if (display) controls.appendChild(display);
-
-                const stopAllBtn = document.createElement('button');
-                stopAllBtn.className = 'timer-btn';
-                stopAllBtn.textContent = 'Сбросить';
-                stopAllBtn.addEventListener('click', function() {
+            // Настраиваем глобальную кнопку сброса
+            const resetBtn = document.querySelector('.plan-modern .plan-timer-bar .timer-btn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
                     stopTimer();
-                    document.querySelectorAll('.plan-timer-btn').forEach(b => b.textContent = 'Запустить');
-                    const display = document.querySelector('.timer-display');
+                    document.querySelectorAll('.plan-modern .plan-step .step-timer-btn').forEach(b => {
+                        b.textContent = 'Запустить';
+                        b.classList.remove('running');
+                        b.classList.remove('completed');
+                    });
+                    const display = document.querySelector('.plan-modern .plan-timer-bar .timer-display');
                     if (display) display.textContent = '00:00';
                 });
-                controls.appendChild(stopAllBtn);
-
-                const globalDisplay = document.createElement('span');
-                globalDisplay.className = 'timer-display';
-                globalDisplay.textContent = '00:00';
-                controls.prepend(globalDisplay);
             }
         }
 
@@ -2101,11 +1840,10 @@
             lastGeneratedData = data;
             lastTopic = topic;
             lastLevels = levels;
-
             const withTasks = document.getElementById('chkTasks').checked;
             const withPlan = document.getElementById('chkPlan').checked;
 
-            // ---------- ЗАДАНИЯ ----------
+            // --- ЗАДАНИЯ ---
             let tasksHTML = '';
             if (withTasks && data.tasks) {
                 const levelMap = {
@@ -2113,67 +1851,59 @@
                     'profi': { label: 'Профи-уровень', cls: 'level-profi', data: data.tasks.profi },
                     'olympiad': { label: 'Олимпиадный уровень', cls: 'level-olympiad', data: data.tasks.olympiad }
                 };
-
                 let hasAny = false;
                 const wrapper = document.createElement('div');
                 wrapper.className = 'tasks-wrapper';
-
                 levels.forEach(level => {
                     const info = levelMap[level];
                     if (info && info.data && info.data.length > 0) {
                         hasAny = true;
                         const block = document.createElement('div');
                         block.className = `task-level ${info.cls}`;
-
                         let tasksList = '<ul class="task-list">';
-                        info.data.forEach(task => {
-                            tasksList += `<li>${task.replace(/^\d+\.\s*/, '')}</li>`;
-                        });
+                        info.data.forEach(task => { tasksList += `<li>${task.replace(/^\d+\.\s*/, '')}</li>`; });
                         tasksList += '</ul>';
-
-                        block.innerHTML = `
-                            <h4>${info.label} <span class="badge">${level === 'base' ? 'Б' : level === 'profi' ? 'П' : 'О'}</span></h4>
-                            ${tasksList}
-                        `;
+                        block.innerHTML =
+                            `<h4>${info.label} <span class="badge">${level === 'base' ? 'Б' : level === 'profi' ? 'П' : 'О'}</span></h4>${tasksList}`;
                         wrapper.appendChild(block);
                     }
                 });
-
-                if (!hasAny) {
-                    tasksHTML = '<p style="color: var(--text-tertiary);">Нет заданий для выбранных уровней</p>';
-                } else {
-                    tasksHTML = wrapper.innerHTML;
-                }
+                tasksHTML = hasAny ? wrapper.innerHTML : '<p style="color: var(--text-tertiary);">Нет заданий для выбранных уровней</p>';
             } else {
                 tasksHTML = '<p style="color: var(--text-tertiary);">Генерация заданий отключена</p>';
             }
             document.getElementById('tasksContent').innerHTML = tasksHTML;
 
-            // ---------- ПЛАН + ТАЙМЕР ----------
+            // --- ПЛАН С ТАЙМЕРАМИ ---
             let planHTML = '';
-            if (withPlan && data.plan && data.plan.length > 0) {
-                let timeline = '<div class="plan-timeline">';
-                data.plan.forEach(item => {
-                    timeline += `
-                        <div class="plan-item">
-                            <span class="plan-dot"></span>
-                            <span class="plan-time">${item.time}</span>
-                            <span class="plan-desc">${item.desc}</span>
+            if (withPlan && data.plan && data.plan.steps) {
+                const p = data.plan;
+                const stepsHtml = p.steps.map(step =>
+                    `<div class="plan-step">
+                        <div class="step-row">
+                            <span class="step-title">${step.name}</span>
+                            <span class="step-time">${step.time || ''}</span>
                         </div>
-                    `;
-                });
-                timeline += '</div>';
+                        <div class="step-desc">${step.desc}</div>
+                    </div>`
+                ).join('');
+
+                const goalsHtml = p.goals ? p.goals.map(g => `<span style="display:block;font-size:15px;color:var(--text-secondary);">• ${g}</span>`).join(
+                    '') : '';
 
                 planHTML = `
-                    <div class="plan-container">
-                        <div class="plan-header">
-                            <span class="plan-title">Тема: ${topic}</span>
-                            <div class="timer-controls">
-                                <span class="timer-display">00:00</span>
-                                <button class="timer-btn" id="stopTimerBtn">Сбросить</button>
-                            </div>
+                    <div class="plan-modern">
+                        <div class="plan-header-block">
+                            <div class="item"><span class="plan-label">Тема</span><span class="plan-value">${p.topic || topic}</span></div>
+                            <div class="item"><span class="plan-label">Класс</span><span class="plan-value">${p.class || ''}</span></div>
+                            <div class="item"><span class="plan-label">Цели</span><span class="plan-value">${goalsHtml || '—'}</span></div>
                         </div>
-                        ${timeline}
+                        <div class="plan-timer-bar">
+                            <span class="timer-display">00:00</span>
+                            <button class="timer-btn">Сбросить таймер</button>
+                        </div>
+                        <div style="font-weight:600;font-size:16px;color:var(--text-primary);margin:4px 0 6px 0;">Ход урока</div>
+                        ${stepsHtml}
                     </div>
                 `;
             } else if (withPlan) {
@@ -2183,20 +1913,10 @@
             }
             document.getElementById('planContent').innerHTML = planHTML;
 
-            setTimeout(() => {
-                setupTimerForPlan();
-                const stopBtn = document.getElementById('stopTimerBtn');
-                if (stopBtn) {
-                    stopBtn.addEventListener('click', function() {
-                        stopTimer();
-                        document.querySelectorAll('.plan-timer-btn').forEach(b => b.textContent = 'Запустить');
-                        const display = document.querySelector('.timer-display');
-                        if (display) display.textContent = '00:00';
-                    });
-                }
-            }, 50);
+            // Настраиваем таймер после рендеринга
+            setTimeout(setupTimerForPlan, 100);
 
-            // ---------- ОТВЕТЫ ----------
+            // --- ОТВЕТЫ ---
             let answersHTML = '';
             if (withTasks && data.answers) {
                 const levelMap = {
@@ -2204,41 +1924,25 @@
                     'profi': { label: 'Профи-уровень', cls: 'level-profi', data: data.answers.profi },
                     'olympiad': { label: 'Олимпиадный уровень', cls: 'level-olympiad', data: data.answers.olympiad }
                 };
-
                 let hasAny = false;
                 const grid = document.createElement('div');
                 grid.className = 'answers-grid';
-
                 levels.forEach(level => {
                     const info = levelMap[level];
                     if (info && info.data) {
                         hasAny = true;
                         const block = document.createElement('div');
                         block.className = `answer-level ${info.cls}`;
-
                         const pairs = info.data.split(/\d+\.\s*/).filter(s => s.trim() !== '');
                         let pairsHTML = '<div class="answer-pairs">';
-                        pairs.forEach((val, idx) => {
-                            pairsHTML += `
-                                <span class="num">${idx + 1}.</span>
-                                <span class="val">${val.trim()}</span>
-                            `;
-                        });
+                        pairs.forEach((val, idx) => { pairsHTML +=
+                                `<span class="num">${idx + 1}.</span><span class="val">${val.trim()}</span>`; });
                         pairsHTML += '</div>';
-
-                        block.innerHTML = `
-                            <h4>${info.label}</h4>
-                            ${pairsHTML}
-                        `;
+                        block.innerHTML = `<h4>${info.label}</h4>${pairsHTML}`;
                         grid.appendChild(block);
                     }
                 });
-
-                if (!hasAny) {
-                    answersHTML = '<p style="color: var(--text-tertiary);">Нет ответов для выбранных уровней</p>';
-                } else {
-                    answersHTML = grid.innerHTML;
-                }
+                answersHTML = hasAny ? grid.innerHTML : '<p style="color: var(--text-tertiary);">Нет ответов для выбранных уровней</p>';
             } else {
                 answersHTML = '<p style="color: var(--text-tertiary);">Ответы не сгенерированы</p>';
             }
@@ -2246,24 +1950,67 @@
         }
 
         // ============================================================
-        // НОВЫЙ УРОК (сброс)
+        // ЭКСПОРТ В WORD (.doc)
         // ============================================================
-        function resetLesson() {
-            stopTimer();
-            document.getElementById('topicInput').value = '';
-            document.querySelectorAll('.level-btn').forEach(btn => {
-                btn.classList.add('active');
-            });
-            document.getElementById('chkTasks').checked = true;
-            document.getElementById('chkPlan').checked = true;
-            document.querySelectorAll('.checkbox-item').forEach(item => {
-                item.classList.remove('disabled');
-            });
-            document.getElementById('resultSection').classList.remove('visible');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            const btn = document.getElementById('generateBtn');
-            btn.classList.remove('loading');
-            btn.querySelector('.btn-text').textContent = 'Создать урок';
+        function exportWord(elementId, filename) {
+            const element = document.getElementById(elementId);
+            if (!element || element.innerHTML.trim() === '' || element.innerHTML.includes('Выберите класс, предмет и нажмите')) {
+                alert('Сначала создайте урок, чтобы скачать Word.');
+                return;
+            }
+
+            let content = element.cloneNode(true);
+            const btns = content.querySelectorAll('.btn-group, .btn-secondary, button, .plan-timer-bar, .step-timer-btn');
+            btns.forEach(el => el.remove());
+
+            const style = `
+                <style>
+                    body { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 30px; color: #1c1c1e; max-width: 800px; margin: 0 auto; }
+                    h1 { color: #007aff; font-size: 28px; margin-bottom: 4px; }
+                    h2 { font-size: 22px; margin-top: 24px; margin-bottom: 12px; color: #1c1c1e; border-bottom: 1px solid #e5e5ea; padding-bottom: 8px; }
+                    h3 { font-size: 18px; margin: 16px 0 8px 0; color: #1c1c1e; }
+                    .task-block { background: #f8f8fc; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; border-left: 4px solid #007aff; }
+                    .task-block.level-base { border-left-color: #34c759; }
+                    .task-block.level-profi { border-left-color: #ff9500; }
+                    .task-block.level-olympiad { border-left-color: #ff3b30; }
+                    .task-block ul { list-style: none; padding: 0; margin: 8px 0; }
+                    .task-block ul li { padding: 4px 0 4px 28px; position: relative; }
+                    .task-block ul li::before { content: counter(item); counter-increment: item; position: absolute; left: 0; font-weight: 600; color: #007aff; }
+                    .task-block ul { counter-reset: item; }
+                    .plan-header { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; background: #f8f8fc; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; border-left: 4px solid #007aff; }
+                    .plan-header .item .label { font-size: 12px; font-weight: 600; color: #8e8e93; text-transform: uppercase; }
+                    .plan-header .item .value { font-size: 16px; font-weight: 500; color: #1c1c1e; }
+                    .plan-step { background: #f8f8fc; border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; border-left: 3px solid #007aff; }
+                    .plan-step .step-title { font-weight: 600; font-size: 16px; }
+                    .plan-step .step-desc { color: #3a3a3c; margin-top: 2px; }
+                    .plan-step .step-time { color: #8e8e93; font-size: 13px; font-family: monospace; }
+                    .answers-block { background: #f8f8fc; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; border-left: 4px solid #007aff; }
+                    .answers-block .pairs { display: grid; grid-template-columns: auto 1fr; gap: 2px 20px; font-size: 16px; }
+                    .answers-block .pairs .num { font-weight: 500; color: #8e8e93; }
+                </style>
+            `;
+
+            const htmlContent = `
+                <html>
+                <head><meta charset="UTF-8"><title>${filename || 'Amixby-урок'}</title>${style}</head>
+                <body>
+                    <h1>Amixby — Урок</h1>
+                    <p style="font-size:18px;color:#3a3a3c;margin-bottom:24px;">Тема: ${lastTopic || ''}</p>
+                    ${content.innerHTML}
+                    <p style="margin-top:32px;font-size:14px;color:#8e8e93;text-align:center;border-top:1px solid #e5e5ea;padding-top:16px;">Создано в Amixby — уроки за минуту</p>
+                </body>
+                </html>
+            `;
+
+            const blob = new Blob([htmlContent], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${filename || 'amixby-urok'}.doc`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         // ============================================================
@@ -2299,14 +2046,12 @@
             wrapper.appendChild(topic);
 
             const contentClone = element.cloneNode(true);
+            const btns = contentClone.querySelectorAll('.btn-group, .btn-secondary, button, .plan-timer-bar, .step-timer-btn');
+            btns.forEach(el => el.remove());
             contentClone.style.padding = '0';
             contentClone.style.background = 'transparent';
             contentClone.style.boxShadow = 'none';
             contentClone.style.borderRadius = '0';
-
-            const timerElements = contentClone.querySelectorAll('.timer-controls, .plan-timer-btn, .timer-display');
-            timerElements.forEach(el => el.remove());
-
             wrapper.appendChild(contentClone);
 
             const footer = document.createElement('p');
@@ -2320,25 +2065,17 @@
             wrapper.appendChild(footer);
 
             document.body.appendChild(wrapper);
-
-            html2pdf()
-                .set({
-                    margin: 0.5,
-                    filename: filename || 'amixby-urok.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-                    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-                })
-                .from(wrapper)
-                .save()
-                .then(() => {
-                    document.body.removeChild(wrapper);
-                })
-                .catch((err) => {
-                    console.error('PDF ошибка:', err);
-                    document.body.removeChild(wrapper);
-                    alert('Ошибка при создании PDF. Попробуйте использовать печать (Ctrl+P) и выбрать "Сохранить как PDF".');
-                });
+            html2pdf().set({
+                margin: 0.5,
+                filename: filename || 'amixby-urok.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            }).from(wrapper).save().then(() => { document.body.removeChild(wrapper); }).catch((err) => {
+                console.error('PDF ошибка:', err);
+                document.body.removeChild(wrapper);
+                alert('Ошибка при создании PDF. Попробуйте использовать печать (Ctrl+P) и выбрать "Сохранить как PDF".');
+            });
         }
 
         // ============================================================
@@ -2351,107 +2088,44 @@
                 alert('Сначала создайте урок, чтобы показать ответы.');
                 return;
             }
-
             const overlay = document.createElement('div');
-            overlay.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: var(--bg-overlay-dark);
-                backdrop-filter: blur(8px);
-                z-index: 9999;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 40px 20px;
-                animation: fadeIn 0.3s ease;
-            `;
-
+            overlay.style.cssText =
+                `position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-overlay-dark);backdrop-filter:blur(8px);z-index:9999;display:flex;justify-content:center;align-items:center;padding:40px 20px;animation:fadeIn 0.3s ease;`;
             const container = document.createElement('div');
-            container.style.cssText = `
-                background: var(--bg-modal);
-                border-radius: 24px;
-                max-width: 800px;
-                width: 100%;
-                max-height: 80vh;
-                overflow-y: auto;
-                padding: 32px 28px;
-                box-shadow: var(--shadow-modal);
-                animation: slideUp 0.3s ease;
-                color: var(--text-primary);
-            `;
-
+            container.style.cssText =
+                `background:var(--bg-modal);border-radius:24px;max-width:800px;width:100%;max-height:80vh;overflow-y:auto;padding:32px 28px;box-shadow:var(--shadow-modal);animation:slideUp 0.3s ease;color:var(--text-primary);`;
             const header = document.createElement('div');
-            header.style.cssText = `
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 16px;
-                border-bottom: 1px solid var(--border-color);
-                padding-bottom: 12px;
-            `;
+            header.style.cssText =
+                `display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border-color);padding-bottom:12px;`;
             const title = document.createElement('h2');
             title.textContent = 'Ответы на экране';
-            title.style.cssText = 'font-size: 24px; font-weight: 600; margin: 0;';
+            title.style.cssText = 'font-size:24px;font-weight:600;margin:0;';
             const closeBtn = document.createElement('button');
             closeBtn.textContent = 'Закрыть';
-            closeBtn.style.cssText = `
-                background: var(--bg-btn-secondary);
-                border: none;
-                border-radius: 12px;
-                padding: 8px 20px;
-                font-size: 16px;
-                font-weight: 500;
-                color: var(--accent);
-                cursor: pointer;
-                transition: background 0.2s ease;
-            `;
+            closeBtn.style.cssText =
+                `background:var(--bg-btn-secondary);border:none;border-radius:12px;padding:8px 20px;font-size:16px;font-weight:500;color:var(--accent);cursor:pointer;transition:background 0.2s ease;`;
             closeBtn.onmouseover = () => closeBtn.style.background = 'var(--bg-btn-secondary-hover)';
             closeBtn.onmouseout = () => closeBtn.style.background = 'var(--bg-btn-secondary)';
             closeBtn.onclick = () => document.body.removeChild(overlay);
             header.appendChild(title);
             header.appendChild(closeBtn);
-
             const contentClone = answersContent.cloneNode(true);
             contentClone.style.padding = '0';
             contentClone.style.background = 'transparent';
             contentClone.style.boxShadow = 'none';
             contentClone.style.borderRadius = '0';
-
             container.appendChild(header);
             container.appendChild(contentClone);
             overlay.appendChild(container);
-
             const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fadeIn {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
-                @keyframes slideUp {
-                    from { opacity: 0; transform: translateY(30px) scale(0.95); }
-                    to { opacity: 1; transform: translateY(0) scale(1); }
-                }
-            `;
+            style.textContent =
+                `@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes slideUp{from{opacity:0;transform:translateY(30px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}`;
             overlay.appendChild(style);
-
             document.body.appendChild(overlay);
-
-            overlay.addEventListener('click', function(e) {
-                if (e.target === overlay) {
-                    document.body.removeChild(overlay);
-                }
-            });
-
+            overlay.addEventListener('click', function(e) { if (e.target === overlay) document.body.removeChild(overlay); });
             const escHandler = function(e) {
-                if (e.key === 'Escape') {
-                    if (document.body.contains(overlay)) {
-                        document.body.removeChild(overlay);
-                    }
-                    document.removeEventListener('keydown', escHandler);
-                }
+                if (e.key === 'Escape') { if (document.body.contains(overlay)) document.body.removeChild(overlay);
+                    document.removeEventListener('keydown', escHandler); }
             };
             document.addEventListener('keydown', escHandler);
         }
@@ -2460,11 +2134,8 @@
         // ТАБЫ
         // ============================================================
         const tabs = document.querySelectorAll('.tab');
-        const tabContents = {
-            tasks: document.getElementById('tab-tasks'),
-            plan: document.getElementById('tab-plan'),
-            answers: document.getElementById('tab-answers'),
-        };
+        const tabContents = { tasks: document.getElementById('tab-tasks'), plan: document.getElementById('tab-plan'),
+            answers: document.getElementById('tab-answers') };
         const indicator = document.getElementById('tabIndicator');
 
         function updateIndicator(activeTab) {
@@ -2473,52 +2144,37 @@
             indicator.style.width = rect.width + 'px';
             indicator.style.left = (rect.left - containerRect.left) + 'px';
         }
-
-        setTimeout(() => {
-            const activeTab = document.querySelector('.tab.active');
-            if (activeTab) updateIndicator(activeTab);
-        }, 50);
-
+        setTimeout(() => { const activeTab = document.querySelector('.tab.active'); if (activeTab) updateIndicator(
+            activeTab); }, 50);
         tabs.forEach(tab => {
             tab.addEventListener('click', function() {
                 tabs.forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
                 updateIndicator(this);
-
                 const target = this.dataset.tab;
-                Object.keys(tabContents).forEach(key => {
-                    tabContents[key].classList.toggle('active', key === target);
-                });
+                Object.keys(tabContents).forEach(key => { tabContents[key].classList.toggle('active', key === target); });
             });
         });
-
-        window.addEventListener('resize', () => {
-            const activeTab = document.querySelector('.tab.active');
-            if (activeTab) updateIndicator(activeTab);
-        });
+        window.addEventListener('resize', () => { const activeTab = document.querySelector('.tab.active'); if (activeTab)
+                updateIndicator(activeTab); });
 
         // ============================================================
         // УРОВНИ
         // ============================================================
-        const levelBtns = document.querySelectorAll('.level-btn');
-        levelBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                this.classList.toggle('active');
-            });
+        document.querySelectorAll('.level-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) { e.stopPropagation();
+                this.classList.toggle('active'); });
         });
 
         // ============================================================
         // ЧЕКБОКСЫ
         // ============================================================
         document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
-            cb.addEventListener('change', function() {
-                this.closest('.checkbox-item').classList.toggle('disabled', !this.checked);
-            });
+            cb.addEventListener('change', function() { this.closest('.checkbox-item').classList.toggle('disabled', !this
+                    .checked); });
         });
-        document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
-            cb.dispatchEvent(new Event('change'));
-        });
+        document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => { cb.dispatchEvent(new Event(
+            'change')); });
 
         // ============================================================
         // КНОПКА «СОЗДАТЬ УРОК»
@@ -2528,48 +2184,27 @@
 
         generateBtn.addEventListener('click', async function() {
             const topic = document.getElementById('topicInput').value.trim();
-            if (!topic) {
-                alert('Пожалуйста, введите тему урока');
-                return;
-            }
-
+            if (!topic) { alert('Пожалуйста, введите тему урока'); return; }
             const activeLevels = document.querySelectorAll('.level-btn.active');
             const levels = [];
             activeLevels.forEach(btn => levels.push(btn.dataset.level));
-
-            if (levels.length === 0) {
-                alert('Выберите хотя бы один уровень сложности');
-                return;
-            }
-
+            if (levels.length === 0) { alert('Выберите хотя бы один уровень сложности'); return; }
             const withPlan = document.getElementById('chkPlan').checked;
-
             this.classList.add('loading');
             this.querySelector('.btn-text').textContent = 'Генерация...';
-
             try {
                 const data = await generateWithAI(topic, levels, withPlan);
                 saveHistoryItem(data, topic, levels);
                 renderLesson(data, topic, levels);
-
                 resultSection.classList.add('visible');
-
                 const tasksTab = document.querySelector('.tab[data-tab="tasks"]');
                 tabs.forEach(t => t.classList.remove('active'));
                 tasksTab.classList.add('active');
-                Object.keys(tabContents).forEach(key => {
-                    tabContents[key].classList.toggle('active', key === 'tasks');
-                });
+                Object.keys(tabContents).forEach(key => { tabContents[key].classList.toggle('active', key === 'tasks'); });
                 updateIndicator(tasksTab);
-
-                setTimeout(() => {
-                    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 200);
-
+                setTimeout(() => { resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 200);
             } catch (error) {
                 console.error('Ошибка:', error);
-
-                // === КАСТОМНЫЕ СООБЩЕНИЯ ДЛЯ ОШИБОК СОЕДИНЕНИЯ ===
                 let userMessage = error.message;
                 if (error.message === 'Failed to fetch' || error.message.includes('NetworkError') || error.message.includes(
                         'network')) {
@@ -2577,13 +2212,8 @@
                 } else if (error.message.includes('технические работы')) {
                     userMessage = error.message;
                 }
-
-                document.getElementById('tasksContent').innerHTML = `
-                    <div class="error-message">
-                        <span class="error-title">Ошибка генерации</span>
-                        ${userMessage}
-                    </div>
-                `;
+                document.getElementById('tasksContent').innerHTML =
+                    `<div class="error-message"><span class="error-title">Ошибка генерации</span>${userMessage}</div>`;
                 resultSection.classList.add('visible');
             } finally {
                 this.classList.remove('loading');
@@ -2594,17 +2224,30 @@
         // ============================================================
         // НОВЫЙ УРОК
         // ============================================================
-        document.getElementById('newLessonBtn').addEventListener('click', resetLesson);
+        document.getElementById('newLessonBtn').addEventListener('click', function() {
+            document.getElementById('topicInput').value = '';
+            document.querySelectorAll('.level-btn').forEach(btn => btn.classList.add('active'));
+            document.getElementById('chkTasks').checked = true;
+            document.getElementById('chkPlan').checked = true;
+            document.querySelectorAll('.checkbox-item').forEach(item => item.classList.remove('disabled'));
+            document.getElementById('resultSection').classList.remove('visible');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const btn = document.getElementById('generateBtn');
+            btn.classList.remove('loading');
+            btn.querySelector('.btn-text').textContent = 'Создать урок';
+        });
 
         // ============================================================
-        // PDF КНОПКИ
+        // PDF / WORD КНОПКИ
         // ============================================================
-        document.getElementById('downloadPdfBtn').addEventListener('click', function() {
-            generatePDF('tab-tasks', 'amixby-zadaniya.pdf');
-        });
-        document.getElementById('downloadPdfBtnPlan').addEventListener('click', function() {
-            generatePDF('tab-plan', 'amixby-plan-uroka.pdf');
-        });
+        document.getElementById('downloadPdfBtn').addEventListener('click', function() { generatePDF('tab-tasks',
+                'amixby-zadaniya.pdf'); });
+        document.getElementById('downloadPdfBtnPlan').addEventListener('click', function() { generatePDF('tab-plan',
+                'amixby-plan-uroka.pdf'); });
+        document.getElementById('downloadWordBtn').addEventListener('click', function() { exportWord('tab-tasks',
+                'amixby-zadaniya'); });
+        document.getElementById('downloadWordBtnPlan').addEventListener('click', function() { exportWord('tab-plan',
+                'amixby-plan-uroka'); });
 
         // ============================================================
         // ПОКАЗАТЬ НА ЭКРАНЕ
@@ -2616,7 +2259,6 @@
         // ============================================================
         const burgerBtn = document.getElementById('burgerBtn');
         const mobileNav = document.getElementById('mobileNav');
-
         burgerBtn.addEventListener('click', function() {
             this.classList.toggle('active');
             mobileNav.classList.toggle('open');
@@ -2628,12 +2270,9 @@
             mobileNav.classList.remove('open');
             document.body.style.overflow = '';
         }
-
         document.addEventListener('click', function(e) {
             if (mobileNav.classList.contains('open')) {
-                if (!mobileNav.contains(e.target) && !burgerBtn.contains(e.target)) {
-                    closeBurger();
-                }
+                if (!mobileNav.contains(e.target) && !burgerBtn.contains(e.target)) { closeBurger(); }
             }
         });
 
@@ -2641,34 +2280,17 @@
         // МОДАЛКИ
         // ============================================================
         function openModal(type) {
-            const map = {
-                'how': 'modalHow',
-                'support': 'modalSupport',
-                'faq': 'modalFaq',
-                'history': 'modalHistory'
-            };
+            const map = { 'how': 'modalHow', 'support': 'modalSupport', 'faq': 'modalFaq', 'history': 'modalHistory' };
             const id = map[type];
-            if (id) {
-                document.getElementById(id).classList.add('open');
-                document.body.style.overflow = 'hidden';
-                if (id === 'modalHistory') {
-                    renderHistory();
-                }
-            }
+            if (id) { document.getElementById(id).classList.add('open');
+                document.body.style.overflow = 'hidden'; if (id === 'modalHistory') renderHistory(); }
         }
 
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
+        function closeModal(id) { document.getElementById(id).classList.remove('open');
+            document.body.style.overflow = ''; }
         document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('open');
-                    document.body.style.overflow = '';
-                }
-            });
+            overlay.addEventListener('click', function(e) { if (e.target === this) { this.classList.remove('open');
+                    document.body.style.overflow = ''; } });
         });
 
         // ============================================================
@@ -2677,10 +2299,7 @@
         function sendSupport(e) {
             e.preventDefault();
             const message = document.getElementById('supportMessage').value.trim();
-            if (!message) {
-                alert('Пожалуйста, опишите вашу проблему.');
-                return;
-            }
+            if (!message) { alert('Пожалуйста, опишите вашу проблему.'); return; }
             const subject = encodeURIComponent('Amixby — Обращение в поддержку');
             const body = encodeURIComponent(message + '\n\n— Отправлено через Amixby');
             window.location.href = `mailto:apexcorpoff@gmail.com?subject=${subject}&body=${body}`;
@@ -2689,6 +2308,5 @@
             alert('Письмо открыто в вашем почтовом клиенте. Отправьте его, и мы ответим.');
         }
     </script>
-
 </body>
 </html>
