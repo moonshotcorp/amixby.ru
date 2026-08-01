@@ -1577,13 +1577,12 @@
     <div class="modal-overlay" id="modalFaq"><div class="modal"><button class="modal-close" onclick="closeModal('modalFaq')">&times;</button><h2 id="faqTitle">Часто задаваемые вопросы</h2><div class="faq-item"><strong id="faq1q">Какие предметы доступны?</strong><p id="faq1a">Все школьные предметы: математика, русский, физика, химия, биология, история, английский и другие.</p></div><div class="faq-item"><strong id="faq2q">Нужно ли регистрироваться?</strong><p id="faq2a">Нет, Amixby работает без регистрации — открыли и пользуетесь.</p></div><div class="faq-item"><strong id="faq3q">Сколько это стоит?</strong><p id="faq3a">Полностью бесплатно. Мы используем Groq API с бесплатным тарифом.</p></div><div class="faq-item"><strong id="faq4q">Можно ли скачать материалы?</strong><p id="faq4a">Да, кнопка «Скачать PDF» или «Скачать Word» сохранит задания и план урока.</p></div><div class="faq-item"><strong id="faq5q">Что делать, если ИИ не отвечает?</strong><p id="faq5a">Проверьте интернет-соединение. Если ошибка повторяется — напишите в поддержку.</p></div></div></div>
     <script>
         // ============================================================
-        // API КЛЮЧ GEMINI (Google AI Studio)
+        // API КЛЮЧ GROQ
         // ============================================================
         const API_KEYS = [
-            'AQ.Ab8RN6KEGRM14MBKt5Z3q8SlLW3dnHMnr2OOk_oj80kJIa-TKQ'
+            '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'
         ];
-        // Формируем URL для Gemini API
-        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + API_KEYS[0];
+        const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
         let currentKeyIndex = 0;
         let allKeysExhausted = false;
@@ -2185,7 +2184,7 @@
         }
 
         // ============================================================
-        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ (Gemini API)
+        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ (Groq)
         // ============================================================
         async function generateWithAI(topic, levels, includePlan, retries = 2) {
             const levelsText = levels.join(', ');
@@ -2266,23 +2265,20 @@
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 60000);
 
-                    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${currentKey}`;
-
-                    const response = await fetch(url, {
+                    const response = await fetch(GROQ_API_URL, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${currentKey}`
                         },
                         body: JSON.stringify({
-                            contents: [{
-                                parts: [{ text: prompt }]
-                            }],
-                            generationConfig: {
-                                temperature: 0.7,
-                                maxOutputTokens: 4000,
-                                topP: 0.95,
-                                topK: 40
-                            }
+                            model: 'llama-3.3-70b-versatile',
+                            messages: [
+                                { role: 'system', content: 'Ты — профессиональный учитель-методист. Отвечай строго в формате JSON.' },
+                                { role: 'user', content: prompt }
+                            ],
+                            temperature: 0.7,
+                            max_tokens: 4000
                         }),
                         signal: controller.signal
                     });
@@ -2313,7 +2309,7 @@
                     }
 
                     const data = await response.json();
-                    const content = data.candidates[0].content.parts[0].text;
+                    const content = data.choices[0].message.content;
                     const jsonMatch = content.match(/\{[\s\S]*\}/);
                     if (!jsonMatch) {
                         if (attempt < retries) {
@@ -3017,4 +3013,4 @@
         }
     </script>
 </body>
-                        </html>
+    </html>
