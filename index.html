@@ -1580,9 +1580,9 @@
         }
 
         // ============================================================
-        // ГЕНЕРАЦИЯ
+        // ГЕНЕРАЦИЯ С ТАЙМАУТОМ И ПОВТОРАМИ
         // ============================================================
-        async function generateWithAI(topic, levels, includePlan) {
+        async function generateWithAI(topic, levels, includePlan, retries = 2) {
             const levelsText = levels.join(', ');
             const planInstruction = includePlan ?
                 `Составь современный поурочный план по ФГОС. Обязательные разделы: Тема, Класс, Цели (3 цели). Ход урока — ровно 7 этапов:
@@ -1642,37 +1642,82 @@
                 План должен быть современным, чётким, без смайликов, строго по ФГОС.
             `;
 
-            const response = await fetch(GROQ_API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
-                body: JSON.stringify({
-                    model: 'llama-3.3-70b-versatile',
-                    messages: [
-                        { role: 'system', content: 'Ты — профессиональный учитель-методист. Отвечай строго в формате JSON.' },
-                        { role: 'user', content: prompt }
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 4000
-                })
-            });
+            let lastError = null;
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                let errorMsg = errorData.error?.message || response.statusText;
-                if (response.status === 429) {
-                    errorMsg = 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
-                } else if (response.status === 401 || response.status === 403 || response.status === 500 || response.status ===
-                    502 || response.status === 503 || response.status === 504) {
-                    errorMsg = 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
+            for (let attempt = 0; attempt <= retries; attempt++) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 секунд таймаут
+
+                    const response = await fetch(GROQ_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
+                        body: JSON.stringify({
+                            model: 'llama-3.3-70b-versatile',
+                            messages: [
+                                { role: 'system', content: 'Ты — профессиональный учитель-методист. Отвечай строго в формате JSON.' },
+                                { role: 'user', content: prompt }
+                            ],
+                            temperature: 0.7,
+                            max_tokens: 4000
+                        }),
+                        signal: controller.signal
+                    });
+
+                    clearTimeout(timeoutId);
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        let errorMsg = errorData.error?.message || response.statusText;
+
+                        if (response.status === 429) {
+                            errorMsg = 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
+                        } else if (response.status === 401 || response.status === 403) {
+                            errorMsg = 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
+                        } else if (response.status === 500 || response.status === 502 || response.status === 503 || response
+                            .status === 504) {
+                            errorMsg = 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
+                            if (attempt < retries) {
+                                console.log(`Попытка ${attempt + 1} не удалась. Повтор через 2 секунды...`);
+                                await new Promise(resolve => setTimeout(resolve, 2000));
+                                continue;
+                            }
+                        }
+                        throw new Error(errorMsg);
+                    }
+
+                    const data = await response.json();
+                    const content = data.choices[0].message.content;
+                    const jsonMatch = content.match(/\{[\s\S]*\}/);
+                    if (!jsonMatch) {
+                        if (attempt < retries) {
+                            console.log(`Попытка ${attempt + 1} — невалидный JSON. Повтор...`);
+                            await new Promise(resolve => setTimeout(resolve, 2000));
+                            continue;
+                        }
+                        throw new Error('Не удалось извлечь JSON из ответа ИИ');
+                    }
+                    return JSON.parse(jsonMatch[0]);
+
+                } catch (error) {
+                    lastError = error;
+                    if (error.name === 'AbortError') {
+                        if (attempt < retries) {
+                            console.log(`Таймаут. Попытка ${attempt + 1}/${retries + 1}. Повтор...`);
+                            await new Promise(resolve => setTimeout(resolve, 2000));
+                            continue;
+                        }
+                        throw new Error('Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!');
+                    }
+                    if (attempt < retries && !error.message.includes('технические работы')) {
+                        console.log(`Ошибка: ${error.message}. Попытка ${attempt + 1}/${retries + 1}. Повтор...`);
+                        await new Promise(resolve => setTimeout(resolve, 2000));
+                        continue;
+                    }
+                    throw error;
                 }
-                throw new Error(errorMsg);
             }
-
-            const data = await response.json();
-            const content = data.choices[0].message.content;
-            const jsonMatch = content.match(/\{[\s\S]*\}/);
-            if (!jsonMatch) throw new Error('Не удалось извлечь JSON из ответа ИИ');
-            return JSON.parse(jsonMatch[0]);
+            throw lastError || new Error('Не удалось сгенерировать урок после нескольких попыток.');
         }
 
         // ============================================================
@@ -2216,10 +2261,12 @@
                 console.error('Ошибка:', error);
                 let userMessage = error.message;
                 if (error.message === 'Failed to fetch' || error.message.includes('NetworkError') || error.message.includes(
-                        'network')) {
+                        'network') || error.message.includes('NetworkError when attempting to fetch resource')) {
                     userMessage = 'Невозможно сгенерировать план урока. Проверьте соединение!';
                 } else if (error.message.includes('технические работы')) {
                     userMessage = error.message;
+                } else if (error.message.includes('Не удалось извлечь JSON')) {
+                    userMessage = 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
                 }
                 document.getElementById('tasksContent').innerHTML =
                     `<div class="error-message"><span class="error-title">Ошибка генерации</span>${userMessage}</div>`;
