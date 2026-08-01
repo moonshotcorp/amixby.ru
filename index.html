@@ -1577,15 +1577,16 @@
     <div class="modal-overlay" id="modalFaq"><div class="modal"><button class="modal-close" onclick="closeModal('modalFaq')">&times;</button><h2 id="faqTitle">Часто задаваемые вопросы</h2><div class="faq-item"><strong id="faq1q">Какие предметы доступны?</strong><p id="faq1a">Все школьные предметы: математика, русский, физика, химия, биология, история, английский и другие.</p></div><div class="faq-item"><strong id="faq2q">Нужно ли регистрироваться?</strong><p id="faq2a">Нет, Amixby работает без регистрации — открыли и пользуетесь.</p></div><div class="faq-item"><strong id="faq3q">Сколько это стоит?</strong><p id="faq3a">Полностью бесплатно. Мы используем Groq API с бесплатным тарифом.</p></div><div class="faq-item"><strong id="faq4q">Можно ли скачать материалы?</strong><p id="faq4a">Да, кнопка «Скачать PDF» или «Скачать Word» сохранит задания и план урока.</p></div><div class="faq-item"><strong id="faq5q">Что делать, если ИИ не отвечает?</strong><p id="faq5a">Проверьте интернет-соединение. Если ошибка повторяется — напишите в поддержку.</p></div></div></div>
     <script>
         // ============================================================
-        // 1 API КЛЮЧ (срок 30 дней)
+        // 1 API КЛЮЧ (OpenRouter)
         // ============================================================
         const API_KEYS = [
-            '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'
+            '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'
         ];
+        // Используем OpenRouter API
+        const GROQ_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
         let currentKeyIndex = 0;
         let allKeysExhausted = false;
-        const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
         function getCurrentKey() {
             if (allKeysExhausted) return null;
@@ -1593,7 +1594,6 @@
         }
 
         function rotateKey() {
-            // Так как ключ только один, ротация не имеет смысла
             allKeysExhausted = true;
             console.warn('Единственный ключ исчерпан!');
             return false;
@@ -2185,7 +2185,7 @@
         }
 
         // ============================================================
-        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ
+        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ (OpenRouter)
         // ============================================================
         async function generateWithAI(topic, levels, includePlan, retries = 2) {
             const levelsText = levels.join(', ');
@@ -2268,9 +2268,14 @@
 
                     const response = await fetch(GROQ_API_URL, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentKey}` },
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${currentKey}`,
+                            'HTTP-Referer': window.location.href,
+                            'X-Title': 'Amixby'
+                        },
                         body: JSON.stringify({
-                            model: 'llama-3.3-70b-versatile',
+                            model: 'google/gemini-2.0-flash-001',
                             messages: [
                                 { role: 'system', content: 'Ты — профессиональный учитель-методист. Отвечай строго в формате JSON.' },
                                 { role: 'user', content: prompt }
