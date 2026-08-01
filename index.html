@@ -1582,7 +1582,6 @@
         const API_KEYS = [
             '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'
         ];
-        // Используем OpenRouter API
         const GROQ_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
         let currentKeyIndex = 0;
@@ -2185,7 +2184,7 @@
         }
 
         // ============================================================
-        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ (OpenRouter)
+        // ГЕНЕРАЦИЯ С ОДНИМ КЛЮЧОМ (OpenRouter) — МОДЕЛЬ ЗАМЕНЕНА НА 2.5
         // ============================================================
         async function generateWithAI(topic, levels, includePlan, retries = 2) {
             const levelsText = levels.join(', ');
@@ -2275,7 +2274,7 @@
                             'X-Title': 'Amixby'
                         },
                         body: JSON.stringify({
-                            model: 'google/gemini-2.0-flash-001',
+                            model: 'google/gemini-2.5-flash-preview',
                             messages: [
                                 { role: 'system', content: 'Ты — профессиональный учитель-методист. Отвечай строго в формате JSON.' },
                                 { role: 'user', content: prompt }
