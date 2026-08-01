@@ -8,7 +8,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <style>
-        /* ===== ВСЕ СТИЛИ ===== */
         :root {
             --bg-primary: #f5f5f8;
             --bg-secondary: #ffffff;
@@ -1648,7 +1647,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- HEADER -->
         <header class="header">
             <div class="logo-wrapper">
                 <div class="logo-row">
@@ -1679,12 +1677,10 @@
                 <a onclick="openModal('faq'); closeBurger();" id="mobFaq">FAQ</a>
             </nav>
         </header>
-        <!-- HERO -->
         <section class="hero">
             <h1 id="heroTitle">Подготовка урока</h1>
             <p id="heroSub">Выберите класс и предмет — ИИ создаст задания, план и ответы за 5 секунд</p>
         </section>
-        <!-- GENERATOR -->
         <section class="generator-card">
             <div class="filters">
                 <div class="filter-group">
@@ -1819,14 +1815,12 @@
         </section>
         <footer class="footer" id="footerText">Amixby 2026 — создано для учителей</footer>
     </div>
-    <!-- ===== МОДАЛКИ ===== -->
     <div class="modal-overlay" id="modalHistory"><div class="modal"><button class="modal-close" onclick="closeModal('modalHistory')">&times;</button><h2 id="historyTitle">История уроков</h2><div id="historyList" class="history-list"></div><div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;"><button class="btn-secondary" onclick="clearHistory()" style="color:var(--level-olympiad);" id="clearHistoryBtn">Очистить историю</button></div></div></div>
     <div class="modal-overlay" id="modalLanguages"><div class="modal"><button class="modal-close" onclick="closeModal('modalLanguages')">&times;</button><h2 id="langTitle">Языки</h2><p style="margin-bottom:12px;" id="langSub">Выберите язык интерфейса и генерации материалов.</p><div style="display:flex;flex-direction:column;gap:10px;"><button class="btn-secondary" onclick="setLanguage('ru')" style="width:100%;text-align:center;font-size:17px;padding:12px;" id="langRu">Русский</button><button class="btn-secondary" onclick="setLanguage('en')" style="width:100%;text-align:center;font-size:17px;padding:12px;" id="langEn">English</button><button class="btn-secondary" onclick="setLanguage('kk')" style="width:100%;text-align:center;font-size:17px;padding:12px;" id="langKk">Қазақша</button><button class="btn-secondary" onclick="setLanguage('de')" style="width:100%;text-align:center;font-size:17px;padding:12px;" id="langDe">Deutsch</button></div><p id="currentLangDisplay" style="margin-top:12px;color:var(--text-tertiary);font-size:15px;">Текущий язык: Русский</p></div></div>
     <div class="modal-overlay" id="modalHow"><div class="modal"><button class="modal-close" onclick="closeModal('modalHow')">&times;</button><h2 id="howTitle">Как это работает?</h2><p id="howStep1"><strong>1. Выберите класс и предмет</strong> — укажите параметры для точной настройки.</p><p id="howStep2"><strong>2. Введите тему</strong> — например: «Квадратные уравнения. 8 класс».</p><p id="howStep3"><strong>3. Выберите уровни</strong> — базовый, профи или олимпиадный (можно несколько).</p><p id="howStep4"><strong>4. Нажмите «Создать урок»</strong> — ИИ сгенерирует задания, план урока и ответы за 5 секунд.</p><p id="howStep5"><strong>5. Скачайте PDF или Word</strong> или распечатайте материалы прямо из браузера.</p><p style="margin-top:12px;color:var(--text-tertiary);" id="howNote">Все материалы создаются на основе вашей темы с учётом школьной программы.</p></div></div>
     <div class="modal-overlay" id="modalSupport"><div class="modal"><button class="modal-close" onclick="closeModal('modalSupport')">&times;</button><h2 id="supportTitle">Поддержка</h2><p id="supportSub">Опишите вашу проблему или предложение, и мы ответим в ближайшее время.</p><div class="support-email"><p><strong>Email для связи:</strong> <a href="mailto:apexcorpoff@gmail.com">apexcorpoff@gmail.com</a></p></div><form id="supportForm" onsubmit="sendSupport(event)"><textarea id="supportMessage" placeholder="Опишите вашу проблему..." required></textarea><button type="submit" class="btn-send" id="supportSend">Отправить</button></form><p style="margin-top:8px;font-size:14px;color:var(--text-tertiary);" id="supportNote">Письмо будет открыто в вашем почтовом клиенте.</p></div></div>
     <div class="modal-overlay" id="modalFaq"><div class="modal"><button class="modal-close" onclick="closeModal('modalFaq')">&times;</button><h2 id="faqTitle">Часто задаваемые вопросы</h2><div class="faq-item"><strong id="faq1q">Какие предметы доступны?</strong><p id="faq1a">Все школьные предметы: математика, русский, физика, химия, биология, история, английский и другие.</p></div><div class="faq-item"><strong id="faq2q">Нужно ли регистрироваться?</strong><p id="faq2a">Нет, Amixby работает без регистрации — открыли и пользуетесь.</p></div><div class="faq-item"><strong id="faq3q">Сколько это стоит?</strong><p id="faq3a">Полностью бесплатно. Мы используем Groq API с бесплатным тарифом.</p></div><div class="faq-item"><strong id="faq4q">Можно ли скачать материалы?</strong><p id="faq4a">Да, кнопка «Скачать PDF» или «Скачать Word» сохранит задания и план урока.</p></div><div class="faq-item"><strong id="faq5q">Что делать, если ИИ не отвечает?</strong><p id="faq5a">Проверьте интернет-соединение. Если ошибка повторяется — напишите в поддержку.</p></div></div></div>
 
-    <!-- ===== ОНБОРДИНГ ===== -->
     <div class="onboarding-overlay" id="onboardingOverlay">
         <div class="onboarding-modal">
             <h2>👋 Добро пожаловать в <span>Amixby</span></h2>
@@ -1852,31 +1846,93 @@
     </div>
 
     <script>
-        // ============================================================
-        // API КЛЮЧ GROQ
-        // ============================================================
-        const API_KEYS = [
-            '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'
-        ];
+        const PROXY_URL = '';
         const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-
-        let currentKeyIndex = 0;
-        let allKeysExhausted = false;
-
-        function getCurrentKey() {
-            if (allKeysExhausted) return null;
-            return API_KEYS[currentKeyIndex];
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function sanitizeTopic(input) {
+            if (!input) return '';
+            let cleaned = input.replace(/[<>]/g, '');
+            if (cleaned.length > 500) {
+                cleaned = cleaned.substring(0, 500);
+            }
+            return cleaned.trim();
+        }
+        
+        function isWordLimitExceeded(text) {
+            const words = text ? text.trim().split(/\s+/).length : 0;
+            return words > MAX_WORDS;
+        }
+        
+        function safeSetTextContent(elementId, text, fallback) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.textContent = text || fallback || '';
+            }
+        }
+        
+        function safeSetInnerHTML(elementId, html) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                const sanitized = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+                el.innerHTML = sanitized;
+            }
         }
 
-        function rotateKey() {
-            allKeysExhausted = true;
-            console.warn('Единственный ключ исчерпан!');
-            return false;
+        const DEMO_KEY = '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';
+        
+        async function callGroqAPI(messages, options) {
+            if (PROXY_URL) {
+                try {
+                    const response = await fetch(PROXY_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            messages: messages,
+                            ...options
+                        })
+                    });
+                    return await response.json();
+                } catch (error) {
+                    console.error('Ошибка прокси:', error);
+                    return await directGroqCall(messages, options);
+                }
+            } else {
+                return await directGroqCall(messages, options);
+            }
+        }
+        
+        async function directGroqCall(messages, options) {
+            const response = await fetch(GROQ_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + DEMO_KEY
+                },
+                body: JSON.stringify({
+                    model: options?.model || 'llama-3.1-8b-instant',
+                    messages: messages,
+                    temperature: options?.temperature || 0.7,
+                    max_tokens: options?.max_tokens || 2500
+                })
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error?.message || 'API Error');
+            }
+            
+            return await response.json();
         }
 
-        // ============================================================
-        // СТАТИСТИКА
-        // ============================================================
         function getStats() {
             try {
                 const stats = JSON.parse(localStorage.getItem('amixby-stats'));
@@ -1906,13 +1962,16 @@
             updateStatsDisplay();
         }
 
-        // ============================================================
-        // КЭШ
-        // ============================================================
         function getCacheKey(topic, levels, withPlan) {
             const levelsStr = levels.slice().sort().join(',');
             const planStr = withPlan ? 'plan' : 'no-plan';
-            return `amixby-cache:${topic}:${levelsStr}:${planStr}`;
+            let hash = 0;
+            const str = topic + ':' + levelsStr + ':' + planStr;
+            for (let i = 0; i < str.length; i++) {
+                hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                hash = hash & hash;
+            }
+            return `amixby-cache:${hash}`;
         }
 
         function getCachedLesson(key) {
@@ -1921,7 +1980,7 @@
                 if (cached) {
                     const data = JSON.parse(cached);
                     const age = Date.now() - data.timestamp;
-                    if (age < 7 * 24 * 60 * 60 * 1000) {
+                    if (age < 30 * 24 * 60 * 60 * 1000 && data.lessonData) {
                         return data.lessonData;
                     } else {
                         localStorage.removeItem(key);
@@ -1944,21 +2003,28 @@
             }
         }
 
-        // ============================================================
-        // ПОДСЧЁТ ТОКЕНОВ
-        // ============================================================
         function estimateTokens(text) {
             if (!text) return 0;
             return Math.ceil(text.length / 4);
         }
 
-        // ============================================================
-        // ТАЙМЕР
-        // ============================================================
         let cooldownTimer = null;
         let cooldownSeconds = 0;
         let isCooldownActive = false;
         const COOLDOWN_STORAGE_KEY = 'amixby-cooldown-until';
+        const MAX_REQUESTS_PER_MINUTE = 5;
+        let requestTimestamps = [];
+
+        function checkRateLimit() {
+            const now = Date.now();
+            requestTimestamps = requestTimestamps.filter(t => now - t < 60000);
+            if (requestTimestamps.length >= MAX_REQUESTS_PER_MINUTE) {
+                const oldest = requestTimestamps[0];
+                const waitTime = Math.ceil((oldest + 60000 - now) / 1000);
+                throw new Error(`Лимит запросов: ${MAX_REQUESTS_PER_MINUTE} в минуту. Подождите ${waitTime} секунд.`);
+            }
+            requestTimestamps.push(now);
+        }
 
         function saveCooldownUntil(until) {
             if (until) {
@@ -2033,9 +2099,6 @@
             return false;
         }
 
-        // ============================================================
-        // ПЕРЕВОДЫ
-        // ============================================================
         const translations = {
             ru: {
                 logoSub: 'Планы за минуту',
@@ -2117,6 +2180,7 @@
                 errorConnection: 'Невозможно сгенерировать план урока. Проверьте соединение!',
                 errorTech: 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!',
                 errorAllKeys: 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!',
+                errorRateLimit: 'Лимит запросов: 5 в минуту. Подождите немного.',
                 fromCache: 'Загружено из кэша',
                 onboardingTitle: '👋 Добро пожаловать в Amixby',
                 onboardingSub: 'Создавайте готовые уроки за считанные секунды — просто выберите параметры и нажмите кнопку.',
@@ -2206,6 +2270,7 @@
                 errorConnection: 'Unable to generate lesson plan. Check your connection!',
                 errorTech: 'Technical work is currently underway. Please wait and try again later!',
                 errorAllKeys: 'Oops, Amixby is currently undergoing technical maintenance. Please try again later!',
+                errorRateLimit: 'Rate limit: 5 per minute. Please wait.',
                 fromCache: 'Loaded from cache',
                 onboardingTitle: '👋 Welcome to Amixby',
                 onboardingSub: 'Create ready-made lessons in seconds — just select parameters and click the button.',
@@ -2295,6 +2360,7 @@
                 errorConnection: 'Сабақ жоспарын жасау мүмкін емес. Қосылымды тексеріңіз!',
                 errorTech: 'Қазір техникалық жұмыстар жүргізілуде. Күте тұрыңыз және кейінірек қайталап көріңіз!',
                 errorAllKeys: 'Ой, қазір Amixby техникалық жұмыстары жүргізілуде. Кейінірек қайталап көріңіз!',
+                errorRateLimit: 'Сұрау шегі: минутына 5. Күте тұрыңыз.',
                 fromCache: 'Кэштен жүктелді',
                 onboardingTitle: '👋 Amixby-ға қош келдіңіз',
                 onboardingSub: 'Дайын сабақтарды секундтарда жасаңыз — параметрлерді таңдап, батырманы басыңыз.',
@@ -2384,6 +2450,7 @@
                 errorConnection: 'Unterrichtsplan konnte nicht generiert werden. Überprüfen Sie Ihre Verbindung!',
                 errorTech: 'Derzeit werden technische Arbeiten durchgeführt. Bitte warten Sie und versuchen Sie es später erneut!',
                 errorAllKeys: 'Hoppla, Amixby wird gerade technisch gewartet. Bitte versuchen Sie es später erneut!',
+                errorRateLimit: 'Anfragelimit: 5 pro Minute. Bitte warten Sie.',
                 fromCache: 'Aus Cache geladen',
                 onboardingTitle: '👋 Willkommen bei Amixby',
                 onboardingSub: 'Erstellen Sie in Sekunden fertige Unterrichtsstunden — wählen Sie einfach die Parameter und klicken Sie auf die Schaltfläche.',
@@ -2395,9 +2462,6 @@
             }
         };
 
-        // ============================================================
-        // ПЕРЕКЛЮЧЕНИЕ ЯЗЫКА
-        // ============================================================
         let currentLanguage = 'ru';
 
         function setLanguage(lang) {
@@ -2497,7 +2561,6 @@
             document.getElementById('faq5q').textContent = t.faq5q;
             document.getElementById('faq5a').textContent = t.faq5a;
 
-            // Онбординг
             var onboardingTitle = document.querySelector('.onboarding-modal h2');
             if (onboardingTitle) {
                 onboardingTitle.innerHTML = t.onboardingTitle || '👋 Добро пожаловать в <span>Amixby</span>';
@@ -2542,9 +2605,6 @@
         setLanguage(initialLang);
         updateStatsDisplay();
 
-        // ============================================================
-        // ГОЛОСОВОЙ ВВОД
-        // ============================================================
         var recognition = null;
         var isVoiceRecording = false;
         var voiceBtn = document.getElementById('voiceBtn');
@@ -2633,9 +2693,6 @@
             });
         }
 
-        // ============================================================
-        // СЧЁТЧИК СЛОВ
-        // ============================================================
         var MAX_WORDS = 20;
 
         function updateWordCounter() {
@@ -2656,9 +2713,6 @@
         topicInput.addEventListener('input', updateWordCounter);
         updateWordCounter();
 
-        // ============================================================
-        // ТЁМНАЯ ТЕМА
-        // ============================================================
         function getTheme() { return localStorage.getItem('amixby-theme') || 'light'; }
 
         function setTheme(theme) {
@@ -2670,9 +2724,6 @@
             setTheme(current === 'light' ? 'dark' : 'light'); }
         setTheme(getTheme());
 
-        // ============================================================
-        // ИСТОРИЯ
-        // ============================================================
         function getHistory() {
             try { return JSON.parse(localStorage.getItem('amixby-history')) || []; } catch { return []; }
         }
@@ -2682,11 +2733,11 @@
             var item = {
                 id: Date.now(),
                 date: new Date().toLocaleString('ru-RU'),
-                topic: topic,
+                topic: escapeHtml(topic),
                 levels: levels.join(', '),
                 data: data,
-                class: document.getElementById('classSelect').value || 'Не указан',
-                subject: document.getElementById('subjectSelect').value || 'Не указан'
+                class: escapeHtml(document.getElementById('classSelect').value || 'Не указан'),
+                subject: escapeHtml(document.getElementById('subjectSelect').value || 'Не указан')
             };
             history.unshift(item);
             localStorage.setItem('amixby-history', JSON.stringify(history));
@@ -2697,9 +2748,9 @@
             var history = getHistory();
             if (history.length === 0) { container.innerHTML = '<div class="history-empty">Уроков пока нет. Создайте свой первый урок!</div>'; return; }
             container.innerHTML = history.map(function(item, index) {
-                return '<div class="history-item"><div class="info"><div class="title">' + item.topic +
-                    '</div><div class="meta">' + item.date + ' · ' + item.class + ' класс · ' + item.subject +
-                    ' · Уровни: ' + item.levels +
+                return '<div class="history-item"><div class="info"><div class="title">' + escapeHtml(item.topic) +
+                    '</div><div class="meta">' + escapeHtml(item.date) + ' · ' + escapeHtml(item.class) + ' класс · ' + escapeHtml(item.subject) +
+                    ' · Уровни: ' + escapeHtml(item.levels) +
                     '</div></div><div class="actions"><button onclick="openHistoryLesson(' + index +
                     ')">Открыть</button><button class="delete" onclick="deleteHistoryItem(' + index +
                     ')">Удалить</button></div></div>';
@@ -2737,11 +2788,15 @@
             renderHistory();
         }
 
-        // ============================================================
-        // ГЕНЕРАЦИЯ
-        // ============================================================
         async function generateWithAI(topic, levels, includePlan, retries) {
             if (retries === undefined) retries = 2;
+            
+            try {
+                checkRateLimit();
+            } catch (error) {
+                throw new Error(translations[currentLanguage]?.errorRateLimit || 'Лимит запросов. Подождите немного.');
+            }
+            
             var levelsText = levels.join(', ');
 
             var planInstruction = includePlan ?
@@ -2754,7 +2809,7 @@
                 lang === 'kk' ? 'қазақша' : 'auf Deutsch';
 
             var fullPrompt = 'Ты — профессиональный учитель-методист. Твоя задача — создать материалы для урока по теме: "' +
-                topic + '". Уровни сложности: ' + levelsText +
+                escapeHtml(topic) + '". Уровни сложности: ' + levelsText +
                 '. Ответ должен быть строго в формате JSON без лишнего текста ' + langPrompt +
                 ': {"tasks": {"base": ["список задач для базового уровня (5 штук)"], "profi": ["список задач для профи-уровня (5 штук)"], "olympiad": ["список задач для олимпиадного уровня (2-3 штуки)"]}, "plan": {"topic": "тема урока", "class": "класс (например, 5 класс)", "goals": ["цель 1", "цель 2", "цель 3"], "steps": [{"name": "Мотивация к учебной деятельности", "desc": "описание (учитель, ученики, УУД)", "time": "5 мин"}, {"name": "Актуализация знаний и фиксирование индивидуального затруднения", "desc": "описание", "time": "5 мин"}, {"name": "Выявление места и причины затруднения. Постановка учебной задачи", "desc": "описание", "time": "5 мин"}, {"name": "Построение проекта выхода из затруднения («Открытие» нового знания)", "desc": "описание", "time": "7 мин"}, {"name": "Первичное закрепление с проговариванием во внешней речи", "desc": "описание", "time": "7 мин"}, {"name": "Самостоятельная работа с самопроверкой по эталону", "desc": "описание", "time": "7 мин"}, {"name": "Рефлексия учебной деятельности на уроке (Итог урока)", "desc": "описание", "time": "4 мин"}]}, "answers": {"base": "ответы на базовый уровень через запятую", "profi": "ответы на профи-уровень через запятую", "olympiad": "ответы на олимпиадный уровень"}} ' +
                 (includePlan ? planInstruction : 'План не нужен.') +
@@ -2764,61 +2819,25 @@
             var lastError = null;
 
             for (var attempt = 0; attempt <= retries; attempt++) {
-                var currentKey = getCurrentKey();
-
-                if (!currentKey || allKeysExhausted) {
-                    throw new Error(translations[currentLanguage]?.errorAllKeys || 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!');
-                }
-
                 try {
                     var controller = new AbortController();
                     var timeoutId = setTimeout(function() { controller.abort(); }, 60000);
 
-                    var response = await fetch(GROQ_API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + currentKey
-                        },
-                        body: JSON.stringify({
-                            model: 'llama-3.1-8b-instant',
-                            messages: [
-                                { role: 'system', content: 'Ты — профессиональный учитель-методист. Отвечай строго в формате JSON.' },
-                                { role: 'user', content: fullPrompt }
-                            ],
+                    const response = await callGroqAPI(
+                        [
+                            { role: 'system', content: 'Ты — профессиональный учитель-методист. Отвечай строго в формате JSON.' },
+                            { role: 'user', content: fullPrompt }
+                        ],
+                        {
                             temperature: 0.7,
-                            max_tokens: 2500
-                        }),
-                        signal: controller.signal
-                    });
+                            max_tokens: 2500,
+                            model: 'llama-3.1-8b-instant'
+                        }
+                    );
 
                     clearTimeout(timeoutId);
 
-                    if (!response.ok) {
-                        var errorData = await response.json();
-                        var errorMsg = errorData.error?.message || response.statusText;
-
-                        if (response.status === 429 || response.status === 402 || response.status === 403) {
-                            var t = translations[currentLanguage] || translations.ru;
-                            console.warn('Единственный ключ исчерпан!');
-                            allKeysExhausted = true;
-                            throw new Error(t.errorAllKeys || 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!');
-                        }
-
-                        if (response.status === 500 || response.status === 502 || response.status === 503 || response.status ===
-                            504) {
-                            errorMsg = translations[currentLanguage]?.errorTech || 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
-                            if (attempt < retries) {
-                                console.log('Попытка ' + (attempt + 1) + ' не удалась. Повтор через 2 секунды...');
-                                await new Promise(function(resolve) { setTimeout(resolve, 2000); });
-                                continue;
-                            }
-                        }
-                        throw new Error(errorMsg);
-                    }
-
-                    var data = await response.json();
-                    var content = data.choices[0].message.content;
+                    var content = response.choices[0].message.content;
                     var jsonMatch = content.match(/\{[\s\S]*\}/);
                     if (!jsonMatch) {
                         if (attempt < retries) {
@@ -2832,12 +2851,8 @@
 
                 } catch (error) {
                     lastError = error;
-
-                    if (error.message.includes('технические работы Amixby') ||
-                        error.message.includes('technical maintenance Amixby') ||
-                        error.message.includes('техникалық жұмыстары Amixby') ||
-                        error.message.includes('technisch gewartet Amixby') ||
-                        error.message.includes('Ой, сейчас идут технические работы Amixby')) {
+                    
+                    if (error.message.includes('Лимит запросов') || error.message.includes('rate limit')) {
                         throw error;
                     }
 
@@ -2849,9 +2864,7 @@
                         }
                         throw new Error(translations[currentLanguage]?.errorTech || 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!');
                     }
-                    if (attempt < retries && !error.message.includes('технические работы') && !error.message.includes(
-                            'Technical work') && !error.message.includes('техникалық жұмыстар') && !error.message.includes(
-                            'technische Arbeiten') && !error.message.includes('технические работы Amixby')) {
+                    if (attempt < retries) {
                         console.log('Ошибка: ' + error.message + '. Попытка ' + (attempt + 1) + '/' + (retries + 1) +
                             '. Повтор...');
                         await new Promise(function(resolve) { setTimeout(resolve, 2000); });
@@ -2863,9 +2876,6 @@
             throw lastError || new Error(translations[currentLanguage]?.errorTech || 'Не удалось сгенерировать урок после нескольких попыток.');
         }
 
-        // ============================================================
-        // ТАЙМЕР (внутренний, для плана урока)
-        // ============================================================
         var timerInterval = null;
         var timerSeconds = 0;
         var timerRunning = false;
@@ -3027,9 +3037,6 @@
             }
         }
 
-        // ============================================================
-        // ОТОБРАЖЕНИЕ
-        // ============================================================
         var lastGeneratedData = null;
         var lastTopic = '';
         var lastLevels = [];
@@ -3050,7 +3057,6 @@
                 cacheBadge.classList.remove('visible');
             }
 
-            // --- ЗАДАНИЯ ---
             var tasksHTML = '';
             if (withTasks && data.tasks) {
                 var levelMap = {
@@ -3063,42 +3069,55 @@
                 wrapper.className = 'tasks-wrapper';
                 levels.forEach(function(level) {
                     var info = levelMap[level];
-                    if (info && info.data && info.data.length > 0) {
-                        hasAny = true;
-                        var block = document.createElement('div');
-                        block.className = 'task-level ' + info.cls;
-                        var tasksList = '<ul class="task-list">';
-                        info.data.forEach(function(task) { tasksList += '<li>' + task.replace(/^\d+\.\s*/, '') +
-                            '</li>'; });
-                        tasksList += '</ul>';
-                        block.innerHTML = '<h4>' + info.label + ' <span class="badge">' + (level === 'base' ? 'Б' :
-                            level === 'profi' ? 'П' : 'О') + '</span></h4>' + tasksList;
-                        wrapper.appendChild(block);
+                    if (info && info.data) {
+                        var tasksArray = info.data;
+                        if (typeof tasksArray === 'string') {
+                            tasksArray = tasksArray.split(/\d+\.\s*/).filter(function(s) { return s.trim() !== ''; });
+                            if (tasksArray.length === 0) {
+                                tasksArray = tasksArray.split('\n').filter(function(s) { return s.trim() !== ''; });
+                            }
+                        }
+                        if (!Array.isArray(tasksArray)) {
+                            tasksArray = [String(tasksArray)];
+                        }
+                        if (tasksArray.length > 0) {
+                            hasAny = true;
+                            var block = document.createElement('div');
+                            block.className = 'task-level ' + info.cls;
+                            var tasksList = '<ul class="task-list">';
+                            tasksArray.forEach(function(task) {
+                                var taskText = escapeHtml(String(task).replace(/^\d+\.\s*/, ''));
+                                tasksList += '<li>' + taskText + '</li>';
+                            });
+                            tasksList += '</ul>';
+                            block.innerHTML = '<h4>' + escapeHtml(info.label) + ' <span class="badge">' + (level === 'base' ? 'Б' :
+                                level === 'profi' ? 'П' : 'О') + '</span></h4>' + tasksList;
+                            wrapper.appendChild(block);
+                        }
                     }
                 });
                 tasksHTML = hasAny ? wrapper.innerHTML :
-                '<p style="color: var(--text-tertiary);">Нет заданий для выбранных уровней</p>';
+                    '<p style="color: var(--text-tertiary);">Нет заданий для выбранных уровней</p>';
             } else {
                 tasksHTML = '<p style="color: var(--text-tertiary);">Генерация заданий отключена</p>';
             }
             document.getElementById('tasksContent').innerHTML = tasksHTML;
 
-            // --- ПЛАН ---
             var planHTML = '';
             if (withPlan && data.plan && data.plan.steps) {
                 var p = data.plan;
                 var stepsHtml = p.steps.map(function(step, idx) {
                     return '<div class="plan-step"><div class="step-row"><span class="step-title">' + (idx + 1) +
-                        '. ' + step.name + '</span><span class="step-time">' + (step.time || '') +
-                        '</span></div><div class="step-desc">' + (step.desc || '') + '</div></div>';
+                        '. ' + escapeHtml(step.name) + '</span><span class="step-time">' + escapeHtml(step.time || '') +
+                        '</span></div><div class="step-desc">' + escapeHtml(step.desc || '') + '</div></div>';
                 }).join('');
 
                 var goalsHtml = p.goals ? p.goals.map(function(g) { return '<span style="display:block;font-size:15px;color:var(--text-secondary);">• ' +
-                        g + '</span>'; }).join('') : '';
+                        escapeHtml(g) + '</span>'; }).join('') : '';
 
                 planHTML = '<div class="plan-modern"><div class="plan-header-block"><div class="item"><span class="plan-label">Тема</span><span class="plan-value">' +
-                    (p.topic || topic) +
-                    '</span></div><div class="item"><span class="plan-label">Класс</span><span class="plan-value">' + (p
+                    escapeHtml(p.topic || topic) +
+                    '</span></div><div class="item"><span class="plan-label">Класс</span><span class="plan-value">' + escapeHtml(p
                         .class || '') +
                     '</span></div><div class="item"><span class="plan-label">Цели</span><span class="plan-value">' + (
                         goalsHtml || '—') +
@@ -3113,7 +3132,6 @@
 
             setTimeout(setupTimerForPlan, 100);
 
-            // --- ОТВЕТЫ ---
             var answersHTML = '';
             if (withTasks && data.answers) {
                 var levelMap2 = {
@@ -3130,28 +3148,26 @@
                         hasAny2 = true;
                         var block = document.createElement('div');
                         block.className = 'answer-level ' + info.cls;
-                        var pairs = info.data.split(/\d+\.\s*/).filter(function(s) { return s.trim() !== ''; });
+                        var answerText = String(info.data);
+                        var pairs = answerText.split(/\d+\.\s*/).filter(function(s) { return s.trim() !== ''; });
                         var pairsHTML = '<div class="answer-pairs">';
                         pairs.forEach(function(val, idx) {
                             pairsHTML += '<span class="num">' + (idx + 1) +
-                                '.</span><span class="val">' + val.trim() + '</span>';
+                                '.</span><span class="val">' + escapeHtml(val.trim()) + '</span>';
                         });
                         pairsHTML += '</div>';
-                        block.innerHTML = '<h4>' + info.label + '</h4>' + pairsHTML;
+                        block.innerHTML = '<h4>' + escapeHtml(info.label) + '</h4>' + pairsHTML;
                         grid.appendChild(block);
                     }
                 });
                 answersHTML = hasAny2 ? grid.innerHTML :
-                '<p style="color: var(--text-tertiary);">Нет ответов для выбранных уровней</p>';
+                    '<p style="color: var(--text-tertiary);">Нет ответов для выбранных уровней</p>';
             } else {
                 answersHTML = '<p style="color: var(--text-tertiary);">Ответы не сгенерированы</p>';
             }
             document.getElementById('answersContent').innerHTML = answersHTML;
         }
 
-        // ============================================================
-        // ЭКСПОРТ В WORD
-        // ============================================================
         function exportWord(elementId, filename) {
             var element = document.getElementById(elementId);
             if (!element || element.innerHTML.trim() === '' || element.innerHTML.includes('Выберите класс, предмет и нажмите')) {
@@ -3163,15 +3179,18 @@
             var btns = content.querySelectorAll('.btn-group, .btn-secondary, button, .plan-timer-bar, .step-timer-btn');
             btns.forEach(function(el) { el.remove(); });
 
+            var contentHTML = content.innerHTML;
+            contentHTML = contentHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+
             var style = '<style>body{font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:30px;color:#1c1c1e;max-width:800px;margin:0 auto;}h1{color:#007aff;font-size:28px;margin-bottom:4px;}h2{font-size:22px;margin-top:24px;margin-bottom:12px;color:#1c1c1e;border-bottom:1px solid #e5e5ea;padding-bottom:8px;}h3{font-size:18px;margin:16px 0 8px 0;color:#1c1c1e;}.task-block{background:#f8f8fc;border-radius:12px;padding:16px 20px;margin-bottom:16px;border-left:4px solid #007aff;}.task-block.level-base{border-left-color:#34c759;}.task-block.level-profi{border-left-color:#ff9500;}.task-block.level-olympiad{border-left-color:#ff3b30;}.task-block ul{list-style:none;padding:0;margin:8px 0;}.task-block ul li{padding:4px 0 4px 28px;position:relative;}.task-block ul li::before{content:counter(item);counter-increment:item;position:absolute;left:0;font-weight:600;color:#007aff;}.task-block ul{counter-reset:item;}.plan-header{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;background:#f8f8fc;border-radius:12px;padding:16px 20px;margin-bottom:16px;border-left:4px solid #007aff;}.plan-header .item .label{font-size:12px;font-weight:600;color:#8e8e93;text-transform:uppercase;}.plan-header .item .value{font-size:16px;font-weight:500;color:#1c1c1e;}.plan-step{background:#f8f8fc;border-radius:12px;padding:12px 16px;margin-bottom:10px;border-left:3px solid #007aff;}.plan-step .step-title{font-weight:600;font-size:16px;}.plan-step .step-desc{color:#3a3a3c;margin-top:4px;font-size:15px;line-height:1.6;}.plan-step .step-time{color:#8e8e93;font-size:13px;font-family:monospace;}.answers-block{background:#f8f8fc;border-radius:12px;padding:16px 20px;margin-bottom:12px;border-left:4px solid #007aff;}.answers-block .pairs{display:grid;grid-template-columns:auto 1fr;gap:2px 20px;font-size:16px;}.answers-block .pairs .num{font-weight:500;color:#8e8e93;}</style>';
 
             var htmlContent =
-                '<html><head><meta charset="UTF-8"><title>' + (filename || 'Amixby-урок') +
+                '<html><head><meta charset="UTF-8"><title>' + escapeHtml(filename || 'Amixby-урок') +
                 '</title>' + style +
                 '</head><body><h1>Amixby — Урок</h1><p style="font-size:18px;color:#3a3a3c;margin-bottom:24px;">Тема: ' +
-                (lastTopic || '') +
-                '</p>' + content.innerHTML +
-                '<p style="margin-top:32px;font-size:14px;color:#8e8e93;text-align:center;border-top:1px solid #e5e5ea;padding-top:16px;">Создано в Amixby — уроки за минуту</p></body></html>';
+                escapeHtml(lastTopic || '') +
+                '</p>' + contentHTML +
+                '<p style="margin-top:32px;font-size:14px;color:#8e8e93;text-align:center;border-top:1px solid #e5e5ea;padding-top:16px;">Создано в Amixby — планы за минуту</p></body></html>';
 
             var blob = new Blob([htmlContent], { type: 'application/msword' });
             var url = URL.createObjectURL(blob);
@@ -3184,9 +3203,6 @@
             URL.revokeObjectURL(url);
         }
 
-        // ============================================================
-        // PDF
-        // ============================================================
         function generatePDF(elementId, filename) {
             var element = document.getElementById(elementId);
             if (!element || element.innerHTML.trim() === '' || element.innerHTML.includes('Выберите класс, предмет и нажмите')) {
@@ -3226,7 +3242,7 @@
             wrapper.appendChild(contentClone);
 
             var footer = document.createElement('p');
-            footer.textContent = 'Создано в Amixby — уроки за минуту';
+            footer.textContent = 'Создано в Amixby — планы за минуту';
             footer.style.marginTop = '32px';
             footer.style.fontSize = '14px';
             footer.style.color = '#8e8e93';
@@ -3249,9 +3265,6 @@
             });
         }
 
-        // ============================================================
-        // ПОКАЗАТЬ НА ЭКРАНЕ
-        // ============================================================
         function showAnswersOnScreen() {
             var answersContent = document.getElementById('answersContent');
             if (!answersContent || answersContent.innerHTML.trim() === '' || answersContent.innerHTML.includes(
@@ -3301,9 +3314,6 @@
             document.addEventListener('keydown', escHandler);
         }
 
-        // ============================================================
-        // ТАБЫ
-        // ============================================================
         var tabs = document.querySelectorAll('.tab');
         var tabContents = { tasks: document.getElementById('tab-tasks'), plan: document.getElementById('tab-plan'),
             answers: document.getElementById('tab-answers') };
@@ -3330,17 +3340,11 @@
         window.addEventListener('resize', function() { var activeTab = document.querySelector('.tab.active'); if (activeTab)
                 updateIndicator(activeTab); });
 
-        // ============================================================
-        // УРОВНИ
-        // ============================================================
         document.querySelectorAll('.level-btn').forEach(function(btn) {
             btn.addEventListener('click', function(e) { e.stopPropagation();
                 this.classList.toggle('active'); });
         });
 
-        // ============================================================
-        // ЧЕКБОКСЫ
-        // ============================================================
         document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(function(cb) {
             cb.addEventListener('change', function() { this.closest('.checkbox-item').classList.toggle('disabled', !this
                     .checked); });
@@ -3348,16 +3352,11 @@
         document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(function(cb) { cb.dispatchEvent(new Event(
             'change')); });
 
-        // ============================================================
-        // КНОПКА «СОЗДАТЬ УРОК»
-        // ============================================================
         var generateBtn = document.getElementById('generateBtn');
         var resultSection = document.getElementById('resultSection');
 
-        // Восстанавливаем таймер при загрузке
         restoreCooldown();
 
-        // Синхронизация между вкладками
         window.addEventListener('storage', function(e) {
             if (e.key === COOLDOWN_STORAGE_KEY) {
                 var val = e.newValue;
@@ -3382,7 +3381,8 @@
         generateBtn.addEventListener('click', async function() {
             if (this.disabled || this.classList.contains('loading')) return;
 
-            var topic = document.getElementById('topicInput').value.trim();
+            var rawTopic = document.getElementById('topicInput').value;
+            var topic = sanitizeTopic(rawTopic);
             if (!topic) { alert('Пожалуйста, введите тему урока'); return; }
 
             var words = topic.split(/\s+/).length;
@@ -3405,7 +3405,6 @@
 
             var withPlan = document.getElementById('chkPlan').checked;
 
-            // ===== ПРОВЕРКА КЭША =====
             var cacheKey = getCacheKey(topic, levels, withPlan);
             var cachedData = getCachedLesson(cacheKey);
 
@@ -3433,7 +3432,6 @@
                 return;
             }
 
-            // ===== НЕТ КЭША =====
             this.classList.add('loading');
             this.disabled = true;
 
@@ -3463,29 +3461,21 @@
                 var userMessage = error.message;
                 var t = translations[currentLanguage] || translations.ru;
 
-                if (error.message.includes('Ой, сейчас идут технические работы Amixby') ||
-                    error.message.includes('Oops, Amixby is currently undergoing technical maintenance') ||
-                    error.message.includes('Ой, қазір Amixby техникалық жұмыстары жүргізілуде') ||
-                    error.message.includes('Hoppla, Amixby wird gerade technisch gewartet') ||
-                    error.message.includes('технические работы Amixby') ||
-                    error.message.includes('Все API-ключи исчерпаны') ||
-                    error.message.includes('All API keys are exhausted')) {
-                    userMessage = t.errorAllKeys || 'Ой, сейчас идут технические работы Amixby. Попробуйте позже!';
+                if (error.message.includes('Лимит запросов') || error.message.includes('rate limit')) {
+                    userMessage = t.errorRateLimit || 'Лимит запросов: 5 в минуту. Подождите немного.';
                 } else if (error.message === 'Failed to fetch' || error.message.includes('NetworkError') || error.message
-                    .includes(
-                        'network') || error.message.includes('NetworkError when attempting to fetch resource')) {
+                    .includes('network')) {
                     userMessage = t.errorConnection || 'Невозможно сгенерировать план урока. Проверьте соединение!';
-                } else if (error.message.includes('технические работы') || error.message.includes('Technical work') || error
-                    .message.includes('техникалық жұмыстар') || error.message.includes('technische Arbeiten')) {
-                    userMessage = error.message;
                 } else if (error.message.includes('Не удалось извлечь JSON') || error.message.includes(
                     'Failed to extract JSON')) {
+                    userMessage = t.errorTech || 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
+                } else {
                     userMessage = t.errorTech || 'Сейчас ведутся технические работы. Подождите, пожалуйста, и попробуйте позже!';
                 }
 
                 document.getElementById('tasksContent').innerHTML =
                     '<div class="error-message"><span class="error-title">' + (t.errorTitle || 'Ошибка генерации') +
-                    '</span>' + userMessage + '</div>';
+                    '</span>' + escapeHtml(userMessage) + '</div>';
                 resultSection.classList.add('visible');
 
                 startCooldown(30);
@@ -3495,9 +3485,6 @@
             }
         });
 
-        // ============================================================
-        // PDF / WORD
-        // ============================================================
         document.getElementById('downloadPdfBtn').addEventListener('click', function() { generatePDF('tab-tasks',
                 'amixby-zadaniya.pdf'); });
         document.getElementById('downloadPdfBtnPlan').addEventListener('click', function() { generatePDF('tab-plan',
@@ -3507,14 +3494,8 @@
         document.getElementById('downloadWordBtnPlan').addEventListener('click', function() { exportWord('tab-plan',
                 'amixby-plan-uroka'); });
 
-        // ============================================================
-        // ПОКАЗАТЬ НА ЭКРАНЕ
-        // ============================================================
         document.getElementById('showAnswersBtn').addEventListener('click', showAnswersOnScreen);
 
-        // ============================================================
-        // БУРГЕР
-        // ============================================================
         var burgerBtn = document.getElementById('burgerBtn');
         var mobileNav = document.getElementById('mobileNav');
         burgerBtn.addEventListener('click', function() {
@@ -3534,9 +3515,6 @@
             }
         });
 
-        // ============================================================
-        // МОДАЛКИ
-        // ============================================================
         function openModal(type) {
             var map = { 'how': 'modalHow', 'support': 'modalSupport', 'faq': 'modalFaq', 'history': 'modalHistory',
                 'languages': 'modalLanguages' };
@@ -3552,9 +3530,6 @@
                     document.body.style.overflow = ''; } });
         });
 
-        // ============================================================
-        // ПОДДЕРЖКА
-        // ============================================================
         function sendSupport(e) {
             e.preventDefault();
             var message = document.getElementById('supportMessage').value.trim();
@@ -3567,9 +3542,6 @@
             alert('Письмо открыто в вашем почтовом клиенте. Отправьте его, и мы ответим.');
         }
 
-        // ============================================================
-        // ОНБОРДИНГ
-        // ============================================================
         function showOnboarding() {
             var overlay = document.getElementById('onboardingOverlay');
             overlay.classList.add('open');
@@ -3585,7 +3557,6 @@
 
         document.getElementById('onboardingStart').addEventListener('click', hideOnboarding);
 
-        // Показываем онбординг только при первом запуске
         if (!localStorage.getItem('amixby-onboarding-shown')) {
             setTimeout(showOnboarding, 400);
         }
